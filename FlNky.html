@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docs Bagus - Api</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* --- Neobrutalism Base Variables (REVERTED TO LIGHT GRAY) --- */
+    :root {
+        --color-bg-light: #f7f7f7; /* Off-White/Light Gray */
+        --color-primary: #a7f3d0; /* Lime Green Accent */
+        --color-secondary: #3b82f6; /* Electric Blue Accent */
+        --color-tertiary: #fbcfe8; /* Soft Pink Accent */
+        --color-dark-text: #1d1d1d;
+        --color-shadow-base: #3b3b3b;
+        --color-grid-line: #ececec; /* Grid Line Color */
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* Background REVERTED to light gray with light grid */
+      background-color: var(--color-bg-light); 
+      background-image: linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+                        linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: var(--color-dark-text);
+      min-height: 10vh;
+    }
+    
+    /* --- Neobrutalism Utility Styles --- */
+    .font-code { font-family: 'Roboto Mono', monospace; }
+    
+    .neobox {
+      border: 2px solid var(--color-dark-text);
+      box-shadow: 4px 4px 0 var(--color-shadow-base);
+      border-radius: 8px;
+    }
+    
+    .neobtn {
+      border: 2px solid var(--color-dark-text);
+      box-shadow: 3px 3px 0 var(--color-shadow-base);
+      transition: all 0.1s ease-in-out;
+    }
+
+    .neobtn:active {
+      box-shadow: 0 0 0 var(--color-shadow-base);
+      transform: translate(3px, 3px);
+    }
+    
+    /* --- Header & Loader --- */
+    .header-neobox {
+        background-color: var(--color-bg-light); 
+        border-bottom: 2px solid var(--color-dark-text);
+        box-shadow: 0 4px 0 var(--color-shadow-base); 
+        border-radius: 0 0 8px 8px;
+    }
+    
+    #loader { background-color: var(--color-bg-light); }
+    #loader .animate-spin { border-top-color: var(--color-secondary); }
+
+    /* FIX: Navigation Bar Styling: INACTIVE is plain text, ACTIVE is PINK button (per foto 1/2) */
+    .nav-link {
+        color: var(--color-dark-text);
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 8px;
+        /* Hapus style button dari default/inactive state agar jadi teks biasa */
+        transition: all 0.1s ease-in-out;
+    }
+    .nav-link:hover {
+        /* Tidak ada efek hover yang terlihat untuk teks biasa */
+    }
+    .nav-link:active {
+        /* Tidak ada efek active untuk teks biasa */
+    }
+    .nav-link.active {
+        /* Active link (Dokumentasi) sekarang menggunakan PINK button style (sesuai foto 1) */
+        background-color: var(--color-tertiary); /* Soft Pink Accent */
+        border: 2px solid var(--color-dark-text); /* Tambah border */
+        box-shadow: 4px 4px 0 var(--color-shadow-base); /* Tambah shadow */
+        transform: translate(0, 0); 
+    }
+    .nav-link.active:hover {
+        /* Maintain active color/shadow on hover */
+        background-color: var(--color-tertiary);
+        box-shadow: 4px 4px 0 var(--color-shadow-base);
+    }
+    .nav-link.active:active {
+        /* Efek klik untuk tombol aktif */
+        box-shadow: 0 0 0 var(--color-shadow-base);
+        transform: translate(4px, 4px);
+    }
+
+    .menu-toggle-btn {
+        color: var(--color-dark-text);
+        /* FIX: Hamburger menu button background set to primary (Lime Green) to match photo 1 header */
+        background-color: var(--color-primary); 
+        padding: 6px 10px;
+        border: 2px solid var(--color-dark-text);
+        box-shadow: 3px 3px 0 var(--color-shadow-base);
+        border-radius: 8px;
+    }
+
+    /* FIX: Style for Centered Category Headers (Matching the centered button look) */
+    .category-header-block {
+      background-color: white;
+      border: 2px solid var(--color-dark-text);
+      box-shadow: 4px 4px 0 var(--color-shadow-base);
+      border-radius: 8px;
+      padding: 1rem 0;
+      text-align: center;
+      margin-bottom: 2rem; /* Add spacing below the block */
+    }
+
+    /* --- API Card & Form Styling --- */
+    .api-card {
+      background-color: white; /* Card BG */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .api-card.is-visible { opacity: 1; transform: translateY(0); }
+    
+    /* Warna aksen untuk tag GET/POST */
+    .tag-get { background-color: var(--color-primary); color: var(--color-dark-text); font-weight: 900; }
+    .tag-post { background-color: var(--color-tertiary); color: var(--color-dark-text); font-weight: 900; }
+    
+    .form-input-neo {
+        background-color: var(--color-bg-light);
+        border: 2px solid var(--color-dark-text);
+        box-shadow: 2px 2px 0 var(--color-shadow-base);
+        padding: 8px;
+        color: var(--color-dark-text);
+        transition: box-shadow 0.1s;
+    }
+    .form-input-neo:focus {
+        box-shadow: 3px 3px 0 var(--color-secondary);
+    }
+
+    /* Custom style for file input button (Neobrutalism) */
+    input[type="file"]::file-selector-button {
+      background-color: var(--color-secondary); /* Electric Blue */
+      color: white;
+      border: 2px solid var(--color-dark-text);
+      box-shadow: 2px 2px 0 var(--color-dark-text);
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      margin-right: 1rem;
+      transition: all 0.1s ease-in-out;
+    }
+    input[type="file"]::file-selector-button:hover {
+      background-color: #2563EB;
+      box-shadow: 1px 1px 0 var(--color-dark-text);
+    }
+    
+    /* Styling untuk tombol submit di form */
+    .submit-btn-neo {
+        background-color: var(--color-secondary);
+        color: white;
+        font-weight: 700;
+    }
+    .copy-btn-neo {
+        background-color: var(--color-bg-light);
+        color: var(--color-dark-text);
+        border: 1px solid var(--color-dark-text);
+        padding: 5px 10px;
+        border-radius: 4px;
+        box-shadow: 1px 1px 0 var(--color-shadow-base);
+    }
+    .copy-btn-neo:active {
+        box-shadow: 0 0 0 var(--color-shadow-base);
+        transform: translate(1px, 1px);
+    }
+    
+    /* Code block background */
+    .code-bg-neo {
+        background-color: var(--color-dark-text);
+        border: 2px solid var(--color-shadow-base);
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  <div id="loader" class="fixed inset-0 flex items-center justify-center z-[9999] transition-opacity duration-500">
+    <div class="w-16 h-16 border-4 border-t-blue-500 border-gray-800 rounded-full animate-spin"></div>
+  </div>
+
+  <header class="fixed top-0 left-0 right-0 z-50 header-neobox border-gray-800">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+      <a href="/" class="text-2xl font-black tracking-wider text-dark-text">Bagus Api</a>
+      <nav class="hidden md:flex items-center space-x-8 text-base">
+        <a href="/" class="nav-link">Beranda</a>
+        <a href="/docs" class="nav-link active">Dokumentasi</a>
+      </nav>
+      <button onclick="toggleMenu()" class="md:hidden focus:outline-none text-2xl menu-toggle-btn">☰</button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden flex-col items-center py-4 space-y-4 bg-white">
+      <a href="/" class="nav-link">Beranda</a>
+      <a href="/docs" class="nav-link active">Dokumentasi</a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 pt-32 pb-16">
+    <div class="text-center mb-12 fade-in-up">
+      <h1 class="text-4xl md:text-5xl font-bold text-dark-text">Dokumentasi API</h1>
+      <p class="mt-4 text-gray-700 max-w-2xl mx-auto">Selamat datang di dokumentasi Bagus Api. Nikmati berbagai layanan API gratis yang dirancang untuk mempermudah dan mendukung pengembangan proyek Anda.</p>
+    </div>
+
+    <div class="search-bar fade-in-up mb-12 max-w-xl mx-auto">
+        <input type="search" id="endpoint-search" placeholder="Search Endpoint" 
+               class="neobox w-full bg-white text-dark-text p-3 text-base form-input-neo" 
+               style="box-shadow: 4px 4px 0 var(--color-secondary); border-radius: 8px;">
+    </div>
+
+    <div class="space-y-10 max-w-4xl mx-auto">
+
+      <div class="category-header-block api-card" data-category="downloader">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Downloader</h2>
+      </div>
+      <div id="downloader-endpoints" class="space-y-8"></div>
+
+      <div class="category-header-block api-card" data-category="game">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Game</h2>
+      </div>
+      <div id="game-endpoints" class="space-y-8"></div>
+      
+      <div class="category-header-block api-card" data-category="orderkuota">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Order Kuota</h2>
+      </div>
+      <div id="orderkuota-endpoints" class="space-y-8"></div>
+      
+      <div class="category-header-block api-card" data-category="edits">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Edits</h2>
+      </div>
+      <div id="edits-endpoints" class="space-y-8"></div>
+      
+      <div class="category-header-block api-card" data-category="stalker">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Stalker</h2>
+      </div>
+      <div id="stalker-endpoints" class="space-y-8"></div>
+      
+      <div class="category-header-block api-card" data-category="search">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Search</h2>
+      </div>
+      <div id="search-endpoints" class="space-y-8"></div>
+      
+      <div class="category-header-block api-card" data-category="tools">
+        <h2 class="text-2xl font-bold text-dark-text m-0 p-0">Tools</h2>
+      </div>
+      <div id="tools-endpoints" class="space-y-8"></div>
+
+    </div>
+  </main>
+
+  <script>
+    // --- UTILITY FUNCTIONS ---
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('flex');
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loader');
+        loader.classList.add('opacity-0');
+        setTimeout(() => { loader.style.display = 'none'; }, 500);
+      }, 500);
+    });
+
+    function showForm(endpointId) {
+        document.getElementById(`test-btn-${endpointId}`)?.classList.add('hidden');
+        document.getElementById(`form-wrapper-${endpointId}`)?.classList.remove('hidden');
+    }
+
+    function hideForm(endpointId) {
+        document.getElementById(`test-btn-${endpointId}`)?.classList.remove('hidden');
+        document.getElementById(`form-wrapper-${endpointId}`)?.classList.add('hidden');
+        
+        const endpointWrapperEl = document.getElementById(`endpoint-display-wrapper-${endpointId}`);
+        if(endpointWrapperEl) {
+            endpointWrapperEl.classList.add('hidden');
+        }
+        const responseEl = document.getElementById(`response-${endpointId}`);
+        if(responseEl) {
+            responseEl.textContent = '// Respons JSON akan muncul di sini...';
+        }
+    }
+
+    function copyResponse(buttonElement, endpointId) {
+        const responseEl = document.getElementById(`response-${endpointId}`);
+        if (!responseEl || responseEl.textContent.includes("...")) {
+            return; 
+        }
+        const responseText = responseEl.textContent;
+        navigator.clipboard.writeText(responseText).then(() => {
+            const originalText = buttonElement.innerHTML;
+            buttonElement.innerHTML = '<span class="text-green-500">Copied!</span>';
+            setTimeout(() => {
+                buttonElement.innerHTML = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error('Gagal menyalin: ', err);
+            alert('Gagal menyalin teks.');
+        });
+    }
+
+    // --- API HANDLER FOR GET REQUESTS ---
+    async function handleApiRequest(event, endpointId) {
+        if (event) event.preventDefault();
+        
+        showForm(endpointId);
+
+        const responseEl = document.getElementById(`response-${endpointId}`);
+        const endpointDisplayEl = document.getElementById(`endpoint-display-${endpointId}`);
+        const endpointWrapperEl = document.getElementById(`endpoint-display-wrapper-${endpointId}`);
+        
+        endpointWrapperEl.classList.add('hidden');
+        endpointDisplayEl.textContent = '';
+        responseEl.textContent = 'Memuat...';
+
+        const baseUrl = 'https://api.baguss.xyz'; 
+        let path = '';
+        const params = new URLSearchParams();
+
+        // Note: The curl examples include 'apikey', but the current form structure doesn't handle API keys,
+        // so we will only process the parameters defined in the form fields.
+        
+        // Helper function to handle parameter reading and validation
+        const handleUrlEndpoint = (paramName, inputId, errorMsg) => {
+            const urlInput = document.getElementById(inputId);
+            const url = urlInput ? urlInput.value : null;
+            if (!url) {
+                responseEl.textContent = errorMsg;
+                return false;
+            }
+            params.append(paramName, url);
+            return true;
+        };
+        
+        const endpoint_type = endpointId.split('-')[1];
+        const endpoint_name = endpointId.split('-')[0];
+
+        switch (endpoint_type) {
+            case 'dl':
+                path = `/api/download/${endpoint_name}`;
+                if (!handleUrlEndpoint('url', `url-input-${endpointId}`, 'Error: URL tidak boleh kosong.')) return;
+                break;
+            case 'game':
+                path = `/api/game/${endpoint_name}`;
+                break;
+            case 'edit':
+                path = `/api/edits/${endpoint_name}`;
+                if (!handleUrlEndpoint('image', `image-url-${endpointId}`, 'Error: URL gambar tidak boleh kosong.')) return;
+                break;
+            case 'stalk': {
+                if (endpoint_name === 'freefire') {
+                    path = `/api/stalker/freefire`;
+                    if (!handleUrlEndpoint('id', `id-input-${endpointId}`, 'Error: ID FreeFire tidak boleh kosong.')) return;
+
+                } else if (endpoint_name === 'mobilelegend') {
+                    path = `/api/stalker/mobilelegend`;
+
+                    if (!handleUrlEndpoint('id', `id-input-${endpointId}`, 'Error: ID Mobile Legend tidak boleh kosong.')) return;
+                    if (!handleUrlEndpoint('zoneid', `zoneid-input-${endpointId}`, 'Error: ZoneID Mobile Legend tidak boleh kosong.')) return;
+
+                } else {
+                    // default: pakai username
+                    path = `/api/stalker/${endpoint_name}`;
+                    if (!handleUrlEndpoint('username', `username-input-${endpointId}`, 'Error: Username tidak boleh kosong.')) return;
+                }
+            }
+            break;
+            case 'search':
+                path = `/api/search/${endpoint_name}`;
+                const searchParam = endpoint_name === 'douyin' ? 'keyword' : 'q';
+                const inputId = `${searchParam}-input-${endpointId}`;
+                if (!handleUrlEndpoint(searchParam, inputId, `Error: Query (${searchParam}) tidak boleh kosong.`)) return;
+                break;
+            case 'kuota': // NEW CASE FOR ORDER KUOTA
+                path = `/api/orderkuota/${endpoint_name}`;
+                // Dynamically handle parameters based on endpoint name
+                let requiredParams = [];
+                if (endpoint_name === 'getotp') {
+                    requiredParams = ['username', 'password'];
+                } else if (endpoint_name === 'gettoken') {
+                    requiredParams = ['username', 'otp'];
+                } else if (endpoint_name === 'createpayment' || endpoint_name === 'withdrawqris') {
+                    requiredParams = ['username', 'token', 'amount'];
+                } else if (endpoint_name === 'mutasiqris' || endpoint_name === 'profile') {
+                    requiredParams = ['username', 'token'];
+                }
+                
+                for (const param of requiredParams) {
+                    const inputId = `${param}-input-${endpointId}`;
+                    if (!handleUrlEndpoint(param, inputId, `Error: Parameter '${param}' tidak boleh kosong.`)) return;
+                }
+                break;
+            case 'tool':
+                path = `/api/tools/${endpoint_name}`;
+                if (endpoint_name === 'web2app') {
+                    if (!handleUrlEndpoint('url', `url-input-${endpointId}`, 'Error: URL tidak boleh kosong.')) return;
+                    if (!handleUrlEndpoint('name', `name-input-${endpointId}`, 'Error: Nama tidak boleh kosong.')) return;
+                    if (!handleUrlEndpoint('email', `email-input-${endpointId}`, 'Error: Email tidak boleh kosong.')) return;
+                } else if (endpoint_name.startsWith('text2')) {
+                    const paramName = endpoint_name === 'text2video' ? 'prompt' : 'text';
+                    if (!handleUrlEndpoint(paramName, `${paramName}-input-${endpointId}`, 'Error: Input teks tidak boleh kosong.')) return;
+                } else {
+                    // Cekqr, shorturl, sstweet, ssweb
+                    if (!handleUrlEndpoint('url', `url-input-${endpointId}`, 'Error: URL tidak boleh kosong.')) return;
+                }
+                break;
+            default:
+                responseEl.textContent = `Error: Endpoint dengan ID '${endpointId}' tidak dikenal.`;
+                return;
+        }
+
+        const queryString = params.toString();
+        const fullUrl = `${baseUrl}${path}${queryString ? `?${queryString}` : ''}`;
+        
+        endpointDisplayEl.textContent = `GET ${fullUrl}`;
+        endpointWrapperEl.classList.remove('hidden');
+
+        try {
+            const response = await fetch(fullUrl);
+            const data = await response.json();
+            
+            if (response.ok) {
+                responseEl.textContent = JSON.stringify(data, null, 2);
+            } else {
+                responseEl.textContent = `// Error: ${response.status} ${response.statusText}\n\n${JSON.stringify(data, null, 2)}`;
+            }
+        } catch (error) {
+            console.error('API request failed:', error);
+            responseEl.textContent = `// Gagal melakukan permintaan: ${error.message}`;
+        }
+    }
+    
+    // --- API HANDLER FOR POST (FILE UPLOAD) REQUESTS ---
+    async function handlePostRequest(event, endpointId) {
+        if (event) event.preventDefault();
+
+        showForm(endpointId);
+
+        const responseEl = document.getElementById(`response-${endpointId}`);
+        const endpointDisplayEl = document.getElementById(`endpoint-display-${endpointId}`);
+        const endpointWrapperEl = document.getElementById(`endpoint-display-wrapper-${endpointId}`);
+        const fileInput = document.getElementById(`file-input-${endpointId}`);
+
+        endpointWrapperEl.classList.add('hidden');
+        endpointDisplayEl.textContent = '';
+        responseEl.textContent = 'Mengupload dan memproses file...';
+
+        if (!fileInput.files || fileInput.files.length === 0) {
+            responseEl.textContent = 'Error: Silakan pilih file terlebih dahulu.';
+            return;
+        }
+
+        const baseUrl = 'https://api.baguss.xyz';
+        const endpoint_name = endpointId.split('-')[0];
+        const fullUrl = `${baseUrl}/api/tools/${endpoint_name}`;
+
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        endpointDisplayEl.textContent = `POST ${fullUrl} - with file: ${fileInput.files[0].name}`;
+        endpointWrapperEl.classList.remove('hidden');
+
+        try {
+            const response = await fetch(fullUrl, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                responseEl.textContent = JSON.stringify(data, null, 2);
+            } else {
+                responseEl.textContent = `// Error: ${response.status} ${response.statusText}\n\n${JSON.stringify(data, null, 2)}`;
+            }
+        } catch (error) {
+            console.error('API POST request failed:', error);
+            responseEl.textContent = `// Gagal melakukan permintaan: ${error.message}`;
+        }
+    }
+    
+    // --- TEMPLATE FUNCTIONS TO GENERATE CARDS ---
+
+    function createDownloaderCard(id, name, description, exampleUrl) {
+        return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                        <code class="text-lg text-dark-text font-code">/download/${name}</code>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <form onsubmit="handleApiRequest(event, '${id}')" class="space-y-4">
+                            <div>
+                                <label for="url-input-${id}" class="text-sm font-medium text-gray-700">url <span class="text-red-500">*</span></label>
+                                <input type="text" id="url-input-${id}" class="mt-1 block w-full rounded-md text-sm form-input-neo" placeholder="${exampleUrl}" required>
+                            </div>
+                            <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">KIRIM</button>
+                        </form>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function createGameEndpointCard(id, description) {
+        const name = id.split('-')[0];
+        return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                <div class="flex items-center space-x-4">
+                    <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                    <code class="text-lg text-dark-text font-code">/game/${name}</code>
+                </div>
+                <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="handleApiRequest(event, '${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Endpoint ini tidak memerlukan parameter.</p>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function createOrderKuotaCard(id, name, description, params) { // NEW CARD FUNCTION
+        let formInputs = '';
+        params.forEach(p => {
+            formInputs += `
+                <div>
+                    <label for="${p.name}-input-${id}" class="text-sm font-medium text-gray-700">${p.name} <span class="text-red-500">*</span></label>
+                    <input type="text" id="${p.name}-input-${id}" class="mt-1 block w-full rounded-md text-sm form-input-neo" placeholder="${p.placeholder}" required>
+                </div>
+            `;
+        });
+
+        return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                        <code class="text-lg text-dark-text font-code">/orderkuota/${name}</code>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <form onsubmit="handleApiRequest(event, '${id}')" class="space-y-4">
+                            ${formInputs}
+                            <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">KIRIM</button>
+                        </form>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function createEditEndpointCard(id, description) {
+        const name = id.split('-')[0];
+        return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                        <code class="text-lg text-dark-text font-code">/edits/${name}</code>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <form onsubmit="handleApiRequest(event, '${id}')" class="space-y-4">
+                            <div>
+                                <label for="image-url-${id}" class="text-sm font-medium text-gray-700">image url <span class="text-red-500">*</span></label>
+                                <input type="text" id="image-url-${id}" class="mt-1 block w-full rounded-md text-sm form-input-neo" placeholder="https://example.com/image.jpg" required>
+                            </div>
+                            <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">KIRIM</button>
+                        </form>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function createStalkerEndpointCard(id, description) {
+        const stalkParams = {
+            freefire: ['id'],
+            mobilelegend: ['id', 'zoneid'],
+            default: ['username']
+        };
+
+        const name = id.split('-')[0];
+        const params = stalkParams[name] || stalkParams.default;
+
+        const inputsHtml = params.map(prm => `
+            <div>
+                <label for="${prm}-input-${id}" class="text-sm font-medium text-gray-700">${prm} <span class="text-red-500">*</span></label>
+                <input type="text" id="${prm}-input-${id}" 
+                    class="mt-1 block w-full rounded-md text-sm form-input-neo" 
+                    placeholder="Masukkan ${prm}..." required>
+            </div>
+        `).join('');
+
+        return `
+            <div class="api-card-wrapper">
+                <div class="api-card neobox overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-4">
+                            <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                            <code class="text-lg text-dark-text font-code">/stalker/${name}</code>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                    </div>
+                    <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                        <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                        
+                        <div id="form-wrapper-${id}" class="hidden">
+                            <div class="flex justify-end mb-2">
+                                <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                                </button>
+                            </div>
+
+                            <form onsubmit="handleApiRequest(event, '${id}')" class="space-y-4">
+                                ${inputsHtml}
+                                <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">KIRIM</button>
+                            </form>
+
+                            <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                                <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                                <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                    <code id="endpoint-display-${id}"></code>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                    <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        <span>Copy</span>
+                                    </button>
+                                </div>
+
+                                <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto">
+    <code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function createSearchEndpointCard(id, name, description, paramName, placeholder) {
+        return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                        <code class="text-lg text-dark-text font-code">/search/${name}</code>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <form onsubmit="handleApiRequest(event, '${id}')" class="space-y-4">
+                            <div>
+                                <label for="${paramName}-input-${id}" class="text-sm font-medium text-gray-700">${paramName} <span class="text-red-500">*</span></label>
+                                <input type="text" id="${paramName}-input-${id}" class="mt-1 block w-full rounded-md text-sm form-input-neo" placeholder="${placeholder}" required>
+                            </div>
+                            <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">KIRIM</button>
+                        </form>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    
+    function createToolsGetCard(id, name, description, params) {
+        let formInputs = '';
+        params.forEach(p => {
+            formInputs += `
+                <div>
+                    <label for="${p.name}-input-${id}" class="text-sm font-medium text-gray-700">${p.name} <span class="text-red-500">*</span></label>
+                    <input type="text" id="${p.name}-input-${id}" class="mt-1 block w-full rounded-md text-sm form-input-neo" placeholder="${p.placeholder}" required>
+                </div>
+            `;
+        });
+
+        return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <span class="tag-get font-bold text-xs font-code px-2 py-1 rounded-md">GET</span>
+                        <code class="text-lg text-dark-text font-code">/tools/${name}</code>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <form onsubmit="handleApiRequest(event, '${id}')" class="space-y-4">
+                            ${formInputs}
+                            <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">KIRIM</button>
+                        </form>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    
+    function createToolsPostCard(id, name, description) {
+         return `
+        <div class="api-card-wrapper">
+            <div class="api-card neobox overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4">
+                        <span class="tag-post font-bold text-xs font-code px-2 py-1 rounded-md">POST</span>
+                        <code class="text-lg text-dark-text font-code">/tools/${name}</code>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-700 api-description">${description}</p>
+                </div>
+                <div class="px-6 pb-6 border-t border-gray-300 pt-4">
+                    <button id="test-btn-${id}" onclick="showForm('${id}')" type="button" class="neobtn bg-gray-200 hover:bg-gray-300 text-dark-text font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">TEST</button>
+                    <div id="form-wrapper-${id}" class="hidden">
+                        <div class="flex justify-end mb-2">
+                            <button onclick="hideForm('${id}')" class="p-2 rounded-md hover:bg-gray-200 transition-colors" title="Tutup">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                            </button>
+                        </div>
+                        <form onsubmit="handlePostRequest(event, '${id}')" class="space-y-4">
+                            <div>
+                                <label for="file-input-${id}" class="text-sm font-medium text-gray-700">file <span class="text-red-500">*</span></label>
+                                <input type="file" id="file-input-${id}" class="mt-1 block w-full text-sm text-gray-700" required>
+                            </div>
+                            <button type="submit" class="neobtn submit-btn-neo font-semibold py-2 px-6 rounded-lg text-sm tracking-wider w-full">UPLOAD & KIRIM</button>
+                        </form>
+                        <div class="mt-6 hidden" id="endpoint-display-wrapper-${id}">
+                            <p class="text-sm font-medium text-gray-700 mb-2">Endpoint Request:</p>
+                            <div class="code-bg-neo p-3 rounded-md text-xs text-white font-code overflow-x-auto">
+                                <code id="endpoint-display-${id}"></code>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-sm font-medium text-gray-700">Respons:</p>
+                                <button onclick="copyResponse(this, '${id}')" class="copy-btn-neo flex items-center space-x-2 text-xs transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
+                            <pre class="code-bg-neo p-4 rounded-md text-xs text-gray-300 font-code overflow-x-auto"><code id="response-${id}">// Respons JSON akan muncul di sini...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    
+    // --- SEARCH IMPLEMENTATION ---
+
+    function filterEndpoints() {
+        const query = document.getElementById('endpoint-search').value.toLowerCase();
+        const allCardWrappers = document.querySelectorAll('.api-card-wrapper');
+        
+        allCardWrappers.forEach(cardWrapper => {
+            const card = cardWrapper.querySelector('.api-card');
+            if (!card) return;
+            
+            const endpointCode = card.querySelector('code').textContent.toLowerCase();
+            const description = card.querySelector('.api-description').textContent.toLowerCase();
+            
+            // Show if the query matches the code or description
+            if (endpointCode.includes(query) || description.includes(query)) {
+                cardWrapper.style.display = 'block';
+            } else {
+                cardWrapper.style.display = 'none';
+            }
+        });
+
+        checkCategoryVisibility();
+    }
+
+    function checkCategoryVisibility() {
+        const categories = ['downloader', 'game', 'orderkuota', 'edits', 'stalker', 'search', 'tools']; 
+        
+        categories.forEach(category => {
+            const header = document.querySelector(`.category-header-block[data-category="${category}"]`);
+            const container = document.getElementById(`${category}-endpoints`);
+            
+            if (header && container) {
+                // Check visible card wrappers within the container
+                const visibleEndpoints = container.querySelectorAll('.api-card-wrapper:not([style*="display: none"])').length;
+                header.style.display = visibleEndpoints > 0 ? 'block' : 'none';
+            }
+        });
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DEFINE ENDPOINTS DATA (Keeping the original data structure) ---
+        const downloaderEndpoints = [
+            { id: 'tiktok-dl', name: 'tiktok', description: 'Download video dari URL TikTok.', exampleUrl: 'https://vt.tiktok.com/abcxyz' },
+            { id: 'instagram-dl', name: 'instagram', description: 'Download video atau gambar dari URL Instagram.', exampleUrl: 'https://instagram.com/p/abcxyz' },
+            { id: 'youtube-dl', name: 'youtube', description: 'Download video atau audio dari URL YouTube.', exampleUrl: 'https://www.youtube.com/watch?v=abcxyz' },
+            { id: 'facebook-dl', name: 'facebook', description: 'Download video dari URL Facebook.', exampleUrl: 'https://www.facebook.com/watch/?v=12345' },
+            { id: 'spotify-dl', name: 'spotify', description: 'Download lagu atau playlist dari URL Spotify.', exampleUrl: 'http://googleusercontent.com/spotify.com/3' },
+            { id: 'pinterest-dl', name: 'pinterest', description: 'Download media dari URL Pinterest.', exampleUrl: 'https://pinterest.com/pin/12345/' },
+            { id: 'snackvideo-dl', name: 'snackvideo', description: 'Download video dari URL SnackVideo.', exampleUrl: 'https://s.snackvideo.com/p/abcxyz' },
+            { id: 'github-dl', name: 'github', description: 'Download repository atau file dari URL GitHub.', exampleUrl: 'https://github.com/username/repo' },
+            { id: 'gdrive-dl', name: 'gdrive', description: 'Download file dari URL Google Drive.', exampleUrl: 'https://drive.google.com/file/d/abcxyz' },
+            { id: 'mediafire-dl', name: 'mediafire', description: 'Download file dari URL MediaFire.', exampleUrl: 'https://www.mediafire.com/file/abcxyz/file.zip' }
+        ];
+
+        const gameEndpoints = [
+            { id: 'tebakgambar-game', description: 'Mendapatkan soal tebak gambar secara acak.' },
+            { id: 'tebakbendera-game', description: 'Mendapatkan soal tebak bendera negara secara acak.' },
+            { id: 'tebakanime-game', description: 'Mendapatkan soal tebak karakter anime secara acak.' },
+            { id: 'susunkata-game', description: 'Mendapatkan soal menyusun kata secara acak.' },
+            { id: 'tebakkata-game', description: 'Mendapatkan soal tebak kata secara acak.' },
+            { id: 'tebakkalimat-game', description: 'Mendapatkan soal tebak kalimat secara acak.' },
+            { id: 'tebakkimia-game', description: 'Mendapatkan soal tebak unsur kimia secara acak.' },
+            { id: 'tebaklirik-game', description: 'Mendapatkan soal tebak lirik lagu secara acak.' },
+            { id: 'asahotak-game', description: 'Mendapatkan soal asah otak secara acak.' },
+            { id: 'caklontong-game', description: 'Mendapatkan soal tebak-tebakan ala Cak Lontong.' }
+        ];
+        
+        // NEW ENDPOINTS DATA
+        const orderKuotaEndpoints = [
+            { id: 'getotp-kuota', name: 'getotp', description: 'Ambil OTP untuk login/autentikasi.', method: 'GET', params: [
+                { name: 'username', placeholder: 'USERNAME_KAMU' },
+                { name: 'password', placeholder: 'PASSWORD_KAMU' }
+            ]},
+            { id: 'gettoken-kuota', name: 'gettoken', description: 'Ambil token autentikasi Order Kuota', method: 'GET', params: [
+                { name: 'username', placeholder: 'USERNAME_KAMU' },
+                { name: 'otp', placeholder: '123456' }
+            ]},
+            { id: 'mutasiqris-kuota', name: 'mutasiqris', description: 'Cek mutasi QRIS Order Kuota', method: 'GET', params: [
+                { name: 'username', placeholder: 'USERNAME_KAMU' },
+                { name: 'token', placeholder: 'AUTH_TOKEN' }
+            ]},
+            { id: 'profile-kuota', name: 'profile', description: 'Ambil detail akun Order Kuota.', method: 'GET', params: [
+                { name: 'username', placeholder: 'USERNAME_KAMU' },
+                { name: 'token', placeholder: 'AUTH_TOKEN' }
+            ]},
+            { id: 'createpayment-kuota', name: 'createpay', description: 'Generate QRIS Gateway Order Kuota', method: 'GET', params: [
+                { name: 'username', placeholder: 'USERNAME_KAMU' },
+                { name: 'token', placeholder: 'AUTH_TOKEN' },
+                { name: 'amount', placeholder: '20000' }
+            ]},
+            { id: 'withdrawqris-kuota', name: 'withdrawqr', description: 'Withdraw saldo QRIS Order Kuota', method: 'GET', params: [
+                { name: 'username', placeholder: 'USERNAME_KAMU' },
+                { name: 'token', placeholder: 'AUTH_TOKEN' },
+                { name: 'amount', placeholder: '50000' }
+            ]}
+        ];
+
+
+        const editsEndpoints = [
+            { id: 'hytamkan-edit', description: 'Mengubah warna kulit pada gambar menjadi hitam.' },
+            { id: 'tompls-edit', description: 'Menghilangkan blur atau sensor pada sebuah gambar.' },
+            { id: 'remini-edit', description: 'Meningkatkan resolusi gambar menjadi HD.' },
+            { id: 'removebg-edit', description: 'Menghapus background dari sebuah gambar.' },
+            { id: 'tobotak-edit', description: 'Mengubah wajah pada gambar menjadi botak.' },
+            { id: 'tobugil-edit', description: 'Menghapus detail pakaian pada sebuah gambar.' },
+            { id: 'tofigure-edit', description: 'Mengubah foto menjadi seperti action figure.' },
+            { id: 'toghibli-edit', description: 'Mengubah foto menjadi style Ghibli.' },
+            { id: 'tohijab-edit', description: 'Menambahkan hijab pada wajah di foto.' },
+            { id: 'topirang-edit', description: 'Mengubah warna rambut menjadi pirang.' },
+            { id: 'tosketch-edit', description: 'Mengubah foto menjadi gambar sketsa pensil.' },
+            { id: 'touban-edit', description: 'Mengubah warna rambut menjadi uban / putih.' },
+            { id: 'tozombie-edit', description: 'Mengubah wajah pada foto menjadi zombie.' }
+        ];
+        
+        const stalkerEndpoints = [
+            { id: 'tiktok-stalk', description: 'Mendapatkan informasi profil pengguna TikTok.' },
+            { id: 'github-stalk', description: 'Mendapatkan informasi profil pengguna GitHub.' },
+            { id: 'instagram-stalk', description: 'Mendapatkan informasi profil pengguna Instagram.' },
+            { id: 'pinterest-stalk', description: 'Mendapatkan informasi profil pengguna Pinterest.' },
+            { id: 'freefire-stalk', description: 'Mendapatkan informasi username akun Free Fire.' },
+            { id: 'mobilelegend-stalk', description: 'Mendapatkan informasi username Mobile Legends.' },
+            { id: 'ytstalk-stalk', description: 'Mendapatkan informasi profil pengguna Youtube.' },
+            { id: 'snackvideo-stalk', description: 'Mendapatkan informasi profil pengguna Snack Video.' }
+        ];
+        
+        
+        const searchEndpoints = [
+            { id: 'pinterest-search', name: 'pinterest', description: 'Mencari image di Pinterest berdasarkan query.', paramName: 'q', placeholder: 'aesthetic room' },
+            { id: 'spotify-search', name: 'spotify', description: 'Mencari music di Spotify berdasarkan query.', paramName: 'q', placeholder: 'one ok rock' },
+           { id: 'yts-search', name: 'youtube', description: 'Mencari video di YouTube berdasarkan query.', paramName: 'q', placeholder: 'belajar javascript' },
+            { id: 'tiktok-search', name: 'tiktok', description: 'Mencari video di TikTok berdasarkan query.', paramName: 'q', placeholder: 'masak viral' },
+            { id: '8fonts-search', name: '8fonts', description: 'Mencari berbagai gaya font berdasarkan query.', paramName: 'q', placeholder: 'Poppins' },
+            { id: 'bingimg-search', name: 'bingimg', description: 'Mencari gambar melalui Bing Images berdasarkan query.', paramName: 'q', placeholder: 'cat programming' },
+            { id: 'school-search', name: 'school', description: 'Mencari nama sekolah berdasarkan query.', paramName: 'q', placeholder: 'Universitas Indonesia' },
+            { id: 'tthashtag-search', name: 'tthashtag', description: 'Mencari hashtag Tiktok berdasarkan query.', paramName: 'q', placeholder: 'fyp' },
+            { id: 'applemusic-search', name: 'applemusic', description: 'Mencari musik di Apple Music berdasarkan query.', paramName: 'q', placeholder: 'Taylor Swift' },
+           { id: 'playstore-search', name: 'playstore', description: 'Mencari aplikasi di Google Playstore.', paramName: 'q', placeholder: 'WhatsApp' },
+            { id: 'happymod-search', name: 'happymod', description: 'Mencari game/aplikasi mod di HappyMod.', paramName: 'q', placeholder: 'Minecraft Mod' },
+            { id: 'gimage-search', name: 'gimage', description: 'Mencari gambar di Google Images.', paramName: 'q', placeholder: 'cute cats' }
+        ];
+        
+        const toolsEndpoints = [
+            { id: 'cekqr-tool', name: 'cekqr', description: 'Membaca data dari QR Code melalui URL gambar.', method: 'GET', params: [{ name: 'url', placeholder: 'https://example.com/qrcode.png' }] },
+            { id: 'shorturl-tool', name: 'shorturl', description: 'Memperpendek URL yang panjang.', method: 'GET', params: [{ name: 'url', placeholder: 'https://example.com/very/long/url' }] },
+            { id: 'sstweet-tool', name: 'sstweet', description: 'Mengambil screenshot dari sebuah tweet berdasarkan URL.', method: 'GET', params: [{ name: 'url', placeholder: 'https://twitter.com/user/status/123' }] },
+            { id: 'ssweb-tool', name: 'ssweb', description: 'Mengambil screenshot dari sebuah halaman web.', method: 'GET', params: [{ name: 'url', placeholder: 'https://example.com' }] },
+            { id: 'text2image-tool', name: 'text2image', description: 'Membuat gambar dari teks.', method: 'GET', params: [{ name: 'text', placeholder: 'a cat wearing a hat' }] },
+            { id: 'text2qr-tool', name: 'text2qr', description: 'Membuat QR Code dari teks.', method: 'GET', params: [{ name: 'text', placeholder: 'Masukkan teks di sini' }] },
+            { id: 'text2video-tool', name: 'text2video', description: 'Membuat video pendek dari prompt teks.', method: 'GET', params: [{ name: 'prompt', placeholder: 'a running horse' }] },
+            { id: 'web2app-tool', name: 'web2app', description: 'Mengubah website menjadi aplikasi (Progressive Web App).', method: 'GET', params: [{ name: 'url', placeholder: 'https://example.com' }, { name: 'name', placeholder: 'Nama Aplikasi' }, { name: 'email', placeholder: 'email@example.com' }] },
+            { id: 'sfile-tool', name: 'sfile', description: 'Upload file ke sfile.mobi.', method: 'POST' },
+            { id: 'mdfup-tool', name: 'mdfup', description: 'Upload file ke MediaFire.', method: 'POST' },
+            { id: 'tourl-tool', name: 'tourl', description: 'Upload gambar menjadi URL.', method: 'POST' }
+        ];
+
+        // --- RENDER CARDS ---
+        const downloaderContainer = document.getElementById('downloader-endpoints');
+        const gameContainer = document.getElementById('game-endpoints');
+        const orderKuotaContainer = document.getElementById('orderkuota-endpoints'); // New container reference
+        const editsContainer = document.getElementById('edits-endpoints');
+        const stalkerContainer = document.getElementById('stalker-endpoints');
+        const searchContainer = document.getElementById('search-endpoints');
+        const toolsContainer = document.getElementById('tools-endpoints');
+        
+        let downloaderHtml = '';
+        downloaderEndpoints.forEach(ep => downloaderHtml += createDownloaderCard(ep.id, ep.name, ep.description, ep.exampleUrl));
+        downloaderContainer.innerHTML = downloaderHtml;
+
+        let gameHtml = '';
+        gameEndpoints.forEach(ep => gameHtml += createGameEndpointCard(ep.id, ep.description));
+        gameContainer.innerHTML = gameHtml;
+        
+        // NEW CATEGORY RENDERING
+        let orderKuotaHtml = '';
+        orderKuotaEndpoints.forEach(ep => orderKuotaHtml += createOrderKuotaCard(ep.id, ep.name, ep.description, ep.params));
+        orderKuotaContainer.innerHTML = orderKuotaHtml; 
+        // END NEW CATEGORY RENDERING
+
+        let editsHtml = '';
+        editsEndpoints.forEach(ep => editsHtml += createEditEndpointCard(ep.id, ep.description));
+        editsContainer.innerHTML = editsHtml;
+        
+        let stalkerHtml = '';
+        stalkerEndpoints.forEach(ep => stalkerHtml += createStalkerEndpointCard(ep.id, ep.description));
+        stalkerContainer.innerHTML = stalkerHtml;
+
+        let searchHtml = '';
+        searchEndpoints.forEach(ep => searchHtml += createSearchEndpointCard(ep.id, ep.name, ep.description, ep.paramName, ep.placeholder));
+        searchContainer.innerHTML = searchHtml;
+
+        let toolsHtml = '';
+        toolsEndpoints.forEach(ep => {
+            if (ep.method === 'POST') {
+                toolsHtml += createToolsPostCard(ep.id, ep.name, ep.description);
+            } else {
+                toolsHtml += createToolsGetCard(ep.id, ep.name, ep.description, ep.params);
+            }
+        });
+        toolsContainer.innerHTML = toolsHtml;
+        
+        // --- ATTACH LISTENERS ---
+        document.getElementById('endpoint-search').addEventListener('input', filterEndpoints);
+
+        // --- ATTACH INTERSECTION OBSERVER ---
+        const cards = document.querySelectorAll('.api-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1 
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    });
+  </script>
+
+</body>
+</html>
