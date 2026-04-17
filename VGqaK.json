@@ -1,0 +1,3012 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BRAT API",
+    "description": "Text to visual conversion service with canvas-based brat generation",
+    "version": "3.0.0"
+  },
+  "tags": [
+    {
+      "name": "Image",
+      "description": "Static image generation"
+    },
+    {
+      "name": "GIF",
+      "description": "Animated GIF creation"
+    },
+    {
+      "name": "Video",
+      "description": "WebM video generation"
+    },
+    {
+      "name": "Quote",
+      "description": "Message quote images"
+    },
+    {
+      "name": "iPhone",
+      "description": "iPhone message screenshots"
+    },
+    {
+      "name": "Nulis",
+      "description": "Handwriting generation"
+    },
+    {
+      "name": "Meme",
+      "description": "Meme generation"
+    },
+    {
+      "name": "Health",
+      "description": "System health and monitoring"
+    },
+    {
+      "name": "Admin",
+      "description": "Administrative endpoints"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "getIndex",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "tags": [
+          "Health"
+        ],
+        "summary": "Comprehensive system health check",
+        "description": "Returns detailed server health, memory usage, chrome, and service statistics",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/admin/stats": {
+      "get": {
+        "operationId": "getAdminStats",
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin statistics",
+        "description": "Detailed system statistics (requires admin key)",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/admin/browser/restart": {
+      "post": {
+        "operationId": "postAdminBrowserRestart",
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Restart Chrome",
+        "description": "Force restart Chrome instance (requires admin key)",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/image": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Text content",
+            "schema": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "in": "query",
+            "name": "text",
+            "required": true
+          },
+          {
+            "description": "Background color",
+            "schema": {
+              "type": "string",
+              "default": "#ffffff"
+            },
+            "in": "query",
+            "name": "background",
+            "required": false
+          },
+          {
+            "description": "Background alias",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "bg",
+            "required": false
+          },
+          {
+            "description": "Text color",
+            "schema": {
+              "type": "string",
+              "default": "#000000"
+            },
+            "in": "query",
+            "name": "color",
+            "required": false
+          },
+          {
+            "description": "Text color alias",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "textColor",
+            "required": false
+          },
+          {
+            "description": "Blur level",
+            "schema": {
+              "default": 2,
+              "minimum": 0,
+              "maximum": 20,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Blur level",
+                  "default": 2,
+                  "minimum": 0,
+                  "maximum": 20,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Blur level",
+                      "default": 0,
+                      "minimum": 0,
+                      "maximum": 20,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Blur level",
+                      "default": 2,
+                      "minimum": 0,
+                      "maximum": 20,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "blur",
+            "required": false
+          },
+          {
+            "description": "Emoji brand",
+            "schema": {
+              "default": "apple",
+              "anyOf": [
+                {
+                  "const": "apple",
+                  "type": "string"
+                },
+                {
+                  "const": "android",
+                  "type": "string"
+                },
+                {
+                  "const": "androidOld",
+                  "type": "string"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "emojiStyle",
+            "required": false
+          }
+        ],
+        "operationId": "getImage",
+        "tags": [
+          "Image"
+        ],
+        "summary": "Generate static image",
+        "description": "Convert text to image with emoji support",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/gif": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Text content",
+            "schema": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "in": "query",
+            "name": "text",
+            "required": true
+          },
+          {
+            "description": "Background color",
+            "schema": {
+              "type": "string",
+              "default": "#ffffff"
+            },
+            "in": "query",
+            "name": "background",
+            "required": false
+          },
+          {
+            "description": "Background alias",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "bg",
+            "required": false
+          },
+          {
+            "description": "Text color",
+            "schema": {
+              "type": "string",
+              "default": "#000000"
+            },
+            "in": "query",
+            "name": "color",
+            "required": false
+          },
+          {
+            "description": "Text color alias",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "textColor",
+            "required": false
+          },
+          {
+            "description": "Blur level",
+            "schema": {
+              "default": 2,
+              "minimum": 0,
+              "maximum": 20,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Blur level",
+                  "default": 2,
+                  "minimum": 0,
+                  "maximum": 20,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Blur level",
+                      "default": 0,
+                      "minimum": 0,
+                      "maximum": 20,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Blur level",
+                      "default": 2,
+                      "minimum": 0,
+                      "maximum": 20,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "blur",
+            "required": false
+          },
+          {
+            "description": "Emoji brand",
+            "schema": {
+              "default": "apple",
+              "anyOf": [
+                {
+                  "const": "apple",
+                  "type": "string"
+                },
+                {
+                  "const": "android",
+                  "type": "string"
+                },
+                {
+                  "const": "androidOld",
+                  "type": "string"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "emojiStyle",
+            "required": false
+          },
+          {
+            "description": "Frame delay (ms)",
+            "schema": {
+              "default": 500,
+              "minimum": 100,
+              "maximum": 2000,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Frame delay (ms)",
+                  "default": 500,
+                  "minimum": 100,
+                  "maximum": 2000,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Frame delay (ms)",
+                      "default": 0,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Frame delay (ms)",
+                      "default": 500,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "delay",
+            "required": false
+          },
+          {
+            "description": "End frame delay (ms)",
+            "schema": {
+              "default": 1000,
+              "minimum": 500,
+              "maximum": 5000,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "End frame delay (ms)",
+                  "default": 1000,
+                  "minimum": 500,
+                  "maximum": 5000,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "End frame delay (ms)",
+                      "default": 0,
+                      "minimum": 500,
+                      "maximum": 5000,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "End frame delay (ms)",
+                      "default": 1000,
+                      "minimum": 500,
+                      "maximum": 5000,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "endDelay",
+            "required": false
+          }
+        ],
+        "operationId": "getGif",
+        "tags": [
+          "GIF"
+        ],
+        "summary": "Generate animated GIF",
+        "description": "Create animated GIF with emoji support",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/mp4": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Text content",
+            "schema": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "in": "query",
+            "name": "text",
+            "required": true
+          },
+          {
+            "description": "Background color",
+            "schema": {
+              "type": "string",
+              "default": "#ffffff"
+            },
+            "in": "query",
+            "name": "background",
+            "required": false
+          },
+          {
+            "description": "Background alias",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "bg",
+            "required": false
+          },
+          {
+            "description": "Text color",
+            "schema": {
+              "type": "string",
+              "default": "#000000"
+            },
+            "in": "query",
+            "name": "color",
+            "required": false
+          },
+          {
+            "description": "Text color alias",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "textColor",
+            "required": false
+          },
+          {
+            "description": "Blur level",
+            "schema": {
+              "default": 2,
+              "minimum": 0,
+              "maximum": 20,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Blur level",
+                  "default": 2,
+                  "minimum": 0,
+                  "maximum": 20,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Blur level",
+                      "default": 0,
+                      "minimum": 0,
+                      "maximum": 20,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Blur level",
+                      "default": 2,
+                      "minimum": 0,
+                      "maximum": 20,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "blur",
+            "required": false
+          },
+          {
+            "description": "Emoji brand",
+            "schema": {
+              "default": "apple",
+              "anyOf": [
+                {
+                  "const": "apple",
+                  "type": "string"
+                },
+                {
+                  "const": "android",
+                  "type": "string"
+                },
+                {
+                  "const": "androidOld",
+                  "type": "string"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "emojiStyle",
+            "required": false
+          },
+          {
+            "description": "Frame delay (ms)",
+            "schema": {
+              "default": 500,
+              "minimum": 100,
+              "maximum": 2000,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Frame delay (ms)",
+                  "default": 500,
+                  "minimum": 100,
+                  "maximum": 2000,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Frame delay (ms)",
+                      "default": 0,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Frame delay (ms)",
+                      "default": 500,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "delay",
+            "required": false
+          },
+          {
+            "description": "End frame delay (ms)",
+            "schema": {
+              "default": 1000,
+              "minimum": 500,
+              "maximum": 5000,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "End frame delay (ms)",
+                  "default": 1000,
+                  "minimum": 500,
+                  "maximum": 5000,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "End frame delay (ms)",
+                      "default": 0,
+                      "minimum": 500,
+                      "maximum": 5000,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "End frame delay (ms)",
+                      "default": 1000,
+                      "minimum": 500,
+                      "maximum": 5000,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "endDelay",
+            "required": false
+          }
+        ],
+        "operationId": "getMp4",
+        "tags": [
+          "Video"
+        ],
+        "summary": "Generate video",
+        "description": "Create animated video with emoji support",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/iphone-quoted": {
+      "get": {
+        "parameters": [
+          {
+            "description": "time display",
+            "schema": {
+              "type": "string",
+              "default": "11:26"
+            },
+            "in": "query",
+            "name": "time",
+            "required": false
+          },
+          {
+            "description": "Message content",
+            "schema": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "in": "query",
+            "name": "messageText",
+            "required": true
+          },
+          {
+            "description": "Carrier name",
+            "schema": {
+              "type": "string",
+              "default": "INDOSAT OORE..."
+            },
+            "in": "query",
+            "name": "carrierName",
+            "required": false
+          },
+          {
+            "description": "Battery percentage",
+            "schema": {
+              "minimum": 0,
+              "maximum": 100,
+              "default": 88,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Battery percentage",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "default": 88,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Battery percentage",
+                      "minimum": 0,
+                      "maximum": 100,
+                      "default": 0,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Battery percentage",
+                      "minimum": 0,
+                      "maximum": 100,
+                      "default": 88,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "batteryPercentage",
+            "required": false
+          },
+          {
+            "description": "Signal strength (1-4)",
+            "schema": {
+              "minimum": 1,
+              "maximum": 4,
+              "default": 4,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Signal strength (1-4)",
+                  "minimum": 1,
+                  "maximum": 4,
+                  "default": 4,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Signal strength (1-4)",
+                      "minimum": 1,
+                      "maximum": 4,
+                      "default": 0,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Signal strength (1-4)",
+                      "minimum": 1,
+                      "maximum": 4,
+                      "default": 4,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "signalStrength",
+            "required": false
+          },
+          {
+            "description": "Emoji style",
+            "schema": {
+              "default": "apple",
+              "anyOf": [
+                {
+                  "const": "apple",
+                  "type": "string"
+                },
+                {
+                  "const": "android",
+                  "type": "string"
+                },
+                {
+                  "const": "google",
+                  "type": "string"
+                },
+                {
+                  "const": "androidOld",
+                  "type": "string"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "emojiStyle",
+            "required": false
+          }
+        ],
+        "operationId": "getIphone-quoted",
+        "tags": [
+          "iPhone"
+        ],
+        "summary": "Generate iPhone message screenshot",
+        "description": "Create realistic iPhone message screenshots with enhanced error handling",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/v2/iphone-quoted": {
+      "post": {
+        "parameters": [],
+        "operationId": "postV2Iphone-quoted",
+        "tags": [
+          "iPhone"
+        ],
+        "summary": "Generate iPhone quoted V2 screenshot (POST JSON)",
+        "description": "Friendly JSON payload. Keep message text and imageUrl separate; empty fields are ignored.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "All fields are optional. Use imageUrl/mediaUrl for media. Message text stays separate from URL.",
+                "example": {
+                  "sender": "other",
+                  "message": "gimana",
+                  "imageUrl": "https://i.pinimg.com/564x/ac/09/cd/ac09cda97d8a29bcf60ac4b99c5b270d.jpg",
+                  "timestamp": "21.02",
+                  "time": "21.02",
+                  "status": {
+                    "carrierName": "INDOSAT OORE...",
+                    "batteryPercentage": 88,
+                    "signalStrength": 4,
+                    "wifi": true
+                  },
+                  "backgroundUrl": "",
+                  "readStatus": true,
+                  "emojiStyle": "apple"
+                },
+                "type": "object",
+                "properties": {
+                  "sender": {
+                    "default": "other",
+                    "description": "Bubble side",
+                    "anyOf": [
+                      {
+                        "const": "self",
+                        "type": "string"
+                      },
+                      {
+                        "const": "other",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "message": {
+                    "maxLength": 4000,
+                    "description": "Main message text",
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "maxLength": 4000,
+                    "description": "Alias of message",
+                    "type": "string"
+                  },
+                  "text": {
+                    "maxLength": 4000,
+                    "description": "Alias of message (simple payload)",
+                    "type": "string"
+                  },
+                  "timestamp": {
+                    "description": "Timestamp inside bubble",
+                    "type": "string"
+                  },
+                  "time": {
+                    "default": "11:26",
+                    "description": "Status bar time",
+                    "type": "string"
+                  },
+                  "emojiStyle": {
+                    "default": "apple",
+                    "description": "Emoji style validator",
+                    "anyOf": [
+                      {
+                        "const": "apple",
+                        "type": "string"
+                      },
+                      {
+                        "const": "android",
+                        "type": "string"
+                      },
+                      {
+                        "const": "google",
+                        "type": "string"
+                      },
+                      {
+                        "const": "androidOld",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "backgroundUrl": {
+                    "description": "Custom background image URL",
+                    "type": "string"
+                  },
+                  "readStatus": {
+                    "default": true,
+                    "description": "Show read ticks for self sender",
+                    "type": "boolean"
+                  },
+                  "carrierName": {
+                    "description": "Carrier text",
+                    "type": "string"
+                  },
+                  "batteryPercentage": {
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Battery percentage",
+                    "anyOf": [
+                      {
+                        "format": "numeric",
+                        "default": 0,
+                        "type": "string"
+                      },
+                      {
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Battery percentage",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  "signalStrength": {
+                    "minimum": 0,
+                    "maximum": 4,
+                    "description": "Signal bars count",
+                    "anyOf": [
+                      {
+                        "format": "numeric",
+                        "default": 0,
+                        "type": "string"
+                      },
+                      {
+                        "minimum": 0,
+                        "maximum": 4,
+                        "description": "Signal bars count",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  "statusWifi": {
+                    "default": true,
+                    "description": "Show wifi icon",
+                    "type": "boolean"
+                  },
+                  "hasQuote": {
+                    "default": false,
+                    "description": "Optional. Usually no need; auto true when quote data exists",
+                    "type": "boolean"
+                  },
+                  "quoteSender": {
+                    "description": "Quote sender label",
+                    "type": "string"
+                  },
+                  "quoteMessage": {
+                    "description": "Quote text",
+                    "type": "string"
+                  },
+                  "quoteImage": {
+                    "description": "Quote image URL",
+                    "type": "string"
+                  },
+                  "hasImage": {
+                    "default": false,
+                    "description": "Optional. Usually no need; auto true when imageUrl/mediaUrl exists",
+                    "type": "boolean"
+                  },
+                  "imageUrl": {
+                    "description": "Media image URL",
+                    "type": "string"
+                  },
+                  "mediaUrl": {
+                    "description": "Alias of imageUrl",
+                    "type": "string"
+                  },
+                  "caption": {
+                    "description": "Media caption (if empty, message text is used)",
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "object",
+                    "properties": {
+                      "time": {
+                        "description": "Alias of time",
+                        "type": "string"
+                      },
+                      "carrierName": {
+                        "description": "Alias of carrierName",
+                        "type": "string"
+                      },
+                      "batteryPercentage": {
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Alias of batteryPercentage",
+                        "anyOf": [
+                          {
+                            "format": "numeric",
+                            "default": 0,
+                            "type": "string"
+                          },
+                          {
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Alias of batteryPercentage",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "signalStrength": {
+                        "minimum": 0,
+                        "maximum": 4,
+                        "description": "Alias of signalStrength",
+                        "anyOf": [
+                          {
+                            "format": "numeric",
+                            "default": 0,
+                            "type": "string"
+                          },
+                          {
+                            "minimum": 0,
+                            "maximum": 4,
+                            "description": "Alias of signalStrength",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "wifi": {
+                        "description": "Alias of statusWifi",
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "quote": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Alias of hasQuote",
+                        "type": "boolean"
+                      },
+                      "sender": {
+                        "description": "Alias of quoteSender",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "Alias of quoteMessage",
+                        "type": "string"
+                      },
+                      "imageUrl": {
+                        "description": "Alias of quoteImage",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "media": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Alias of hasImage",
+                        "type": "boolean"
+                      },
+                      "imageUrl": {
+                        "description": "Alias of imageUrl",
+                        "type": "string"
+                      },
+                      "caption": {
+                        "description": "Alias of caption",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "description": "All fields are optional. Use imageUrl/mediaUrl for media. Message text stays separate from URL.",
+                "example": {
+                  "sender": "other",
+                  "message": "gimana",
+                  "imageUrl": "https://i.pinimg.com/564x/ac/09/cd/ac09cda97d8a29bcf60ac4b99c5b270d.jpg",
+                  "timestamp": "21.02",
+                  "time": "21.02",
+                  "status": {
+                    "carrierName": "INDOSAT OORE...",
+                    "batteryPercentage": 88,
+                    "signalStrength": 4,
+                    "wifi": true
+                  },
+                  "backgroundUrl": "",
+                  "readStatus": true,
+                  "emojiStyle": "apple"
+                },
+                "type": "object",
+                "properties": {
+                  "sender": {
+                    "default": "other",
+                    "description": "Bubble side",
+                    "anyOf": [
+                      {
+                        "const": "self",
+                        "type": "string"
+                      },
+                      {
+                        "const": "other",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "message": {
+                    "maxLength": 4000,
+                    "description": "Main message text",
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "maxLength": 4000,
+                    "description": "Alias of message",
+                    "type": "string"
+                  },
+                  "text": {
+                    "maxLength": 4000,
+                    "description": "Alias of message (simple payload)",
+                    "type": "string"
+                  },
+                  "timestamp": {
+                    "description": "Timestamp inside bubble",
+                    "type": "string"
+                  },
+                  "time": {
+                    "default": "11:26",
+                    "description": "Status bar time",
+                    "type": "string"
+                  },
+                  "emojiStyle": {
+                    "default": "apple",
+                    "description": "Emoji style validator",
+                    "anyOf": [
+                      {
+                        "const": "apple",
+                        "type": "string"
+                      },
+                      {
+                        "const": "android",
+                        "type": "string"
+                      },
+                      {
+                        "const": "google",
+                        "type": "string"
+                      },
+                      {
+                        "const": "androidOld",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "backgroundUrl": {
+                    "description": "Custom background image URL",
+                    "type": "string"
+                  },
+                  "readStatus": {
+                    "default": true,
+                    "description": "Show read ticks for self sender",
+                    "type": "boolean"
+                  },
+                  "carrierName": {
+                    "description": "Carrier text",
+                    "type": "string"
+                  },
+                  "batteryPercentage": {
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Battery percentage",
+                    "anyOf": [
+                      {
+                        "format": "numeric",
+                        "default": 0,
+                        "type": "string"
+                      },
+                      {
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Battery percentage",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  "signalStrength": {
+                    "minimum": 0,
+                    "maximum": 4,
+                    "description": "Signal bars count",
+                    "anyOf": [
+                      {
+                        "format": "numeric",
+                        "default": 0,
+                        "type": "string"
+                      },
+                      {
+                        "minimum": 0,
+                        "maximum": 4,
+                        "description": "Signal bars count",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  "statusWifi": {
+                    "default": true,
+                    "description": "Show wifi icon",
+                    "type": "boolean"
+                  },
+                  "hasQuote": {
+                    "default": false,
+                    "description": "Optional. Usually no need; auto true when quote data exists",
+                    "type": "boolean"
+                  },
+                  "quoteSender": {
+                    "description": "Quote sender label",
+                    "type": "string"
+                  },
+                  "quoteMessage": {
+                    "description": "Quote text",
+                    "type": "string"
+                  },
+                  "quoteImage": {
+                    "description": "Quote image URL",
+                    "type": "string"
+                  },
+                  "hasImage": {
+                    "default": false,
+                    "description": "Optional. Usually no need; auto true when imageUrl/mediaUrl exists",
+                    "type": "boolean"
+                  },
+                  "imageUrl": {
+                    "description": "Media image URL",
+                    "type": "string"
+                  },
+                  "mediaUrl": {
+                    "description": "Alias of imageUrl",
+                    "type": "string"
+                  },
+                  "caption": {
+                    "description": "Media caption (if empty, message text is used)",
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "object",
+                    "properties": {
+                      "time": {
+                        "description": "Alias of time",
+                        "type": "string"
+                      },
+                      "carrierName": {
+                        "description": "Alias of carrierName",
+                        "type": "string"
+                      },
+                      "batteryPercentage": {
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Alias of batteryPercentage",
+                        "anyOf": [
+                          {
+                            "format": "numeric",
+                            "default": 0,
+                            "type": "string"
+                          },
+                          {
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Alias of batteryPercentage",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "signalStrength": {
+                        "minimum": 0,
+                        "maximum": 4,
+                        "description": "Alias of signalStrength",
+                        "anyOf": [
+                          {
+                            "format": "numeric",
+                            "default": 0,
+                            "type": "string"
+                          },
+                          {
+                            "minimum": 0,
+                            "maximum": 4,
+                            "description": "Alias of signalStrength",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "wifi": {
+                        "description": "Alias of statusWifi",
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "quote": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Alias of hasQuote",
+                        "type": "boolean"
+                      },
+                      "sender": {
+                        "description": "Alias of quoteSender",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "Alias of quoteMessage",
+                        "type": "string"
+                      },
+                      "imageUrl": {
+                        "description": "Alias of quoteImage",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "media": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Alias of hasImage",
+                        "type": "boolean"
+                      },
+                      "imageUrl": {
+                        "description": "Alias of imageUrl",
+                        "type": "string"
+                      },
+                      "caption": {
+                        "description": "Alias of caption",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "description": "All fields are optional. Use imageUrl/mediaUrl for media. Message text stays separate from URL.",
+                "example": {
+                  "sender": "other",
+                  "message": "gimana",
+                  "imageUrl": "https://i.pinimg.com/564x/ac/09/cd/ac09cda97d8a29bcf60ac4b99c5b270d.jpg",
+                  "timestamp": "21.02",
+                  "time": "21.02",
+                  "status": {
+                    "carrierName": "INDOSAT OORE...",
+                    "batteryPercentage": 88,
+                    "signalStrength": 4,
+                    "wifi": true
+                  },
+                  "backgroundUrl": "",
+                  "readStatus": true,
+                  "emojiStyle": "apple"
+                },
+                "type": "object",
+                "properties": {
+                  "sender": {
+                    "default": "other",
+                    "description": "Bubble side",
+                    "anyOf": [
+                      {
+                        "const": "self",
+                        "type": "string"
+                      },
+                      {
+                        "const": "other",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "message": {
+                    "maxLength": 4000,
+                    "description": "Main message text",
+                    "type": "string"
+                  },
+                  "messageText": {
+                    "maxLength": 4000,
+                    "description": "Alias of message",
+                    "type": "string"
+                  },
+                  "text": {
+                    "maxLength": 4000,
+                    "description": "Alias of message (simple payload)",
+                    "type": "string"
+                  },
+                  "timestamp": {
+                    "description": "Timestamp inside bubble",
+                    "type": "string"
+                  },
+                  "time": {
+                    "default": "11:26",
+                    "description": "Status bar time",
+                    "type": "string"
+                  },
+                  "emojiStyle": {
+                    "default": "apple",
+                    "description": "Emoji style validator",
+                    "anyOf": [
+                      {
+                        "const": "apple",
+                        "type": "string"
+                      },
+                      {
+                        "const": "android",
+                        "type": "string"
+                      },
+                      {
+                        "const": "google",
+                        "type": "string"
+                      },
+                      {
+                        "const": "androidOld",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "backgroundUrl": {
+                    "description": "Custom background image URL",
+                    "type": "string"
+                  },
+                  "readStatus": {
+                    "default": true,
+                    "description": "Show read ticks for self sender",
+                    "type": "boolean"
+                  },
+                  "carrierName": {
+                    "description": "Carrier text",
+                    "type": "string"
+                  },
+                  "batteryPercentage": {
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Battery percentage",
+                    "anyOf": [
+                      {
+                        "format": "numeric",
+                        "default": 0,
+                        "type": "string"
+                      },
+                      {
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Battery percentage",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  "signalStrength": {
+                    "minimum": 0,
+                    "maximum": 4,
+                    "description": "Signal bars count",
+                    "anyOf": [
+                      {
+                        "format": "numeric",
+                        "default": 0,
+                        "type": "string"
+                      },
+                      {
+                        "minimum": 0,
+                        "maximum": 4,
+                        "description": "Signal bars count",
+                        "type": "number"
+                      }
+                    ]
+                  },
+                  "statusWifi": {
+                    "default": true,
+                    "description": "Show wifi icon",
+                    "type": "boolean"
+                  },
+                  "hasQuote": {
+                    "default": false,
+                    "description": "Optional. Usually no need; auto true when quote data exists",
+                    "type": "boolean"
+                  },
+                  "quoteSender": {
+                    "description": "Quote sender label",
+                    "type": "string"
+                  },
+                  "quoteMessage": {
+                    "description": "Quote text",
+                    "type": "string"
+                  },
+                  "quoteImage": {
+                    "description": "Quote image URL",
+                    "type": "string"
+                  },
+                  "hasImage": {
+                    "default": false,
+                    "description": "Optional. Usually no need; auto true when imageUrl/mediaUrl exists",
+                    "type": "boolean"
+                  },
+                  "imageUrl": {
+                    "description": "Media image URL",
+                    "type": "string"
+                  },
+                  "mediaUrl": {
+                    "description": "Alias of imageUrl",
+                    "type": "string"
+                  },
+                  "caption": {
+                    "description": "Media caption (if empty, message text is used)",
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "object",
+                    "properties": {
+                      "time": {
+                        "description": "Alias of time",
+                        "type": "string"
+                      },
+                      "carrierName": {
+                        "description": "Alias of carrierName",
+                        "type": "string"
+                      },
+                      "batteryPercentage": {
+                        "minimum": 0,
+                        "maximum": 100,
+                        "description": "Alias of batteryPercentage",
+                        "anyOf": [
+                          {
+                            "format": "numeric",
+                            "default": 0,
+                            "type": "string"
+                          },
+                          {
+                            "minimum": 0,
+                            "maximum": 100,
+                            "description": "Alias of batteryPercentage",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "signalStrength": {
+                        "minimum": 0,
+                        "maximum": 4,
+                        "description": "Alias of signalStrength",
+                        "anyOf": [
+                          {
+                            "format": "numeric",
+                            "default": 0,
+                            "type": "string"
+                          },
+                          {
+                            "minimum": 0,
+                            "maximum": 4,
+                            "description": "Alias of signalStrength",
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "wifi": {
+                        "description": "Alias of statusWifi",
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "quote": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Alias of hasQuote",
+                        "type": "boolean"
+                      },
+                      "sender": {
+                        "description": "Alias of quoteSender",
+                        "type": "string"
+                      },
+                      "message": {
+                        "description": "Alias of quoteMessage",
+                        "type": "string"
+                      },
+                      "imageUrl": {
+                        "description": "Alias of quoteImage",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "media": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Alias of hasImage",
+                        "type": "boolean"
+                      },
+                      "imageUrl": {
+                        "description": "Alias of imageUrl",
+                        "type": "string"
+                      },
+                      "caption": {
+                        "description": "Alias of caption",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/nulis": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Year for handwriting",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "waktu",
+            "required": false
+          },
+          {
+            "description": "Day name",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "hari",
+            "required": false
+          },
+          {
+            "description": "Student name",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "in": "query",
+            "name": "nama",
+            "required": false
+          },
+          {
+            "description": "Class name",
+            "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "in": "query",
+            "name": "kelas",
+            "required": false
+          },
+          {
+            "description": "Text to write",
+            "schema": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "in": "query",
+            "name": "text",
+            "required": false
+          },
+          {
+            "description": "Theme type (1-14)",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "type",
+            "required": false
+          }
+        ],
+        "operationId": "getNulis",
+        "tags": [
+          "Nulis"
+        ],
+        "summary": "Generate handwriting image",
+        "description": "Create realistic handwriting on notebook paper with various themes",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/quoted": {
+      "post": {
+        "parameters": [],
+        "operationId": "postQuoted",
+        "tags": [
+          "Quote"
+        ],
+        "summary": "Generate quoted message images",
+        "description": "Generate quote images using quote-api compatible engine",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "messages": [
+                    {
+                      "from": {
+                        "id": 1,
+                        "first_name": "user",
+                        "last_name": "",
+                        "name": "",
+                        "photo": {
+                          "url": ""
+                        }
+                      },
+                      "text": "",
+                      "entities": [],
+                      "avatar": true,
+                      "media": {
+                        "url": ""
+                      },
+                      "mediaType": "",
+                      "replyMessage": {
+                        "name": "",
+                        "text": "",
+                        "entities": [],
+                        "chatId": 1
+                      }
+                    }
+                  ],
+                  "backgroundColor": "#292232",
+                  "width": 512,
+                  "height": 512,
+                  "scale": 2,
+                  "type": "quote",
+                  "format": "png",
+                  "emojiStyle": "apple"
+                },
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "default": "quote",
+                    "description": "Output mode: quote, image, stories",
+                    "type": "string"
+                  },
+                  "format": {
+                    "default": "png",
+                    "description": "Requested output extension (png/webp)",
+                    "type": "string"
+                  },
+                  "ext": {
+                    "description": "Optional direct extension override: png/webp",
+                    "type": "string"
+                  },
+                  "backgroundColor": {
+                    "default": "#292232",
+                    "description": "Single color, gradient (a/b), or semi variant (//a)",
+                    "type": "string"
+                  },
+                  "width": {
+                    "default": 512,
+                    "type": "number"
+                  },
+                  "height": {
+                    "default": 512,
+                    "type": "number"
+                  },
+                  "scale": {
+                    "default": 2,
+                    "minimum": 1,
+                    "maximum": 20,
+                    "type": "number"
+                  },
+                  "emojiStyle": {
+                    "default": "apple",
+                    "description": "Emoji style: apple/google/twitter/joypixels/blob",
+                    "type": "string"
+                  },
+                  "messages": {
+                    "minItems": 1,
+                    "description": "Quote message objects (quote-api compatible)",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "first_name": {
+                              "type": "string"
+                            },
+                            "last_name": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "username": {
+                              "type": "string"
+                            },
+                            "emoji_status": {
+                              "type": "string"
+                            },
+                            "photo": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                },
+                                "big_file_id": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "entities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "offset": {
+                                "type": "number"
+                              },
+                              "length": {
+                                "type": "number"
+                              },
+                              "url": {
+                                "type": "string"
+                              },
+                              "custom_emoji_id": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "offset",
+                              "length"
+                            ]
+                          }
+                        },
+                        "avatar": {
+                          "type": "boolean"
+                        },
+                        "media": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                },
+                                "file_id": {
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "type": "number"
+                                },
+                                "height": {
+                                  "type": "number"
+                                },
+                                "is_animated": {
+                                  "type": "boolean"
+                                },
+                                "thumb": {
+                                  "type": "object",
+                                  "properties": {
+                                    "file_id": {
+                                      "type": "string"
+                                    },
+                                    "width": {
+                                      "type": "number"
+                                    },
+                                    "height": {
+                                      "type": "number"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "file_id": {
+                                    "type": "string"
+                                  },
+                                  "width": {
+                                    "type": "number"
+                                  },
+                                  "height": {
+                                    "type": "number"
+                                  },
+                                  "is_animated": {
+                                    "type": "boolean"
+                                  },
+                                  "thumb": {
+                                    "type": "object",
+                                    "properties": {
+                                      "file_id": {
+                                        "type": "string"
+                                      },
+                                      "width": {
+                                        "type": "number"
+                                      },
+                                      "height": {
+                                        "type": "number"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "mediaType": {
+                          "type": "string"
+                        },
+                        "mediaCrop": {
+                          "type": "boolean"
+                        },
+                        "voice": {
+                          "type": "object",
+                          "properties": {
+                            "waveform": {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "required": [
+                            "waveform"
+                          ]
+                        },
+                        "forward": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "senderTag": {
+                          "type": "string"
+                        },
+                        "isQuote": {
+                          "type": "boolean"
+                        },
+                        "replyMessage": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "entities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "offset": {
+                                    "type": "number"
+                                  },
+                                  "length": {
+                                    "type": "number"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "custom_emoji_id": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "offset",
+                                  "length"
+                                ]
+                              }
+                            },
+                            "chatId": {
+                              "type": "number"
+                            },
+                            "from": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "first_name": {
+                                  "type": "string"
+                                },
+                                "last_name": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "username": {
+                                  "type": "string"
+                                },
+                                "emoji_status": {
+                                  "type": "string"
+                                },
+                                "photo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "url": {
+                                      "type": "string"
+                                    },
+                                    "big_file_id": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "messages"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "example": {
+                  "messages": [
+                    {
+                      "from": {
+                        "id": 1,
+                        "first_name": "user",
+                        "last_name": "",
+                        "name": "",
+                        "photo": {
+                          "url": ""
+                        }
+                      },
+                      "text": "",
+                      "entities": [],
+                      "avatar": true,
+                      "media": {
+                        "url": ""
+                      },
+                      "mediaType": "",
+                      "replyMessage": {
+                        "name": "",
+                        "text": "",
+                        "entities": [],
+                        "chatId": 1
+                      }
+                    }
+                  ],
+                  "backgroundColor": "#292232",
+                  "width": 512,
+                  "height": 512,
+                  "scale": 2,
+                  "type": "quote",
+                  "format": "png",
+                  "emojiStyle": "apple"
+                },
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "default": "quote",
+                    "description": "Output mode: quote, image, stories",
+                    "type": "string"
+                  },
+                  "format": {
+                    "default": "png",
+                    "description": "Requested output extension (png/webp)",
+                    "type": "string"
+                  },
+                  "ext": {
+                    "description": "Optional direct extension override: png/webp",
+                    "type": "string"
+                  },
+                  "backgroundColor": {
+                    "default": "#292232",
+                    "description": "Single color, gradient (a/b), or semi variant (//a)",
+                    "type": "string"
+                  },
+                  "width": {
+                    "default": 512,
+                    "type": "number"
+                  },
+                  "height": {
+                    "default": 512,
+                    "type": "number"
+                  },
+                  "scale": {
+                    "default": 2,
+                    "minimum": 1,
+                    "maximum": 20,
+                    "type": "number"
+                  },
+                  "emojiStyle": {
+                    "default": "apple",
+                    "description": "Emoji style: apple/google/twitter/joypixels/blob",
+                    "type": "string"
+                  },
+                  "messages": {
+                    "minItems": 1,
+                    "description": "Quote message objects (quote-api compatible)",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "first_name": {
+                              "type": "string"
+                            },
+                            "last_name": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "username": {
+                              "type": "string"
+                            },
+                            "emoji_status": {
+                              "type": "string"
+                            },
+                            "photo": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                },
+                                "big_file_id": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "entities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "offset": {
+                                "type": "number"
+                              },
+                              "length": {
+                                "type": "number"
+                              },
+                              "url": {
+                                "type": "string"
+                              },
+                              "custom_emoji_id": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "offset",
+                              "length"
+                            ]
+                          }
+                        },
+                        "avatar": {
+                          "type": "boolean"
+                        },
+                        "media": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                },
+                                "file_id": {
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "type": "number"
+                                },
+                                "height": {
+                                  "type": "number"
+                                },
+                                "is_animated": {
+                                  "type": "boolean"
+                                },
+                                "thumb": {
+                                  "type": "object",
+                                  "properties": {
+                                    "file_id": {
+                                      "type": "string"
+                                    },
+                                    "width": {
+                                      "type": "number"
+                                    },
+                                    "height": {
+                                      "type": "number"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "file_id": {
+                                    "type": "string"
+                                  },
+                                  "width": {
+                                    "type": "number"
+                                  },
+                                  "height": {
+                                    "type": "number"
+                                  },
+                                  "is_animated": {
+                                    "type": "boolean"
+                                  },
+                                  "thumb": {
+                                    "type": "object",
+                                    "properties": {
+                                      "file_id": {
+                                        "type": "string"
+                                      },
+                                      "width": {
+                                        "type": "number"
+                                      },
+                                      "height": {
+                                        "type": "number"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "mediaType": {
+                          "type": "string"
+                        },
+                        "mediaCrop": {
+                          "type": "boolean"
+                        },
+                        "voice": {
+                          "type": "object",
+                          "properties": {
+                            "waveform": {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "required": [
+                            "waveform"
+                          ]
+                        },
+                        "forward": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "senderTag": {
+                          "type": "string"
+                        },
+                        "isQuote": {
+                          "type": "boolean"
+                        },
+                        "replyMessage": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "entities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "offset": {
+                                    "type": "number"
+                                  },
+                                  "length": {
+                                    "type": "number"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "custom_emoji_id": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "offset",
+                                  "length"
+                                ]
+                              }
+                            },
+                            "chatId": {
+                              "type": "number"
+                            },
+                            "from": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "first_name": {
+                                  "type": "string"
+                                },
+                                "last_name": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "username": {
+                                  "type": "string"
+                                },
+                                "emoji_status": {
+                                  "type": "string"
+                                },
+                                "photo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "url": {
+                                      "type": "string"
+                                    },
+                                    "big_file_id": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "messages"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "example": {
+                  "messages": [
+                    {
+                      "from": {
+                        "id": 1,
+                        "first_name": "user",
+                        "last_name": "",
+                        "name": "",
+                        "photo": {
+                          "url": ""
+                        }
+                      },
+                      "text": "",
+                      "entities": [],
+                      "avatar": true,
+                      "media": {
+                        "url": ""
+                      },
+                      "mediaType": "",
+                      "replyMessage": {
+                        "name": "",
+                        "text": "",
+                        "entities": [],
+                        "chatId": 1
+                      }
+                    }
+                  ],
+                  "backgroundColor": "#292232",
+                  "width": 512,
+                  "height": 512,
+                  "scale": 2,
+                  "type": "quote",
+                  "format": "png",
+                  "emojiStyle": "apple"
+                },
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "default": "quote",
+                    "description": "Output mode: quote, image, stories",
+                    "type": "string"
+                  },
+                  "format": {
+                    "default": "png",
+                    "description": "Requested output extension (png/webp)",
+                    "type": "string"
+                  },
+                  "ext": {
+                    "description": "Optional direct extension override: png/webp",
+                    "type": "string"
+                  },
+                  "backgroundColor": {
+                    "default": "#292232",
+                    "description": "Single color, gradient (a/b), or semi variant (//a)",
+                    "type": "string"
+                  },
+                  "width": {
+                    "default": 512,
+                    "type": "number"
+                  },
+                  "height": {
+                    "default": 512,
+                    "type": "number"
+                  },
+                  "scale": {
+                    "default": 2,
+                    "minimum": 1,
+                    "maximum": 20,
+                    "type": "number"
+                  },
+                  "emojiStyle": {
+                    "default": "apple",
+                    "description": "Emoji style: apple/google/twitter/joypixels/blob",
+                    "type": "string"
+                  },
+                  "messages": {
+                    "minItems": 1,
+                    "description": "Quote message objects (quote-api compatible)",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "first_name": {
+                              "type": "string"
+                            },
+                            "last_name": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "username": {
+                              "type": "string"
+                            },
+                            "emoji_status": {
+                              "type": "string"
+                            },
+                            "photo": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                },
+                                "big_file_id": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "entities": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "offset": {
+                                "type": "number"
+                              },
+                              "length": {
+                                "type": "number"
+                              },
+                              "url": {
+                                "type": "string"
+                              },
+                              "custom_emoji_id": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "offset",
+                              "length"
+                            ]
+                          }
+                        },
+                        "avatar": {
+                          "type": "boolean"
+                        },
+                        "media": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                },
+                                "file_id": {
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "type": "number"
+                                },
+                                "height": {
+                                  "type": "number"
+                                },
+                                "is_animated": {
+                                  "type": "boolean"
+                                },
+                                "thumb": {
+                                  "type": "object",
+                                  "properties": {
+                                    "file_id": {
+                                      "type": "string"
+                                    },
+                                    "width": {
+                                      "type": "number"
+                                    },
+                                    "height": {
+                                      "type": "number"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "file_id": {
+                                    "type": "string"
+                                  },
+                                  "width": {
+                                    "type": "number"
+                                  },
+                                  "height": {
+                                    "type": "number"
+                                  },
+                                  "is_animated": {
+                                    "type": "boolean"
+                                  },
+                                  "thumb": {
+                                    "type": "object",
+                                    "properties": {
+                                      "file_id": {
+                                        "type": "string"
+                                      },
+                                      "width": {
+                                        "type": "number"
+                                      },
+                                      "height": {
+                                        "type": "number"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "mediaType": {
+                          "type": "string"
+                        },
+                        "mediaCrop": {
+                          "type": "boolean"
+                        },
+                        "voice": {
+                          "type": "object",
+                          "properties": {
+                            "waveform": {
+                              "type": "array",
+                              "items": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "required": [
+                            "waveform"
+                          ]
+                        },
+                        "forward": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "senderTag": {
+                          "type": "string"
+                        },
+                        "isQuote": {
+                          "type": "boolean"
+                        },
+                        "replyMessage": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "entities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "offset": {
+                                    "type": "number"
+                                  },
+                                  "length": {
+                                    "type": "number"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "custom_emoji_id": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "offset",
+                                  "length"
+                                ]
+                              }
+                            },
+                            "chatId": {
+                              "type": "number"
+                            },
+                            "from": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "first_name": {
+                                  "type": "string"
+                                },
+                                "last_name": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "username": {
+                                  "type": "string"
+                                },
+                                "emoji_status": {
+                                  "type": "string"
+                                },
+                                "photo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "url": {
+                                      "type": "string"
+                                    },
+                                    "big_file_id": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "messages"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/meme": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Text for the top of the image",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "in": "query",
+            "name": "topText",
+            "required": false
+          },
+          {
+            "description": "Text for the bottom of the image",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "in": "query",
+            "name": "bottomText",
+            "required": false
+          },
+          {
+            "description": "Font family",
+            "schema": {
+              "default": "Impact",
+              "anyOf": [
+                {
+                  "const": "Impact",
+                  "type": "string"
+                },
+                {
+                  "const": "Arial",
+                  "type": "string"
+                },
+                {
+                  "const": "Zahraaa",
+                  "type": "string"
+                },
+                {
+                  "const": "IndieFlower",
+                  "type": "string"
+                },
+                {
+                  "const": "ArchivoNarrow",
+                  "type": "string"
+                },
+                {
+                  "const": "ArchivoNarrowBold",
+                  "type": "string"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "fontFamily",
+            "required": false
+          },
+          {
+            "description": "Text color",
+            "schema": {
+              "type": "string",
+              "default": "white"
+            },
+            "in": "query",
+            "name": "textColor",
+            "required": false
+          },
+          {
+            "description": "Text stroke color",
+            "schema": {
+              "type": "string",
+              "default": "black"
+            },
+            "in": "query",
+            "name": "strokeColor",
+            "required": false
+          },
+          {
+            "description": "Background image URL",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "backgroundImage",
+            "required": false
+          }
+        ],
+        "operationId": "getMeme",
+        "tags": [
+          "Meme"
+        ],
+        "summary": "Generate meme image",
+        "description": "Create meme with top and bottom text on custom background from URL",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/meme/text": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Text content",
+            "schema": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "in": "query",
+            "name": "text",
+            "required": true
+          },
+          {
+            "description": "Image width",
+            "schema": {
+              "default": 500,
+              "minimum": 100,
+              "maximum": 2000,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Image width",
+                  "default": 500,
+                  "minimum": 100,
+                  "maximum": 2000,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Image width",
+                      "default": 0,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Image width",
+                      "default": 500,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "width",
+            "required": false
+          },
+          {
+            "description": "Image height",
+            "schema": {
+              "default": 500,
+              "minimum": 100,
+              "maximum": 2000,
+              "anyOf": [
+                {
+                  "format": "numeric",
+                  "default": 0,
+                  "type": "string"
+                },
+                {
+                  "description": "Image height",
+                  "default": 500,
+                  "minimum": 100,
+                  "maximum": 2000,
+                  "type": "number",
+                  "anyOf": [
+                    {
+                      "description": "Image height",
+                      "default": 0,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "string",
+                      "format": "numeric"
+                    },
+                    {
+                      "description": "Image height",
+                      "default": 500,
+                      "minimum": 100,
+                      "maximum": 2000,
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "height",
+            "required": false
+          },
+          {
+            "description": "Font family",
+            "schema": {
+              "default": "Impact",
+              "anyOf": [
+                {
+                  "const": "Impact",
+                  "type": "string"
+                },
+                {
+                  "const": "Arial",
+                  "type": "string"
+                },
+                {
+                  "const": "Zahraaa",
+                  "type": "string"
+                },
+                {
+                  "const": "IndieFlower",
+                  "type": "string"
+                },
+                {
+                  "const": "ArchivoNarrow",
+                  "type": "string"
+                },
+                {
+                  "const": "ArchivoNarrowBold",
+                  "type": "string"
+                }
+              ]
+            },
+            "in": "query",
+            "name": "fontFamily",
+            "required": false
+          },
+          {
+            "description": "Text color",
+            "schema": {
+              "type": "string",
+              "default": "white"
+            },
+            "in": "query",
+            "name": "textColor",
+            "required": false
+          },
+          {
+            "description": "Text stroke color",
+            "schema": {
+              "type": "string",
+              "default": "black"
+            },
+            "in": "query",
+            "name": "strokeColor",
+            "required": false
+          }
+        ],
+        "operationId": "getMemeText",
+        "tags": [
+          "Meme"
+        ],
+        "summary": "Generate text-only meme",
+        "description": "Create text-only meme on black background with enhanced error handling",
+        "responses": {
+          "200": {}
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
