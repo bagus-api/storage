@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Yanz Super App v1.6 - Ultimate Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --emerald-primary: #10b981; --android-bg: #ffffff; }
+        html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; background-color: var(--android-bg); }
+        body { font-family: 'Inter', sans-serif; display: flex; flex-direction: column; }
+        .arabic { font-family: 'Amiri', serif; }
+        header { flex-shrink: 0; z-index: 60; background: white; border-bottom: 1px solid #eee; }
+        #main-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; }
+        .app-screen { display: none; width: 100%; padding: 20px 20px 140px 20px; box-sizing: border-box; }
+        .active-screen { display: block; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #eee; z-index: 100; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -5px 15px rgba(0,0,0,0.03); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 8px; font-weight: 800; color: #9ca3af; flex: 1; border: none; background: none; outline: none; }
+        .nav-item.active { color: var(--emerald-primary); }
+        .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; }
+        
+        .android-card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 8px 20px -5px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; margin-bottom: 15px; }
+        
+        /* EDUCATION TABS */
+        .edu-nav { display: flex; gap: 5px; margin-bottom: 20px; position: sticky; top: 0; background: white; padding: 10px 0; z-index: 10; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+        .edu-btn { flex: 0 0 auto; padding: 10px 15px; border-radius: 12px; font-weight: 800; font-size: 9px; background: #f1f5f9; color: #64748b; text-transform: uppercase; }
+        .edu-btn.active { background: #10b981; color: white; }
+
+        /* KIBLAT COMPASS STYLING */
+        #compass-container { position: relative; width: 200px; height: 200px; margin: 20px auto; border: 5px solid #10b981; border-radius: 50%; display: flex; justify-content: center; align-items: center; background: #f0fdf4; }
+        #arrow { width: 4px; height: 120px; background: #ef4444; position: absolute; top: 40px; transform-origin: bottom center; transition: transform 0.5s ease; border-radius: 10px; }
+        #arrow::after { content: '▲'; position: absolute; top: -15px; left: -6px; color: #ef4444; font-size: 16px; }
+
+        #splash { position: fixed; inset: 0; background: #064e3b; z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; }
+    </style>
+</head>
+<body>
+
+    <div id="splash">
+        <div class="text-6xl mb-4 animate-bounce">🧭</div>
+        <h1 class="text-white text-2xl font-black tracking-tighter uppercase">YANZ ULTIMATE</h1>
+        <p class="text-emerald-400 text-[10px] font-bold mt-2 uppercase tracking-widest">v1.6 | Compass & Tajwid Enabled</p>
+    </div>
+
+    <header class="px-6 py-4 flex justify-between items-center">
+        <h2 id="screen-title" class="text-xl font-black text-slate-800 tracking-tighter uppercase">Home</h2>
+        <div class="w-10 h-10 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 font-black shadow-inner">YH</div>
+    </header>
+
+    <main id="main-content">
+        <section id="home" class="app-screen active-screen">
+            <div class="android-card bg-emerald-600 text-white mb-6">
+                <h3 class="text-2xl font-black leading-tight">Gacor Segala Galanya!</h3>
+                <p class="mt-2 text-[10px] font-bold opacity-80 uppercase tracking-widest">Bos Rafzxamba Dashboard</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <div onclick="changeNav('quran')" class="android-card flex flex-col items-center py-6 active:scale-90 transition-all"><span class="text-3xl mb-1">📖</span><span class="font-black text-[10px] text-slate-700">QURAN</span></div>
+                <div onclick="changeNav('sholat')" class="android-card flex flex-col items-center py-6 active:scale-90 transition-all"><span class="text-3xl mb-1">🕒</span><span class="font-black text-[10px] text-slate-700">SHOLAT</span></div>
+                <div onclick="changeNav('edukasi')" class="android-card flex flex-col items-center py-6 active:scale-90 transition-all"><span class="text-3xl mb-1">🎓</span><span class="font-black text-[10px] text-slate-700">EDUKASI</span></div>
+                <div onclick="changeNav('asmaul')" class="android-card flex flex-col items-center py-6 active:scale-90 transition-all"><span class="text-3xl mb-1">✨</span><span class="font-black text-[10px] text-slate-700">ASMAUL</span></div>
+                <div onclick="changeNav('kiblat')" class="android-card flex flex-col items-center py-6 col-span-2 active:scale-90 transition-all"><span class="text-3xl mb-1">🧭</span><span class="font-black text-[10px] text-slate-700">ARAH KIBLAT</span></div>
+            </div>
+        </section>
+
+        <section id="quran" class="app-screen">
+            <input type="text" id="quranSearch" onkeyup="filterSurah()" placeholder="Cari surah..." class="w-full bg-slate-100 p-4 rounded-2xl outline-none mb-6 font-bold text-sm">
+            <div id="surahContainer" class="space-y-3"></div>
+        </section>
+
+        <section id="edukasi" class="app-screen">
+            <div class="edu-nav">
+                <button onclick="switchEdu('hijaiyah')" id="btn-hijaiyah" class="edu-btn active">HIJAIYAH</button>
+                <button onclick="switchEdu('tajwid')" id="btn-tajwid" class="edu-btn">TAJWID/MAD</button>
+                <button onclick="switchEdu('nabi')" id="btn-nabi" class="edu-btn">25 NABI</button>
+                <button onclick="switchEdu('malaikat')" id="btn-malaikat" class="edu-btn">MALAIKAT</button>
+            </div>
+            <div id="edu-content" class="space-y-3"></div>
+        </section>
+
+        <section id="asmaul" class="app-screen">
+            <div id="asmaulContainer" class="grid grid-cols-3 gap-3"></div>
+        </section>
+
+        <section id="sholat" class="app-screen">
+            <div class="android-card">
+                <input type="text" id="citySearch" onkeyup="searchCity()" placeholder="Cari wilayah..." class="w-full p-2 outline-none font-black text-slate-800 text-lg border-b-2 border-emerald-500 bg-transparent">
+                <div id="cityList" class="hidden mt-2 max-h-60 overflow-y-auto bg-white rounded-xl shadow-inner border"></div>
+            </div>
+            <div id="prayerDisplay" class="space-y-3"></div>
+        </section>
+
+        <section id="kiblat" class="app-screen text-center">
+            <div class="android-card">
+                <h3 class="font-black text-emerald-600 mb-2 uppercase">Arah Kiblat Akurat</h3>
+                <p class="text-[10px] text-slate-400 font-bold mb-4 italic">Berdasarkan lokasi GPS lu saat ini</p>
+                <div id="compass-container">
+                    <div id="arrow"></div>
+                    <div class="text-[10px] font-black text-emerald-800 mt-20">KA'BAH</div>
+                </div>
+                <div id="kiblat-info" class="mt-6 font-black text-slate-800 text-sm">Menghitung koordinat...</div>
+                <button onclick="initKiblat()" class="mt-4 bg-emerald-600 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-lg">REFRESH LOKASI</button>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button onclick="changeNav('home')" id="nav-home" class="nav-item active"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>HOME</span></button>
+        <button onclick="changeNav('quran')" id="nav-quran" class="nav-item"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v4.58L12 21l7-5.24V11.18L23 9l-11-6z"/></svg><span>QURAN</span></button>
+        <button onclick="changeNav('edukasi')" id="nav-edukasi" class="nav-item"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg><span>EDU</span></button>
+        <button onclick="changeNav('asmaul')" id="nav-asmaul" class="nav-item"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"/></svg><span>ASMAUL</span></button>
+        <button onclick="changeNav('sholat')" id="nav-sholat" class="nav-item"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg><span>SHOLAT</span></button>
+    </nav>
+
+    <div id="quranModal" class="fixed inset-0 bg-white z-[3000] hidden flex flex-col">
+        <header class="p-4 flex items-center gap-4 border-b shrink-0"><button onclick="closeModal()" class="text-3xl p-2">←</button><h2 id="modalTitle" class="font-black text-emerald-600"></h2></header>
+        <div class="bg-slate-900 p-4 flex items-center justify-between"><span class="text-emerald-400 text-[10px] font-black uppercase">Qori: Misyari Rasyid Al-Afasy</span><audio id="globalAudio" controls class="h-8 w-40"></audio></div>
+        <div id="ayahContainer" class="flex-1 overflow-y-auto p-6 space-y-12 bg-slate-50"></div>
+    </div>
+
+    <script>
+        // DATA TAJWID/MAD
+        const tajwidData = [
+            {n:"Mad Thabi'i", t:"Alif mati setelah fathah, Ya mati setelah kasrah, atau Wawu mati setelah dhommah. Panjang: 2 Harakat."},
+            {n:"Mad Wajib Muttasil", t:"Mad Thabi'i bertemu Hamzah dalam satu kata. Panjang: 4-5 Harakat."},
+            {n:"Mad Jaiz Munfasil", t:"Mad Thabi'i bertemu Hamzah di lain kata. Panjang: 2-5 Harakat."},
+            {n:"Mad 'Arid Lissukun", t:"Mad Thabi'i di akhir ayat/wakaf. Panjang: 2, 4, atau 6 Harakat."},
+            {n:"Mad Iwad", t:"Tanwin fathah di akhir ayat (dibaca fathah). Panjang: 2 Harakat."},
+            {n:"Idgham Bigunnah", t:"Nun mati/Tanwin bertemu (Ya, Nun, Mim, Wawu). Dibaca dengung."},
+            {n:"Ikhfa Haqiqi", t:"Nun mati/Tanwin bertemu 15 huruf hijaiyah tertentu. Dibaca samar."}
+        ];
+        
+        const hijaiyahData = [{h:"ا", n:"Alif"}, {h:"ب", n:"Ba"}, {h:"ت", n:"Ta"}, {h:"ث", n:"Tsa"},{h:"ج", n:"Jim"}, {h:"ح", n:"Ha"}, {h:"خ", n:"Kho"}, {h:"د", n:"Dal"},{h:"ذ", n:"Dzal"}, {h:"ر", n:"Ro"}, {h:"ز", n:"Zai"}, {h:"س", n:"Sin"},{h:"ش", n:"Syin"}, {h:"ص", n:"Shod"}, {h:"ض", n:"Dhod"}, {h:"ط", n:"Tho"},{h:"ظ", n:"Zho"}, {h:"ع", n:"'Ain"}, {h:"غ", n:"Ghoin"}, {h:"ف", n:"Fa"},{h:"ق", n:"Qof"}, {h:"ك", n:"Kaf"}, {h:"ل", n:"Lam"}, {h:"م", n:"Mim"},{h:"ن", n:"Nun"}, {h:"و", n:"Wawu"}, {h:"ه", n:"Ha'"}, {h:"ء", n:"Hamzah"}, {h:"ي", n:"Ya"}];
+        const nabiData = ["Adam", "Idris", "Nuh", "Hud", "Sholeh", "Ibrahim", "Luth", "Ismail", "Ishaq", "Yaqub", "Yusuf", "Ayub", "Syu'aib", "Musa", "Harun", "Dzulkifli", "Daud", "Sulaiman", "Ilyas", "Ilyasa", "Yunus", "Zakaria", "Yahya", "Isa", "Muhammad SAW"];
+        const malaikatData = [{n:"Jibril",t:"Wahyu"},{n:"Mikail",t:"Rezeki"},{n:"Israfil",t:"Sangkakala"},{n:"Izrail",t:"Nyawa"},{n:"Munkar",t:"Kubur"},{n:"Nakir",t:"Kubur"},{n:"Raqib",t:"Amal Baik"},{n:"Atid",t:"Amal Buruk"},{n:"Malik",t:"Neraka"},{n:"Ridwan",t:"Surga"}];
+
+        function switchEdu(type) {
+            const container = document.getElementById('edu-content');
+            container.innerHTML = "";
+            document.querySelectorAll('.edu-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-' + type).classList.add('active');
+            
+            if(type === 'hijaiyah') {
+                container.className = "grid grid-cols-3 gap-3";
+                hijaiyahData.forEach(item => container.innerHTML += `<div class="android-card flex flex-col items-center justify-center py-4"><div class="arabic text-4xl text-emerald-600 font-bold mb-1">${item.h}</div><div class="font-black text-[10px] text-slate-400 uppercase">${item.n}</div></div>`);
+            } else if(type === 'tajwid') {
+                container.className = "space-y-3";
+                tajwidData.forEach(item => container.innerHTML += `<div class="android-card py-4"><div class="font-black text-emerald-600 text-xs mb-1 uppercase">${item.n}</div><p class="text-[11px] text-slate-500 font-medium leading-relaxed">${item.t}</p></div>`);
+            } else if(type === 'nabi') {
+                container.className = "space-y-3";
+                nabiData.forEach((n, i) => container.innerHTML += `<div class="android-card py-4 flex items-center gap-4"><div class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center font-black text-xs">${i+1}</div><div class="font-bold text-slate-700 text-sm">${n}</div></div>`);
+            } else {
+                container.className = "space-y-3";
+                malaikatData.forEach((m, i) => container.innerHTML += `<div class="android-card py-4"><div class="flex justify-between items-center mb-1"><span class="font-black text-emerald-600 text-xs uppercase">${m.n}</span><span class="text-[8px] bg-slate-100 px-2 py-1 rounded-full font-bold">#${i+1}</span></div><p class="text-[10px] text-slate-500 font-medium">Tugas: ${m.t}</p></div>`);
+            }
+        }
+
+        function changeNav(target) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active-screen'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(target).classList.add('active-screen');
+            document.getElementById('nav-' + target).classList.add('active');
+            document.getElementById('screen-title').innerText = target;
+            if(target === 'edukasi') switchEdu('hijaiyah');
+            if(target === 'kiblat') initKiblat();
+            document.getElementById('main-content').scrollTo(0,0);
+        }
+
+        // --- KIBLAT ENGINE ---
+        function initKiblat() {
+            const info = document.getElementById('kiblat-info');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    // Coordinates of Kaaba
+                    const kaabaLat = 21.4225;
+                    const kaabaLng = 39.8262;
+                    
+                    const y = Math.sin(Math.toRadians(kaabaLng - lng));
+                    const x = Math.cos(Math.toRadians(lat)) * Math.tan(Math.toRadians(kaabaLat)) -
+                              Math.sin(Math.toRadians(lat)) * Math.cos(Math.toRadians(kaabaLng - lng));
+                    
+                    let qiblaDeg = Math.toDegrees(Math.atan2(y, x));
+                    if (qiblaDeg < 0) qiblaDeg += 360;
+                    
+                    document.getElementById('arrow').style.transform = `rotate(${qiblaDeg}deg)`;
+                    info.innerHTML = `ARAH KIBLAT: ${qiblaDeg.toFixed(2)}° <br> <span class="text-[10px] text-emerald-500 font-bold">LOKASI: ${lat.toFixed(4)}, ${lng.toFixed(4)}</span>`;
+                }, () => { info.innerText = "Aktifkan GPS lu, Bos!"; });
+            } else { info.innerText = "Browser lu gak support GPS!"; }
+        }
+
+        Math.toRadians = deg => deg * (Math.PI / 180);
+        Math.toDegrees = rad => rad * (180 / Math.PI);
+
+        // --- SPLASH & OTHER DATA ---
+        window.onload = () => {
+            setTimeout(() => { document.getElementById('splash').style.opacity = '0'; setTimeout(() => document.getElementById('splash').style.display = 'none', 500); }, 2000);
+            loadSurahs(); loadAsmaul();
+        };
+
+        async function loadSurahs() {
+            const res = await fetch('https://equran.id/api/v2/surat');
+            const data = await res.json();
+            const container = document.getElementById('surahContainer');
+            container.innerHTML = '';
+            data.data.forEach(s => {
+                container.innerHTML += `<div onclick="viewSurah(${s.nomor})" class="android-card flex justify-between items-center py-4 px-5"><div class="flex items-center gap-4"><div class="w-10 h-10 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center font-black text-xs">${s.nomor}</div><div><h4 class="font-black text-slate-800 text-sm">${s.namaLatin}</h4><p class="text-[9px] text-slate-400 font-bold uppercase">${s.arti}</p></div></div><div class="arabic text-2xl text-emerald-600">${s.nama}</div></div>`;
+            });
+        }
+
+        async function viewSurah(id) {
+            document.getElementById('quranModal').classList.remove('hidden');
+            const container = document.getElementById('ayahContainer');
+            container.innerHTML = '<div class="text-center py-20 font-black animate-pulse text-emerald-600">MENYIAPKAN AYAT ADEM...</div>';
+            const res = await fetch(`https://equran.id/api/v2/surat/${id}`);
+            const data = await res.json();
+            const surah = data.data;
+            document.getElementById('modalTitle').innerText = surah.namaLatin;
+            document.getElementById('globalAudio').src = surah.audioFull['05'];
+            let html = '';
+            surah.ayat.forEach(a => {
+                html += `<div class="border-b border-slate-200 pb-10"><div class="flex justify-between items-start mb-6"><button onclick="playVerse('${a.audio['05']}')" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-[10px] font-black">▶ PLAY</button><span class="w-8 h-8 bg-slate-800 text-white rounded-full flex items-center justify-center text-[10px] font-black">${a.nomorAyat}</span></div><p class="arabic text-4xl text-right leading-[2.5] text-slate-900">${a.teksArab}</p><p class="mt-4 text-emerald-600 text-[10px] italic font-black">${a.teksLatin}</p><p class="mt-2 text-slate-600 text-xs leading-relaxed font-medium">${a.teksIndonesia}</p></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function playVerse(url) { const audio = document.getElementById('globalAudio'); audio.src = url; audio.play(); }
+        function closeModal() { document.getElementById('quranModal').classList.add('hidden'); document.getElementById('globalAudio').pause(); }
+        
+        async function loadAsmaul() {
+            const res = await fetch('https://islamic-api-zhirrr.vercel.app/api/asmaulhusna');
+            const data = await res.json();
+            const container = document.getElementById('asmaulContainer');
+            data.data.forEach(a => {
+                container.innerHTML += `<div class="android-card flex flex-col items-center justify-center text-center p-3 min-h-[140px]"><div class="arabic text-3xl text-emerald-600 mb-2 font-bold">${a.arabic}</div><div class="font-black text-[9px] uppercase text-slate-800 leading-tight">${a.latin}</div></div>`;
+            });
+        }
+
+        async function searchCity() {
+            const input = document.getElementById('citySearch').value;
+            if(input.length < 3) return;
+            const res = await fetch(`https://api.myquran.com/v2/sholat/kota/cari/${input}`);
+            const data = await res.json();
+            const list = document.getElementById('cityList'); list.innerHTML = '';
+            if(data.data && data.data.length > 0) {
+                list.classList.remove('hidden');
+                data.data.forEach(c => {
+                    const d = document.createElement('div'); d.className = 'p-4 border-b text-xs font-black text-slate-600'; d.innerText = c.lokasi;
+                    d.onclick = () => getSchedule(c.id, c.lokasi); list.appendChild(d);
+                });
+            }
+        }
+
+        async function getSchedule(id, name) {
+            document.getElementById('cityList').classList.add('hidden'); document.getElementById('citySearch').value = name;
+            const res = await fetch(`https://api.myquran.com/v2/sholat/jadwal/${id}/2026/04/16`);
+            const data = await res.json();
+            const j = data.data.jadwal;
+            const times = [{n:'Subuh',t:j.subuh},{n:'Dzuhur',t:j.dzuhur},{n:'Ashar',t:j.ashar},{n:'Maghrib',t:j.maghrib},{n:'Isya',t:j.isya}];
+            document.getElementById('prayerDisplay').innerHTML = '';
+            times.forEach(t => { document.getElementById('prayerDisplay').innerHTML += `<div class="android-card flex justify-between items-center py-5 shadow-sm active:bg-slate-50 transition-colors"><span class="font-black text-slate-400 uppercase text-[10px] tracking-widest">${t.n}</span><span class="text-xl font-black text-emerald-600">${t.t}</span></div>`; });
+        }
+    </script>
+</body>
+</html>
