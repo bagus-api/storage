@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WA Fake Ultra Fix</title>
+
+<style>
+body{margin:0;font-family:-apple-system;background:#111;}
+
+.container{
+  max-width:400px;
+  margin:auto;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:#ece5dd;
+}
+
+.dark{background:#0b141a;color:white;}
+
+.header{
+  background:#111b21;
+  color:white;
+  padding:12px;
+  display:flex;
+  align-items:center;
+}
+
+.header img{
+  width:42px;height:42px;border-radius:50%;margin:0 10px;
+}
+
+.info{flex:1;}
+.name{font-weight:500;font-size:16px;}
+.status{font-size:12px;opacity:0.8;margin-top:2px;}
+
+.icon{
+  width:26px;
+  height:26px;
+  margin:0 6px;
+  stroke:white;
+  stroke-width:2;
+  fill:none;
+  cursor:pointer;
+}
+
+/* CHAT */
+.chat{
+  flex:1;
+  overflow-y:auto;
+  padding:10px;
+  background-size:cover;
+}
+
+.msg{
+  max-width:75%;
+  padding:8px;
+  border-radius:12px;
+  margin:6px 0;
+  font-size:14px;
+}
+
+.me{background:#dcf8c6;margin-left:auto;}
+.fake{background:white;}
+
+.dark .me{background:#005c4b;}
+.dark .fake{background:#202c33;}
+
+.time{
+  font-size:10px;
+  opacity:0.6;
+  text-align:right;
+}
+
+.check{margin-left:5px;}
+
+img.preview{max-width:100%;border-radius:10px;margin-top:5px;}
+audio{width:100%;margin-top:5px;}
+
+/* INPUT */
+.input{
+  display:flex;
+  padding:5px;
+  background:white;
+}
+
+.dark .input{background:#202c33;}
+
+input{
+  flex:1;
+  padding:10px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+
+button{
+  margin-left:5px;
+  border:none;
+  padding:10px;
+  border-radius:50%;
+  background:#25D366;
+  color:white;
+  cursor:pointer;
+}
+
+/* MENU */
+.menu{
+  position:absolute;
+  top:60px;
+  right:10px;
+  background:white;
+  border-radius:10px;
+  display:none;
+  padding:10px;
+  width:200px;
+}
+
+.dark .menu{background:#202c33;color:white;}
+
+.menu input,.menu select{width:100%;margin:5px 0;}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="app">
+
+<!-- HEADER -->
+<div class="header">
+
+  <!-- BACK -->
+  <svg class="icon" viewBox="0 0 24 24">
+    <polyline points="15 6 9 12 15 18"/>
+  </svg>
+
+  <img src="https://i.postimg.cc/523ZstMw/IMG-20260412-WA0057.jpg">
+
+  <div class="info">
+    <div class="name" id="name">Kontak Fake</div>
+    <div class="status" id="status">online</div>
+  </div>
+
+  <!-- VIDEO -->
+  <svg class="icon" viewBox="0 0 24 24">
+    <rect x="3" y="7" width="13" height="10" rx="2"/>
+    <polygon points="16,10 21,7 21,17 16,14"/>
+  </svg>
+
+  <!-- CALL -->
+  <svg class="icon" viewBox="0 0 24 24" onclick="startCall()">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+    19.79 19.79 0 0 1-8.63-3.07
+    19.5 19.5 0 0 1-6-6
+    19.79 19.79 0 0 1-3.07-8.67A2
+    2 0 0 1 4.11 2h3a2 2 0 0 1
+    2 1.72c.12.81.37 1.6.72
+    2.34a2 2 0 0 1-.45 2.11L8.09
+    9.91a16 16 0 0 0 6 6l1.74-1.29a2
+    2 0 0 1 2.11-.45c.74.35
+    1.53.6 2.34.72A2 2 0 0 1
+    22 16.92z"/>
+  </svg>
+
+  <!-- MENU -->
+  <svg class="icon" onclick="toggleMenu()" viewBox="0 0 24 24">
+    <circle cx="12" cy="5" r="1.8" fill="white"/>
+    <circle cx="12" cy="12" r="1.8" fill="white"/>
+    <circle cx="12" cy="19" r="1.8" fill="white"/>
+  </svg>
+
+</div>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+  Nama:
+  <input id="namaInput">
+
+  Status:
+  <select id="statusSelect">
+    <option value="online">online</option>
+    <option value="offline">offline</option>
+    <option value="last">terakhir dilihat</option>
+  </select>
+
+  Kirim dari:
+  <select id="sender">
+    <option value="me">Kamu</option>
+    <option value="fake">Fake</option>
+  </select>
+
+  Mode:
+  <select onchange="mode(this.value)">
+    <option value="light">Putih</option>
+    <option value="dark">Hitam</option>
+  </select>
+
+  <input type="file" onchange="bg(event)">
+  <button onclick="applySettings()">Simpan</button>
+</div>
+
+<!-- CHAT -->
+<div class="chat" id="chat"></div>
+
+<!-- INPUT -->
+<div class="input">
+  <input id="text" placeholder="Ketik pesan...">
+  <button onclick="send()">➤</button>
+</div>
+
+</div>
+
+<script>
+
+/* JAM */
+function jam(){
+  let d=new Date();
+  return d.getHours()+":"+String(d.getMinutes()).padStart(2,'0');
+}
+
+/* SEND */
+function send(){
+  let t=text.value;
+  let s=sender.value;
+  if(!t)return;
+
+  let m=document.createElement("div");
+  m.className="msg "+s;
+
+  m.innerHTML=t+
+  "<div class='time'>"+jam()+" <span class='check'>✓</span></div>";
+
+  chat.appendChild(m);
+  text.value="";
+  chat.scrollTop=chat.scrollHeight;
+
+  if(s==="me"){
+    setTimeout(()=>m.querySelector(".check").innerHTML="✓✓",1000);
+    setTimeout(()=>m.querySelector(".check").style.color="deepskyblue",2000);
+  }
+}
+
+/* MENU */
+function toggleMenu(){
+  menu.style.display = menu.style.display==="block"?"none":"block";
+}
+
+/* APPLY SETTINGS (FIX STATUS BUG) */
+function applySettings(){
+  let nama = document.getElementById("namaInput").value;
+  let statusVal = document.getElementById("statusSelect").value;
+
+  if(nama) document.getElementById("name").innerText = nama;
+
+  if(statusVal==="online"){
+    status.innerText="online";
+  }else if(statusVal==="offline"){
+    status.innerText="offline";
+  }else{
+    status.innerText="terakhir dilihat "+jam();
+  }
+
+  menu.style.display="none";
+}
+
+/* MODE */
+function mode(v){
+  app.classList.toggle("dark", v==="dark");
+}
+
+/* BG */
+function bg(e){
+  chat.style.backgroundImage="url("+URL.createObjectURL(e.target.files[0])+")";
+}
+
+/* CALL */
+function startCall(){ alert("Simulasi Telepon"); }
+
+</script>
+
+</body>
+</html>
