@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>xyZ Nonton Anime</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </button>
+            <button class="nav-item" data-page="schedule">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Jadwal</span>
+            </button>
+            <button class="nav-item" data-page="genres">
+                <i class="fas fa-tags"></i>
+                <span>Genre</span>
+            </button>
+            <button class="nav-item" data-page="history">
+                <i class="fas fa-history"></i>
+                <span>Riwayat</span>
+            </button>
+            <button class="nav-item dev-nav-btn" id="devNavBtn">
+                <i class="fas fa-code"></i>
+                <span>Dev</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="mainContent">
+            <div class="loading-container" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Memuat...</p>
+            </div>
+            <div id="content"></div>
+        </main>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="fabButton" style="display: none;">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- Developer Modal -->
+    <div class="modal" id="devModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-code"></i> Developer Info</h3>
+                <button class="close-modal" id="closeDevModal">&times;</button>
+            </div>
+            <div class="modal-body dev-modal-body">
+                <div class="profile-section">
+                    <div class="avatar-wrapper">
+                        <div class="avatar-container">
+                            <img src="https://i.imgur.com/9oGHeWf.jpeg" alt="xyZ Logo" class="avatar">
+                        </div>
+                    </div>
+                    <h1 class="brand-name">xyZ Rexal</h1>
+                    <p class="bio">savero.omaga</p>
+                </div>
+                <div class="dev-info">
+                    <p><strong><i class="fas fa-user"></i> Made by</strong> <span>@xyZ (Rexal)</span></p>
+                    <p><strong><i class="fas fa-tag"></i> Version</strong> <span>1.0</span></p>
+                    <p><strong><i class="fas fa-bug"></i> Web</strong> <a href="https://xyz42.vercel.app" target="_blank">xyz42.vercel.app</a></p>
+                                        <p><strong><i class="fas fa-bug"></i> Report Bug</strong> <a href="https://ngl.link/sapero.omaga" target="_blank"></a></p>
+
+                </div>
+                <div class="dev-footer">
+                    <small>© 2026 xyZ API ( Samehadaku ) - Nonton Anime Gratis</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quality Modal -->
+    <div class="modal" id="qualityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Kualitas Video</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="qualityList"></div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="player.js"></script>
+    <script src="detail.js"></script>
+    <script src="watch.js"></script>
+    <script src="home.js"></script>
+    <script src="schedule.js"></script>
+    <script src="genres.js"></script>
+    <script src="history.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
