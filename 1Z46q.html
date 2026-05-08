@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>RikiTools | Neo Brutalist Studio</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'float': 'float 3s ease-in-out infinite',
+              'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'slide-down': 'slideDown 0.4s ease-out',
+              'scale-bounce': 'scaleBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              'shimmer': 'shimmer 1.5s infinite',
+              'border-pulse': 'borderPulse 2s ease-in-out infinite',
+              'fade-in': 'fadeIn 0.4s ease-out',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-8px)' },
+              },
+              glowPulse: {
+                '0%, 100%': { boxShadow: '0 0 5px rgba(255,51,102,0.3)' },
+                '50%': { boxShadow: '0 0 25px rgba(255,51,102,0.6)' },
+              },
+              slideUp: {
+                from: { opacity: '0', transform: 'translateY(40px)' },
+                to: { opacity: '1', transform: 'translateY(0)' },
+              },
+              slideDown: {
+                from: { opacity: '0', transform: 'translateY(-20px)' },
+                to: { opacity: '1', transform: 'translateY(0)' },
+              },
+              scaleBounce: {
+                '0%': { transform: 'scale(0.9)', opacity: '0' },
+                '70%': { transform: 'scale(1.02)' },
+                '100%': { transform: 'scale(1)', opacity: '1' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-200% 0' },
+                '100%': { backgroundPosition: '200% 0' },
+              },
+              borderPulse: {
+                '0%, 100%': { borderColor: '#000000' },
+                '50%': { borderColor: '#FF3366' },
+              },
+              fadeIn: {
+                from: { opacity: '0' },
+                to: { opacity: '1' },
+              },
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: #0A0A0A;
+        }
+
+        /* Modern Neo-brutalism with Glassmorphism Touch */
+        .neo-card {
+            background: linear-gradient(145deg, #FFFFFF 0%, #F8F9FA 100%);
+            border: 3px solid #000000;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .dark .neo-card {
+            background: linear-gradient(145deg, #1A1D2E 0%, #141824 100%);
+            border: 3px solid #2D3348;
+        }
+        
+        .neo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 12px 12px 0px 0px #000000;
+        }
+        
+        .dark .neo-card:hover {
+            box-shadow: 12px 12px 0px 0px #FF3366;
+        }
+
+        .neo-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .neo-button:active {
+            transform: translate(3px, 3px);
+            box-shadow: none !important;
+        }
+        
+        .neo-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .neo-button:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Glass Effect */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid #000000;
+        }
+        
+        .dark .glass-nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid #2D3348;
+        }
+
+        /* Loading Animation */
+        .loader {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #FF3366;
+            border-right: 3px solid #FFD700;
+            border-bottom: 3px solid #00C853;
+            border-radius: 50%;
+            animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1A1D2E; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #FF3366, #FFD700); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FF3366; }
+
+        /* Input Focus Effect */
+        .input-modern:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 51, 102, 0.2);
+            transform: scale(1.01);
+        }
+
+        /* Tab Active Animation */
+        .tab-active {
+            animation: tabPulse 0.3s ease-out;
+        }
+        
+        @keyframes tabPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Result Image Hover */
+        .result-img {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .result-img:hover {
+            transform: scale(1.02);
+            box-shadow: 8px 8px 0px 0px #FF3366;
+        }
+
+        /* Background Gradient Animated */
+        .bg-gradient-animate {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 50%, #0A0A0A 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="dark">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+        const API_KEY = "OwMkM";
+
+        const SunIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+            </svg>
+        );
+
+        const MoonIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+            </svg>
+        );
+
+        function App() {
+            const [tab, setTab] = useState('brat');
+            const [text, setText] = useState('');
+            const [loading, setLoading] = useState(false);
+            const [result, setResult] = useState(null);
+            const [theme, setTheme] = useState('dark');
+            const [activeTabStyle, setActiveTabStyle] = useState({});
+            
+            // State Parameter
+            const [iqcTime, setIqcTime] = useState('12:00');
+            const [iqcBattery, setIqcBattery] = useState('100');
+            const [iqcCarrier, setIqcCarrier] = useState('4G');
+            const [ssDevice, setSsDevice] = useState('desktop');
+            const [gopaySaldo, setGopaySaldo] = useState('890');
+            const [gopayKoin, setGopayKoin] = useState('159');
+            const [gopayPengeluaran, setGopayPengeluaran] = useState('0');
+            const [gopayBulan, setGopayBulan] = useState('Mei');
+            const [danaNominal, setDanaNominal] = useState('');
+
+            const fileInputRef = useRef(null);
+
+            useEffect(() => {
+                document.body.className = theme;
+            }, [theme]);
+
+            const handleTabChange = (tabId) => {
+                setTab(tabId);
+                setResult(null);
+                setText('');
+            };
+
+            const handleProcess = async () => {
+                if (tab !== 'uploader' && !text && tab !== 'gopay' && tab !== 'dana') return;
+                setLoading(true);
+                setResult(null);
+
+                try {
+                    if (tab === 'uploader') {
+                        const file = fileInputRef.current?.files?.[0];
+                        if (!file) { setLoading(false); return; }
+                        const formData = new FormData();
+                        formData.append('file', file);
+                        const res = await fetch('https://www.gobox.my.id/upload', { method: 'POST', body: formData });
+                        const data = await res.json();
+                        const url = data.url || data.link || data.result?.url || data.data?.url || data.fileUrl;
+                        if (url) setResult({ type: 'url', content: url });
+                    } else if (tab === 'ssweb') {
+                        const apiUrl = `https://api.siputzx.my.id/api/tools/ssweb?url=${encodeURIComponent(text)}&device=${ssDevice}&theme=dark&fullPage=false`;
+                        setResult({ type: 'image', content: apiUrl });
+                    } else if (tab === 'iqc') {
+                        const apiUrl = `https://api.shny.my.id/api/imagecreator/iqc?time=${encodeURIComponent(iqcTime)}&batteryPercentage=${encodeURIComponent(iqcBattery)}&carrierName=${encodeURIComponent(iqcCarrier)}&messageText=${encodeURIComponent(text)}`;
+                        const res = await fetch(apiUrl);
+                        const blob = await res.blob();
+                        setResult({ type: 'image', content: URL.createObjectURL(blob) });
+                    } else if (tab === 'gopay') {
+                        await generateGoPay();
+                    } else if (tab === 'dana') {
+                        await generateDana();
+                    } else {
+                        let api = "";
+                        const enc = encodeURIComponent(text);
+                        if (tab === 'brat') api = `https://api.theresav.biz.id/maker/brat?text=${enc}`;
+                        if (tab === 'bratvid') api = `https://api.theresav.biz.id/maker/bratvid?text=${enc}&format=mp4`;
+                        if (tab === 'bratnime') api = `https://api.theresav.biz.id/maker/bratanime?text=${enc}&apikey=${API_KEY}`;
+                        if (tab === 'graffiti') api = `https://api.siputzx.my.id/api/m/ephoto360?url=${encodeURIComponent("https://en.ephoto360.com/create-a-cartoon-style-graffiti-text-effect-online-668.html")}&text1=${enc}`;
+                        if (tab === 'bratbahlil') api = `https://api.ikyyxd.my.id/maker/bratbahlil?text=${enc}`;
+
+                        if (!api) {
+                            setLoading(false);
+                            return;
+                        }
+
+                        const res = await fetch(api);
+                        const blob = await res.blob();
+                        const type = tab === 'bratvid' ? 'video' : 'image';
+                        setResult({ type, content: URL.createObjectURL(blob) });
+                    }
+                } catch (e) { alert('Error: ' + e.message); }
+                setLoading(false);
+            };
+
+            const loadImage = (src) => new Promise((res, rej) => {
+                const img = new Image(); img.crossOrigin = 'Anonymous'; img.onload = () => res(img); img.onerror = rej; img.src = src;
+            });
+
+            const generateGoPay = async () => {
+                const baseUrl = 'https://raw.githubusercontent.com/Ditzzx-vibecoder/Assets/main';
+                const [bgImg] = await Promise.all([loadImage(`${baseUrl}/Image/quality_restoration_20260501080321276.jpg`)]);
+                const canvas = document.createElement('canvas'); canvas.width = bgImg.width; canvas.height = bgImg.height;
+                const ctx = canvas.getContext('2d'); ctx.drawImage(bgImg, 0, 0);
+                ctx.fillStyle = '#fff'; ctx.textBaseline = 'top';
+                ctx.font = 'bold 34px sans-serif'; 
+                ctx.fillText('Rp', 62, 250);
+                const rpW = ctx.measureText('Rp').width;
+                ctx.font = 'bold 95px serif'; ctx.fillText(gopaySaldo, 62 + rpW + 10, 225);
+                ctx.font = 'bold 34px sans-serif'; ctx.fillText(gopayKoin, 115, 400);
+                ctx.font = '600 34px sans-serif'; ctx.fillText(`Rp${gopayPengeluaran} udah terpakai di ${gopayBulan}`, 100, 510);
+                canvas.toBlob(blob => { if (blob) setResult({ type: 'image', content: URL.createObjectURL(blob) }) }, 'image/jpeg');
+            };
+
+            const generateDana = async () => {
+                const raw = Number(danaNominal.replace(/\./g, ''));
+                const bg = await loadImage('https://raw.githubusercontent.com/Ditzzx-vibecoder/Assets/main/Image/_20260501192538912.jpg');
+                const canvas = document.createElement('canvas'); canvas.width = bg.width; canvas.height = bg.height;
+                const ctx = canvas.getContext('2d'); ctx.drawImage(bg, 0, 0);
+                ctx.font = 'bold 19px sans-serif'; ctx.fillStyle = '#a9e6ff'; ctx.textBaseline = 'top';
+                ctx.fillText('Rp', 70, 62);
+                const rpW = ctx.measureText('Rp').width;
+                ctx.font = 'bold 29px sans-serif'; ctx.fillStyle = '#FFFFFF'; 
+                ctx.fillText(raw.toLocaleString('id-ID'), 70 + rpW + 6, 54);
+                canvas.toBlob(blob => { if (blob) setResult({ type: 'image', content: URL.createObjectURL(blob) }) }, 'image/png');
+            };
+
+            const tabs = [
+                { id: 'brat', label: 'Brat', color: 'from-yellow-400 to-orange-500', icon: 'fa-crown', badge: 'HOT' },
+                { id: 'bratvid', label: 'BRATVID', color: 'from-green-400 to-emerald-500', icon: 'fa-video', badge: 'NEW' },
+                { id: 'bratnime', label: 'BRATNIME', color: 'from-pink-400 to-rose-500', icon: 'fa-anime', badge: '' },
+                { id: 'bratbahlil', label: 'BratBahlil', color: 'from-lime-400 to-green-500', icon: 'fa-fire', badge: 'POP' },
+                { id: 'graffiti', label: 'Grafiti', color: 'from-blue-400 to-indigo-500', icon: 'fa-paintbrush', badge: '' },
+                { id: 'iqc', label: 'IQC', color: 'from-orange-400 to-red-500', icon: 'fa-mobile-alt', badge: 'BETA' },
+                { id: 'uploader', label: 'Uploader', color: 'from-purple-400 to-violet-500', icon: 'fa-cloud-upload-alt', badge: '' },
+                { id: 'ssweb', label: 'SSWEB', color: 'from-red-400 to-pink-500', icon: 'fa-camera', badge: '' },
+                { id: 'gopay', label: 'GoPay', color: 'from-teal-400 to-cyan-500', icon: 'fa-wallet', badge: 'PREMIUM' },
+                { id: 'dana', label: 'Dana', color: 'from-sky-400 to-blue-500', icon: 'fa-money-bill-wave', badge: '' },
+            ];
+
+            return (
+                <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-animate' : 'bg-gray-50'} transition-all duration-500`}>
+                    {/* Modern Navbar */}
+                    <nav className={`fixed top-0 left-0 right-0 z-50 ${theme === 'dark' ? 'glass-nav' : 'bg-white border-b-2 border-black'} shadow-lg`}>
+                        <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg animate-float">
+                                    <i className="fas fa-bolt text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h1 className="text-2xl font-black tracking-tighter bg-gradient-to-r from-pink-600 to-yellow-500 bg-clip-text text-transparent">RIKITOOLS</h1>
+                                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Neo Brutalist Studio</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-black/5 dark:bg-white/5 rounded-full">
+                                    <i className="fas fa-users text-pink-500 text-xs"></i>
+                                    <span className="text-xs font-bold">1,234 Online</span>
+                                </div>
+                                <button 
+                                    onClick={() => setTheme(p => p === 'light' ? 'dark' : 'light')}
+                                    className="w-10 h-10 rounded-xl bg-gradient-to-r from-pink-500 to-yellow-500 text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+                                >
+                                    {theme === 'dark' ? <i className="fas fa-sun"></i> : <i className="fas fa-moon"></i>}
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content */}
+                    <main className="pt-24 pb-12 px-4 max-w-4xl mx-auto">
+                        {/* Modern Tab Bar */}
+                        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+                            {tabs.map((t, idx) => (
+                                <button
+                                    key={t.id}
+                                    onClick={() => handleTabChange(t.id)}
+                                    className={`relative px-4 py-2 rounded-xl font-bold text-sm uppercase tracking-wider transition-all duration-300 ${
+                                        tab === t.id 
+                                            ? `bg-gradient-to-r ${t.color} text-white shadow-lg scale-105` 
+                                            : `${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`
+                                    }`}
+                                    style={{ transitionDelay: `${idx * 20}ms` }}
+                                >
+                                    <i className={`fas ${t.icon} mr-2 text-xs`}></i>
+                                    {t.label}
+                                    {t.badge && tab !== t.id && (
+                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full text-[8px] font-bold text-white flex items-center justify-center animate-pulse">
+                                            {t.badge}
+                                        </span>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Main Card */}
+                        <div className="animate-slide-up">
+                            <div className={`neo-card rounded-2xl p-6 md:p-8 ${theme === 'dark' ? 'dark' : ''}`}>
+                                {/* Header */}
+                                <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${tabs.find(t => t.id === tab)?.color.split(' ')[1]}`}></div>
+                                            <span className="text-xs font-bold uppercase tracking-wider text-gray-500">Active Tool</span>
+                                        </div>
+                                        <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
+                                            {tab}
+                                        </h2>
+                                        <p className="text-sm text-gray-500 mt-1">High-impact brutalist tool studio</p>
+                                    </div>
+                                    {loading ? (
+                                        <div className="loader"></div>
+                                    ) : (
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-pink-500 to-yellow-500 flex items-center justify-center shadow-lg animate-float">
+                                            <i className="fas fa-magic text-white text-xl"></i>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Input Area */}
+                                <div className="space-y-5">
+                                    {tab === 'uploader' ? (
+                                        <div className="relative">
+                                            <input type="file" ref={fileInputRef} className="w-full border-3 border-black rounded-xl p-4 bg-gray-50 dark:bg-gray-900 font-medium text-lg input-modern transition-all cursor-pointer" />
+                                            <div className="absolute inset-0 rounded-xl border-2 border-transparent pointer-events-none"></div>
+                                        </div>
+                                    ) : tab === 'gopay' ? (
+                                        <div className="grid grid-cols-2 gap-4">
+                                            {[
+                                                { label: 'Saldo', value: gopaySaldo, set: setGopaySaldo, icon: 'fa-coins', color: 'text-yellow-500' },
+                                                { label: 'Koin', value: gopayKoin, set: setGopayKoin, icon: 'fa-star', color: 'text-yellow-500' },
+                                                { label: 'Pengeluaran', value: gopayPengeluaran, set: setGopayPengeluaran, icon: 'fa-chart-line', color: 'text-red-500' },
+                                                { label: 'Bulan', value: gopayBulan, set: setGopayBulan, icon: 'fa-calendar', color: 'text-blue-500' },
+                                            ].map((field) => (
+                                                <div key={field.label} className="space-y-2">
+                                                    <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
+                                                        <i className={`fas ${field.icon} ${field.color}`}></i>
+                                                        {field.label}
+                                                    </label>
+                                                    <input type="text" value={field.value} onChange={e => field.set(e.target.value)} className="w-full border-3 border-black rounded-xl p-3 bg-gray-50 dark:bg-gray-900 font-bold text-lg input-modern transition-all" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : tab === 'dana' ? (
+                                        <div className="space-y-2">
+                                            <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
+                                                <i className="fas fa-money-bill-wave text-green-500"></i>
+                                                Nominal (Rp)
+                                            </label>
+                                            <input type="text" value={danaNominal} onChange={e => setDanaNominal(e.target.value)} className="w-full border-3 border-black rounded-xl p-4 bg-gray-50 dark:bg-gray-900 font-bold text-2xl input-modern transition-all text-center" placeholder="150.000" />
+                                        </div>
+                                    ) : tab === 'iqc' ? (
+                                        <div className="space-y-4">
+                                            <div className="grid grid-cols-3 gap-4">
+                                                {[
+                                                    { label: 'Jam', value: iqcTime, set: setIqcTime, icon: 'fa-clock', type: 'time' },
+                                                    { label: 'Battery', value: iqcBattery, set: setIqcBattery, icon: 'fa-battery-full', type: 'number' },
+                                                    { label: 'Provider', value: iqcCarrier, set: setIqcCarrier, icon: 'fa-signal', type: 'text' },
+                                                ].map((field) => (
+                                                    <div key={field.label} className="space-y-2">
+                                                        <label className="flex items-center gap-1 text-[10px] font-bold uppercase">
+                                                            <i className={`fas ${field.icon} text-pink-500`}></i>
+                                                            {field.label}
+                                                        </label>
+                                                        <input type={field.type} value={field.value} onChange={e => field.set(e.target.value)} className="w-full border-3 border-black rounded-xl p-2 bg-gray-50 dark:bg-gray-900 font-bold text-sm input-modern" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <textarea 
+                                                value={text} onChange={e => setText(e.target.value)}
+                                                className="w-full border-3 border-black rounded-xl p-4 bg-gray-50 dark:bg-gray-900 font-medium h-32 text-lg input-modern transition-all resize-none"
+                                                placeholder="✏️ Tulis pesan keren disini..."
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-2">
+                                            <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
+                                                <i className="fas fa-pen-fancy text-pink-500"></i>
+                                                Input Text
+                                            </label>
+                                            <textarea 
+                                                value={text} onChange={e => setText(e.target.value)}
+                                                className="w-full border-3 border-black rounded-xl p-4 bg-gray-50 dark:bg-gray-900 font-medium h-36 text-lg input-modern transition-all resize-none"
+                                                placeholder={tab === 'ssweb' ? '🔗 https://example.com' : '✨ Type something awesome...'}
+                                            />
+                                        </div>
+                                    )}
+
+                                    {/* Generate Button */}
+                                    <button 
+                                        onClick={handleProcess} 
+                                        disabled={loading}
+                                        className="neo-button w-full bg-gradient-to-r from-pink-500 to-yellow-500 text-black font-black py-4 rounded-xl text-lg uppercase tracking-wider shadow-lg hover:shadow-xl transition-all disabled:opacity-50 mt-4 flex items-center justify-center gap-3"
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <i className="fas fa-spinner fa-spin"></i>
+                                                <span>PROCESSING...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <i className="fas fa-bolt"></i>
+                                                <span>GENERATE NOW</span>
+                                                <i className="fas fa-arrow-right"></i>
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Result Display */}
+                            {result && (
+                                <div className={`mt-6 neo-card rounded-2xl p-6 animate-scale-bounce ${theme === 'dark' ? 'dark' : ''}`}>
+                                    <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center">
+                                                <i className="fas fa-check text-white text-xs"></i>
+                                            </div>
+                                            <span className="font-bold text-sm uppercase tracking-wider">Generated Result</span>
+                                        </div>
+                                        {result.type !== 'url' && (
+                                            <a href={result.content} download className="px-5 py-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
+                                                <i className="fas fa-download"></i>
+                                                DOWNLOAD
+                                            </a>
+                                        )}
+                                    </div>
+                                    <div className="bg-gray-900 rounded-xl p-3 overflow-hidden flex justify-center">
+                                        {result.type === 'image' && (
+                                            <img src={result.content} className="max-w-full h-auto max-h-[500px] object-contain rounded-lg result-img" alt="Generated result" />
+                                        )}
+                                        {result.type === 'video' && (
+                                            <video src={result.content} controls autoPlay loop className="max-w-full rounded-lg shadow-xl" />
+                                        )}
+                                        {result.type === 'url' && (
+                                            <div className="p-6 text-center w-full">
+                                                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
+                                                    <i className="fas fa-link text-white text-3xl"></i>
+                                                </div>
+                                                <p className="text-white break-all font-mono text-sm mb-6 bg-gray-800 p-4 rounded-xl border border-gray-700">{result.content}</p>
+                                                <button 
+                                                    onClick={() => { navigator.clipboard.writeText(result.content); alert('✅ Link copied to clipboard!'); }}
+                                                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mx-auto"
+                                                >
+                                                    <i className="fas fa-copy"></i>
+                                                    Copy Link
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </main>
+
+                    {/* Modern Footer */}
+                    <footer className="border-t border-gray-800 mt-12 py-6">
+                        <div className="max-w-4xl mx-auto px-4 text-center">
+                            <div className="flex justify-center gap-6 mb-4">
+                                <i className="fab fa-whatsapp text-gray-600 hover:text-green-500 transition-colors cursor-pointer text-xl"></i>
+                                <i className="fab fa-github text-gray-600 hover:text-white transition-colors cursor-pointer text-xl"></i>
+                                <i className="fab fa-instagram text-gray-600 hover:text-pink-500 transition-colors cursor-pointer text-xl"></i>
+                                <i className="fab fa-discord text-gray-600 hover:text-indigo-500 transition-colors cursor-pointer text-xl"></i>
+                            </div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wider">
+                                © 2024 RIKITOOLS • NEO BRUTALIST STUDIO • ALL RIGHTS RESERVED
+                            </p>
+                            <p className="text-[10px] text-gray-600 mt-2">
+                                <i className="fas fa-shield-alt mr-1"></i> Built with brutalist principles • High impact design
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+```
