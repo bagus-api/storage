@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deployer — Ditzzx Tools</title>
+  <meta name="description" content="Deploy website HTML kamu ke Vercel dalam hitungan detik — tanpa akun, tanpa setup, langsung live." />
+  <meta name="author" content="Ditzzx" />
+  <link rel="canonical" href="https://ditzzx.my.id/deployer" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ditzzx.my.id/deployer" />
+  <meta property="og:title" content="Deployer — Ditzzx Tools" />
+  <meta property="og:description" content="Deploy website HTML kamu ke Vercel dalam hitungan detik." />
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/Ditzzx-vibecoder/Assets@main/Image/1776521399452.png" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --fg: #ffffff;
+      --fg-dim: rgba(255,255,255,0.30);
+      --fg-mid: rgba(255,255,255,0.60);
+      --grid: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.18);
+      --accent: #ffffff;
+      --card-hover: rgba(255,255,255,0.025);
+      --green: #4ade80;
+      --red: #f87171;
+      --yellow: #facc15;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Syne', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 80% at 50% 0%, transparent 50%, #080808 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(8,8,8,0.75);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: var(--fg);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--fg-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--fg);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--fg); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--fg); }
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+    }
+
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--fg-mid);
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 65px; left: 0; right: 0;
+      background: rgba(8,8,8,0.96);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 32px 24px;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      color: var(--fg-mid);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .mobile-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 4px 0;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 64px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .page-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--fg-dim);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .page-title {
+      font-size: clamp(40px, 8vw, 96px);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 0.92;
+      margin-bottom: 20px;
+    }
+
+    .page-title span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.18);
+    }
+
+    .page-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--fg-dim);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+    }
+
+    /* ── DEPLOYER CARD ── */
+    .deployer-card {
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.015);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .card-section {
+      padding: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-section:last-child { border-bottom: none; }
+
+    .card-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: var(--fg-dim);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── DROP ZONE ── */
+    .drop-zone {
+      border: 1px dashed rgba(255,255,255,0.12);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .drop-zone.has-file {
+      border-color: rgba(74,222,128,0.3);
+      background: rgba(74,222,128,0.03);
+    }
+
+    .drop-icon {
+      width: 36px; height: 36px;
+      margin: 0 auto 16px;
+      color: var(--fg-dim);
+    }
+
+    .drop-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--fg-mid);
+      margin-bottom: 6px;
+    }
+
+    .drop-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.06em;
+    }
+
+    .file-info {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .file-info.show { display: flex; }
+
+    .file-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.08em;
+    }
+
+    .file-remove {
+      background: none;
+      border: none;
+      color: var(--fg-dim);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 2px;
+      transition: color 0.2s;
+    }
+
+    .file-remove:hover { color: var(--red); }
+
+    #fileInput { display: none; }
+
+    /* ── INPUT FIELD ── */
+    .input-group {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .input-group:focus-within { border-color: var(--border-hover); }
+
+    .input-prefix {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.06em;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.03);
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-field {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--fg);
+      padding: 14px 16px;
+      letter-spacing: 0.06em;
+    }
+
+    .input-field::placeholder { color: var(--fg-dim); }
+
+    .input-suffix {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.06em;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.03);
+      border-left: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .input-hint {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--fg-dim);
+      letter-spacing: 0.1em;
+      margin-top: 10px;
+    }
+
+    /* ── QUOTA BAR ── */
+    .quota-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .quota-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .quota-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-mid);
+      letter-spacing: 0.1em;
+    }
+
+    .quota-bar-track {
+      height: 2px;
+      background: var(--border);
+      width: 100%;
+    }
+
+    .quota-bar-fill {
+      height: 100%;
+      background: var(--green);
+      transition: width 0.5s ease;
+    }
+
+    /* ── DEPLOY BUTTON ── */
+    .btn-deploy {
+      width: 100%;
+      padding: 18px;
+      background: var(--fg);
+      color: var(--bg);
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-deploy:hover { background: rgba(255,255,255,0.88); }
+    .btn-deploy:disabled {
+      background: rgba(255,255,255,0.08);
+      color: var(--fg-dim);
+      cursor: not-allowed;
+    }
+
+    .btn-deploy .spinner {
+      width: 12px; height: 12px;
+      border: 1px solid rgba(8,8,8,0.3);
+      border-top-color: var(--bg);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .btn-deploy.loading .spinner { display: block; }
+    .btn-deploy.loading .btn-text { opacity: 0.7; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── STATUS BOX ── */
+    .status-box {
+      display: none;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      margin-top: 16px;
+    }
+
+    .status-box.show { display: block; }
+    .status-box.success { border-color: rgba(74,222,128,0.25); background: rgba(74,222,128,0.04); }
+    .status-box.error { border-color: rgba(248,113,113,0.25); background: rgba(248,113,113,0.04); }
+    .status-box.cooldown { border-color: rgba(250,204,21,0.25); background: rgba(250,204,21,0.04); }
+
+    .status-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .status-icon {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-box.success .status-icon { background: var(--green); }
+    .status-box.error .status-icon { background: var(--red); }
+    .status-box.cooldown .status-icon { background: var(--yellow); }
+
+    .status-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .status-box.success .status-title { color: var(--green); }
+    .status-box.error .status-title { color: var(--red); }
+    .status-box.cooldown .status-title { color: var(--yellow); }
+
+    .status-msg {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--fg-dim);
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+    }
+
+    .status-url {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid rgba(74,222,128,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .status-url:hover { border-color: var(--green); }
+
+    /* ── COOLDOWN TIMER ── */
+    .cooldown-timer {
+      font-family: 'DM Mono', monospace;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--yellow);
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-left, .footer-right {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .footer-right { text-align: right; }
+
+    .footer-center {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-center a {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-center a:hover { color: var(--fg); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── GUIDE SECTION ── */
+    .guide-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 80px 24px;
+    }
+
+    .guide-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .guide-header {
+      margin-bottom: 40px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .guide-card {
+      background: var(--bg);
+      padding: 28px;
+      transition: background 0.3s;
+    }
+
+    .guide-card:hover { background: var(--card-hover); }
+
+    .guide-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .guide-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid;
+    }
+
+    .guide-badge.static  { color: var(--fg-mid); border-color: var(--border-hover); }
+    .guide-badge.zip     { color: #60a5fa; border-color: rgba(96,165,250,0.3); }
+    .guide-badge.serverless { color: var(--green); border-color: rgba(74,222,128,0.3); }
+
+    .guide-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--fg-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .guide-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    .guide-desc code {
+      color: var(--fg-mid);
+      background: rgba(255,255,255,0.06);
+      padding: 1px 5px;
+    }
+
+    /* ── TREE ── */
+    .guide-tree {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .tree-pre {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      line-height: 2;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      white-space: pre;
+    }
+
+    .tree-chr {
+      color: var(--border-hover);
+      user-select: none;
+    }
+
+    .tree-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+    }
+
+    .tree-line.indent  { padding-left: 16px; }
+    .tree-line.indent2 { padding-left: 32px; }
+
+    .tree-folder {
+      color: var(--fg-mid);
+      letter-spacing: 0.04em;
+    }
+
+    .tree-file {
+      letter-spacing: 0.04em;
+      padding: 2px 6px;
+    }
+
+    .tree-file.html { color: #f97316; background: rgba(249,115,22,0.08); }
+    .tree-file.css  { color: #60a5fa; background: rgba(96,165,250,0.08); }
+    .tree-file.js   { color: #facc15; background: rgba(250,204,21,0.08); }
+    .tree-file.api  { color: var(--green); background: rgba(74,222,128,0.08); }
+    .tree-file.img  { color: var(--fg-mid); background: rgba(255,255,255,0.05); }
+    .tree-file.json { color: #c084fc; background: rgba(192,132,252,0.08); }
+
+    .tree-endpoint {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--fg-dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── CODE BLOCK ── */
+    .guide-code-block {
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .guide-code-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .guide-code {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      line-height: 1.9;
+      padding: 20px;
+      overflow-x: auto;
+      color: var(--fg-mid);
+    }
+
+    .guide-code-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.06em;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.015);
+    }
+
+    .guide-code-note code {
+      color: var(--green);
+    }
+
+    /* Syntax highlight */
+    .c-keyword { color: #c084fc; }
+    .c-fn      { color: #60a5fa; }
+    .c-str     { color: var(--green); }
+    .c-num     { color: #f97316; }
+
+    .guide-or {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--fg-dim);
+      text-transform: uppercase;
+      margin: 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .guide-or::before, .guide-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .guide-subheader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 40px 0 20px;
+    }
+
+    /* ── NOTES ── */
+    .guide-notes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .guide-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--fg-dim);
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+    }
+
+    .guide-note code {
+      color: var(--fg-mid);
+      background: rgba(255,255,255,0.06);
+      padding: 1px 5px;
+    }
+
+    .guide-note strong { color: var(--fg-mid); }
+
+    .note-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .note-dot.ok   { background: var(--green); }
+    .note-dot.warn { background: var(--yellow); }
+
+
+    /* ── MODE SELECTOR ── */
+    .mode-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .mode-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .mode-btn:hover {
+      border-color: var(--border-hover);
+      background: var(--card-hover);
+    }
+
+    .mode-btn.active {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .mode-btn.active::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--fg);
+    }
+
+    .mode-icon { color: var(--fg-dim); margin-bottom: 4px; }
+    .mode-btn.active .mode-icon { color: var(--fg); }
+
+    .mode-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--fg-dim);
+      text-transform: uppercase;
+    }
+
+    .mode-btn.active .mode-label { color: var(--fg); }
+
+    .mode-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--fg-dim);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links, .nav-status { display: none; }
+      .hamburger { display: flex; }
+
+      main { padding: 100px 16px 60px; }
+
+      .page-title { font-size: clamp(36px, 10vw, 64px); }
+
+      .card-section { padding: 24px; }
+
+      footer {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 24px;
+        text-align: center;
+      }
+
+      .footer-right { text-align: center; }
+      .footer-center { justify-content: center; }
+    }
+  </style>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="./index.html" class="nav-logo">Ditzzx</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="./index.html#about">About</a></li>
+        <li><a href="./index.html#tools">Tools</a></li>
+        <li><a href="./deployer.html" class="active">Deployer</a></li>
+        <li><a href="./developer.html">Developer</a></li>
+      </ul>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span>Available</span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="./index.html#about" class="mobile-link">About</a>
+    <a href="./index.html#tools" class="mobile-link">Tools</a>
+    <div class="mobile-divider"></div>
+    <a href="./downloader.html" class="mobile-link">Downloader</a>
+    <a href="./generator.html" class="mobile-link">Generator</a>
+    <a href="./image-tools.html" class="mobile-link">Image Tools</a>
+    <a href="./deployer.html" class="mobile-link">Deployer</a>
+    <div class="mobile-divider"></div>
+    <a href="./developer.html" class="mobile-link">Developer</a>
+  </div>
+
+  <!-- Main -->
+  <main>
+    <div class="page-header">
+      <span class="page-label">// 04 — Tool</span>
+      <h1 class="page-title">
+        Deployer
+        <span>Instant Deploy</span>
+      </h1>
+      <p class="page-sub">Pilih mode → Kasih nama → Live dalam detik.</p>
+    </div>
+
+    <div class="deployer-card">
+
+      <!-- Step 1: Mode -->
+      <div class="card-section">
+        <p class="card-label">01 — Mode</p>
+        <div class="mode-selector">
+          <button class="mode-btn active" id="modeHtml" data-mode="html">
+            <span class="mode-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" stroke="currentColor" stroke-width="1"/><path d="M5 5h4M5 7h4M5 9h2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+            </span>
+            <span class="mode-label">HTML</span>
+            <span class="mode-desc">Upload file .html</span>
+          </button>
+          <button class="mode-btn" id="modeServerless" data-mode="serverless">
+            <span class="mode-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1"/><path d="M7 4v3l2 1" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+            </span>
+            <span class="mode-label">Serverless</span>
+            <span class="mode-desc">Deploy dari GitHub repo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Input -->
+      <div class="card-section">
+
+        <!-- HTML panel -->
+        <div id="panelHtml">
+          <p class="card-label">02 — File HTML</p>
+          <div class="drop-zone" id="dropZone">
+            <svg class="drop-icon" viewBox="0 0 36 36" fill="none">
+              <path d="M18 24V12M18 12L13 17M18 12L23 17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <rect x="4" y="4" width="28" height="28" rx="0" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+            </svg>
+            <p class="drop-title">Drop file di sini</p>
+            <p class="drop-sub">.html untuk halaman tunggal (max 5MB)</p>
+            <div class="file-info" id="fileInfo">
+              <span class="file-name" id="fileName"></span>
+              <button class="file-remove" id="fileRemove" title="Hapus file">×</button>
+            </div>
+          </div>
+          <input type="file" id="fileInput" accept=".html,.htm" />
+        </div>
+
+        <!-- Serverless panel -->
+        <div id="panelServerless" style="display:none">
+          <p class="card-label">02 — GitHub Repo</p>
+          <div class="input-group">
+            <input
+              type="text"
+              id="repoInput"
+              class="input-field"
+              placeholder="https://github.com/username/repo-name"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+          <p class="input-hint">Repo harus <strong style="color:var(--fg-mid)">public</strong> — repo private tidak bisa di-deploy.</p>
+          <p class="input-hint" style="margin-top:6px">Branch default: <strong style="color:var(--fg-mid)">main</strong> · Atau paste URL branch: <code>github.com/user/repo/tree/branch</code></p>
+          <p class="input-hint" style="margin-top:6px">Wajib ada <strong style="color:var(--fg-mid)">index.html</strong> di root.</p>
+        </div>
+
+      </div>
+
+      <!-- Step 3: Nama Website -->
+      <div class="card-section">
+        <p class="card-label">03 — Nama Website</p>
+        <div class="input-group">
+          <span class="input-prefix">https://</span>
+          <input
+            type="text"
+            id="siteName"
+            class="input-field"
+            placeholder="nama-website-kamu"
+            maxlength="40"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <span class="input-suffix">.vercel.app</span>
+        </div>
+        <p class="input-hint">Gunakan huruf kecil, angka, dan tanda hubung ( - ) saja.</p>
+      </div>
+
+      <!-- Step 4: Quota & Deploy -->
+      <div class="card-section">
+        <p class="card-label">04 — Deploy</p>
+
+        <div class="quota-row">
+          <span class="quota-label">Quota Harian</span>
+          <span class="quota-num" id="quotaNum">— / 50</span>
+        </div>
+        <div class="quota-bar-track">
+          <div class="quota-bar-fill" id="quotaBar" style="width: 100%"></div>
+        </div>
+
+        <br/>
+
+        <button class="btn-deploy" id="deployBtn">
+          <div class="spinner"></div>
+          <span class="btn-text">Deploy Sekarang</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </button>
+
+        <!-- Status Box -->
+        <div class="status-box" id="statusBox">
+          <div class="status-header">
+            <span class="status-icon"></span>
+            <span class="status-title" id="statusTitle"></span>
+          </div>
+          <p class="status-msg" id="statusMsg"></p>
+          <a href="#" class="status-url" id="statusUrl" target="_blank" rel="noopener" style="display:none">
+            Buka Website
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </a>
+          <div class="cooldown-timer" id="cooldownTimer" style="display:none"></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Guide Section -->
+  <section class="guide-section">
+    <div class="guide-inner">
+
+      <div class="guide-header">
+        <span class="page-label" style="margin-bottom:0">// Panduan Penggunaan</span>
+      </div>
+
+      <div class="guide-grid">
+
+        <!-- Mode HTML -->
+        <div class="guide-card">
+          <div class="guide-card-top">
+            <span class="guide-badge static">HTML</span>
+            <span class="guide-tag">Static site</span>
+          </div>
+          <p class="guide-desc">Upload file <code>.html</code> tunggal — cocok untuk landing page, portofolio, atau halaman sederhana. CSS & JS harus inline di dalam file.</p>
+          <div class="guide-tree">
+            <pre class="tree-pre"><span class="tree-file html">index.html</span>
+<span class="tree-chr">  ├──</span> <span class="tree-file css">&lt;style&gt; ... &lt;/style&gt;</span>
+<span class="tree-chr">  └──</span> <span class="tree-file js">&lt;script&gt; ... &lt;/script&gt;</span></pre>
+          </div>
+        </div>
+
+        <!-- Mode Serverless -->
+        <div class="guide-card">
+          <div class="guide-card-top">
+            <span class="guide-badge serverless">Serverless</span>
+            <span class="guide-tag">GitHub repo</span>
+          </div>
+          <p class="guide-desc">Deploy langsung dari repo GitHub public. Support multi-file, assets, dan Vercel Serverless Functions di folder <code>api/</code>.</p>
+          <div class="guide-tree">
+            <pre class="tree-pre"><span class="tree-folder">github.com/user/repo</span>
+<span class="tree-chr">├──</span> <span class="tree-file html">index.html</span>
+<span class="tree-chr">├──</span> <span class="tree-file css">style.css</span>        <span class="tree-endpoint">opsional</span>
+<span class="tree-chr">├──</span> <span class="tree-file js">script.js</span>         <span class="tree-endpoint">opsional</span>
+<span class="tree-chr">├──</span> <span class="tree-folder">api/</span>
+<span class="tree-chr">│   ├──</span> <span class="tree-file api">hello.js</span>  <span class="tree-endpoint">→ /api/hello</span>
+<span class="tree-chr">│   └──</span> <span class="tree-file api">data.js</span>   <span class="tree-endpoint">→ /api/data</span>
+<span class="tree-chr">└──</span> <span class="tree-file json">vercel.json</span>       <span class="tree-endpoint">opsional</span></pre>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Contoh serverless function -->
+      <div class="guide-code-block">
+        <div class="guide-code-header">
+          <span class="page-label" style="margin-bottom:0">Contoh: api/hello.js</span>
+          <span class="guide-tag">Vercel Serverless Function</span>
+        </div>
+        <pre class="guide-code"><span class="c-keyword">export default</span> <span class="c-keyword">function</span> <span class="c-fn">handler</span>(req, res) {
+  res.<span class="c-fn">status</span>(<span class="c-num">200</span>).<span class="c-fn">json</span>({ message: <span class="c-str">'Hello from serverless!'</span> });
+}</pre>
+        <p class="guide-code-note">Akses via <code>https://nama-kamu.vercel.app/api/hello</code></p>
+      </div>
+
+      <!-- Notes -->
+      <div class="guide-notes">
+        <div class="guide-note">
+          <span class="note-dot ok"></span>
+          <span>Mode <strong>HTML</strong> — upload file <code>.html</code> tunggal, maksimal 5MB</span>
+        </div>
+        <div class="guide-note">
+          <span class="note-dot warn"></span>
+          <span>Mode <strong>Serverless</strong> — repo GitHub harus <strong>public</strong>, branch default <code>main</code></span>
+        </div>
+        <div class="guide-note">
+          <span class="note-dot ok"></span>
+          <span>Serverless function wajib pakai <code>export default function handler(req, res)</code></span>
+        </div>
+        <div class="guide-note">
+          <span class="note-dot ok"></span>
+          <span>File <code>vercel.json</code> opsional — Vercel akan auto-detect struktur project</span>
+        </div>
+        <div class="guide-note">
+          <span class="note-dot warn"></span>
+          <span>Node modules tidak perlu di-include — Vercel install otomatis dari <code>package.json</code></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="footer-left">© 2026 Ditzzx</p>
+    <div class="footer-center">
+      <a href="./index.html">Home</a>
+      <a href="./index.html#about">About</a>
+      <a href="./index.html#tools">Tools</a>
+    </div>
+    <p class="footer-right">Precision in every pixel</p>
+  </footer>
+
+  <script>
+    // ── HAMBURGER ──
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // ── NAV SCROLL ──
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      navEl.style.borderBottomColor = window.scrollY > 20
+        ? 'rgba(255,255,255,0.1)'
+        : 'var(--border)';
+    });
+
+    // ── MODE SELECTOR ──
+    let currentMode = 'html';
+
+    document.getElementById('modeHtml').addEventListener('click', () => setMode('html'));
+    document.getElementById('modeServerless').addEventListener('click', () => setMode('serverless'));
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('modeHtml').classList.toggle('active', mode === 'html');
+      document.getElementById('modeServerless').classList.toggle('active', mode === 'serverless');
+      document.getElementById('panelHtml').style.display = mode === 'html' ? 'block' : 'none';
+      document.getElementById('panelServerless').style.display = mode === 'serverless' ? 'block' : 'none';
+      clearStatus();
+    }
+
+    // ── FILE UPLOAD ──
+    const dropZone   = document.getElementById('dropZone');
+    const fileInput  = document.getElementById('fileInput');
+    const fileInfo   = document.getElementById('fileInfo');
+    const fileNameEl = document.getElementById('fileName');
+    const fileRemove = document.getElementById('fileRemove');
+
+    let selectedFile = null;
+
+    dropZone.addEventListener('click', (e) => {
+      if (e.target === fileRemove) return;
+      fileInput.click();
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) setFile(file);
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files[0]) setFile(fileInput.files[0]);
+    });
+
+    fileRemove.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearFile();
+    });
+
+    function setFile(file) {
+      if (!file.name.match(/\.(html|htm)$/i)) {
+        showStatus('error', 'Format Tidak Valid', 'Hanya file .html yang diterima.');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        showStatus('error', 'File Terlalu Besar', 'Ukuran file maksimal 5MB.');
+        return;
+      }
+      selectedFile = file;
+      fileNameEl.textContent = file.name;
+      dropZone.classList.add('has-file');
+      fileInfo.classList.add('show');
+      dropZone.querySelector('.drop-icon').style.display = 'none';
+      dropZone.querySelector('.drop-title').style.display = 'none';
+      dropZone.querySelector('.drop-sub').style.display = 'none';
+      clearStatus();
+    }
+
+    function clearFile() {
+      selectedFile = null;
+      fileInput.value = '';
+      fileNameEl.textContent = '';
+      dropZone.classList.remove('has-file');
+      fileInfo.classList.remove('show');
+      dropZone.querySelector('.drop-icon').style.display = '';
+      dropZone.querySelector('.drop-title').style.display = '';
+      dropZone.querySelector('.drop-sub').style.display = '';
+    }
+
+    // ── INPUT VALIDATION ──
+    const siteNameInput = document.getElementById('siteName');
+    siteNameInput.addEventListener('input', () => {
+      siteNameInput.value = siteNameInput.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+    });
+
+    // ── QUOTA DISPLAY ──
+    function updateQuota(remaining, total = 50) {
+      document.getElementById('quotaNum').textContent = `${remaining} / ${total}`;
+      document.getElementById('quotaBar').style.width = `${(remaining / total) * 100}%`;
+      const bar = document.getElementById('quotaBar');
+      bar.style.background = remaining > 10 ? 'var(--green)' : remaining > 3 ? 'var(--yellow)' : 'var(--red)';
+    }
+
+    // ── STATUS BOX ──
+    let cooldownInterval = null;
+
+    function showStatus(type, title, msg, url = null, cooldownSecs = null) {
+      const box   = document.getElementById('statusBox');
+      const timer = document.getElementById('cooldownTimer');
+      const urlEl = document.getElementById('statusUrl');
+
+      box.className = `status-box show ${type}`;
+      document.getElementById('statusTitle').textContent = title;
+      document.getElementById('statusMsg').textContent   = msg;
+
+      urlEl.style.display   = url ? 'inline-flex' : 'none';
+      timer.style.display   = cooldownSecs ? 'block' : 'none';
+
+      if (url) { urlEl.href = url; }
+
+      if (cooldownSecs) {
+        let remaining = cooldownSecs;
+        const tick = () => {
+          const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+          const s = (remaining % 60).toString().padStart(2, '0');
+          timer.textContent = `${m}:${s}`;
+          if (remaining <= 0) {
+            clearInterval(cooldownInterval);
+            timer.style.display = 'none';
+          }
+          remaining--;
+        };
+        tick();
+        clearInterval(cooldownInterval);
+        cooldownInterval = setInterval(tick, 1000);
+      }
+    }
+
+    function clearStatus() {
+      const box = document.getElementById('statusBox');
+      box.className = 'status-box';
+      clearInterval(cooldownInterval);
+    }
+
+    // ── DEPLOY ──
+    const deployBtn = document.getElementById('deployBtn');
+
+    deployBtn.addEventListener('click', async () => {
+      const name = siteNameInput.value.trim();
+
+      if (!name) {
+        showStatus('error', 'Nama Kosong', 'Masukkan nama website terlebih dahulu.');
+        return;
+      }
+
+      if (!/^[a-z0-9-]+$/.test(name)) {
+        showStatus('error', 'Nama Tidak Valid', 'Gunakan huruf kecil, angka, dan tanda hubung saja.');
+        return;
+      }
+
+      if (currentMode === 'html' && !selectedFile) {
+        showStatus('error', 'File Kosong', 'Pilih file HTML terlebih dahulu.');
+        return;
+      }
+
+      if (currentMode === 'serverless') {
+        const repo = document.getElementById('repoInput').value.trim();
+        if (!repo) {
+          showStatus('error', 'Repo Kosong', 'Masukkan URL repo GitHub terlebih dahulu.');
+          return;
+        }
+      }
+
+      deployBtn.disabled = true;
+      deployBtn.classList.add('loading');
+      deployBtn.querySelector('.btn-text').textContent = 'Deploying...';
+      clearStatus();
+
+      try {
+        let body;
+
+        if (currentMode === 'html') {
+          const fileData = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = () => reject(new Error('Gagal membaca file.'));
+            reader.readAsDataURL(selectedFile);
+          });
+          body = JSON.stringify({ name, fileData, fileName: selectedFile.name, mode: 'html' });
+        } else {
+          const repo = document.getElementById('repoInput').value.trim()
+            .replace(/^https?:\/\/(www\.)?github\.com\//, '');
+          body = JSON.stringify({ name, repo, mode: 'serverless' });
+        }
+
+        const res = await fetch('/api/deployer/deploy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body
+        });
+
+        let data;
+        try {
+          data = await res.json();
+        } catch (e) {
+          showStatus('error', 'Deploy Gagal', `Server error ${res.status}. Coba lagi.`);
+          return;
+        }
+
+        if (data.remainingQuota !== undefined) {
+          updateQuota(data.remainingQuota);
+        }
+
+        if (res.ok && data.success) {
+          showStatus(
+            'success',
+            'Deploy Berhasil',
+            `Website kamu sudah live! Quota tersisa: ${data.remainingQuota}/50`,
+            data.url
+          );
+          clearFile();
+          if (document.getElementById('repoInput')) document.getElementById('repoInput').value = '';
+          siteNameInput.value = '';
+        } else if (data.cooldown) {
+          showStatus('cooldown', 'Cooldown Aktif', data.error, null, data.remainingSeconds);
+        } else if (data.quotaExceeded) {
+          showStatus('error', 'Quota Habis', data.error);
+        } else {
+          showStatus('error', 'Deploy Gagal', data.error || 'Terjadi kesalahan. Coba lagi.');
+        }
+
+      } catch (err) {
+        console.error('Deploy error:', err?.message, err?.name, err);
+        showStatus('error', 'Koneksi Error', err?.message || err?.name || 'Gagal terhubung ke server.');
+      } finally {
+        deployBtn.disabled = false;
+        deployBtn.classList.remove('loading');
+        deployBtn.querySelector('.btn-text').textContent = 'Deploy Sekarang';
+      }
+    });
+  </script>
+</body>
+</html>
