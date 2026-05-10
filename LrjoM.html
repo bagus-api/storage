@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sky Digital Bridge</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb' } }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f3f4f6; -webkit-tap-highlight-color: transparent; font-family: sans-serif; }
+        #app-container { max-width: 420px; margin: 0 auto; background: white; min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.05); overflow-x: hidden; }
+        .fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        ::-webkit-scrollbar { display: none; }
+        #reader__dashboard_section_csr button { background: #3b82f6 !important; color: white !important; padding: 10px 20px !important; border-radius: 8px !important; border: none !important; }
+    </style>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- UTILS ---
+        const parseQRIS = (payload) => {
+            try {
+                if (!payload || payload.length < 20) return null;
+                let index = 0; const data = {};
+                while (index < payload.length) {
+                    const id = payload.substring(index, index + 2);
+                    const length = parseInt(payload.substring(index + 2, index + 4), 10);
+                    if (isNaN(length)) break;
+                    data[id] = payload.substring(index + 4, index + 4 + length);
+                    index += 4 + length;
+                }
+                return {
+                    raw: payload,
+                    merchantName: data['59'] || 'Merchant Tidak Terdeteksi',
+                    amount: data['54'] ? parseFloat(data['54']) : null,
+                    isDynamic: !!data['54']
+                };
+            } catch (e) { return null; }
+        };
+
+        const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+
+        // --- ICONS ---
+        const Icons = {
+            Home: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>,
+            Scan: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>,
+            History: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>,
+            Upload: () => <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+        };
+
+        // --- COMPONENTS ---
+        const HomeView = ({ onScanClick }) => (
+            <div className="fade-in-up p-6 flex flex-col items-center justify-center min-h-[80vh] text-center">
+                <div className="w-20 h-20 bg-brand-500 rounded-3xl shadow-lg flex items-center justify-center text-white mb-6">
+                    <Icons.Scan />
+                </div>
+                <h1 className="text-2xl font-bold text-gray-800 mb-2">Sky Digital Bridge</h1>
+                <p className="text-gray-500 mb-10 px-4 text-sm">Scan QRIS dari kamera atau upload file gambar untuk melakukan pembayaran.</p>
+                <button onClick={onScanClick} className="w-full bg-brand-600 active:bg-brand-700 text-white font-bold py-4 rounded-xl shadow-md transition-transform active:scale-95">
+                    Scan QRIS
+                </button>
+            </div>
+        );
+
+        const ScannerView = ({ onDecode, onError }) => {
+            const [isLoading, setIsLoading] = useState(false);
+            const scannerId = "reader";
+
+            useEffect(() => {
+                const html5QrCode = new Html5Qrcode(scannerId);
+                const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+                html5QrCode.start({ facingMode: "environment" }, config, 
+                    (text) => { html5QrCode.stop().then(() => onDecode(text)); },
+                    () => {} 
+                ).catch(err => console.error("Camera Error:", err));
+
+                return () => {
+                    if (html5QrCode.isScanning) {
+                        html5QrCode.stop().catch(err => console.error(err));
+                    }
+                };
+            }, []);
+
+            const handleFileChange = async (e) => {
+                if (e.target.files.length === 0) return;
+                const file = e.target.files[0];
+                setIsLoading(true);
+
+                // Buat instance baru khusus file untuk menghindari konflik dengan kamera aktif
+                const fileScanner = new Html5Qrcode("file-scanner-hidden");
+                try {
+                    const decodedText = await fileScanner.scanFile(file, true);
+                    onDecode(decodedText);
+                } catch (err) {
+                    onError("Gambar tidak terbaca. Pastikan QRIS terlihat jelas.");
+                } finally {
+                    setIsLoading(false);
+                    fileScanner.clear();
+                }
+            };
+
+            return (
+                <div className="fade-in-up flex flex-col h-[calc(100vh-80px)] bg-black text-white relative">
+                    {isLoading && (
+                        <div className="absolute inset-0 bg-black/80 z-50 flex flex-col items-center justify-center">
+                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white mb-4"></div>
+                            <p>Memproses gambar...</p>
+                        </div>
+                    )}
+                    
+                    <div className="p-4 text-center z-10 bg-black/50 text-sm">Arahkan kamera ke kode QRIS</div>
+                    
+                    <div className="flex-grow flex items-center justify-center bg-black">
+                        <div id={scannerId} className="w-full"></div>
+                        <div id="file-scanner-hidden" className="hidden"></div>
+                    </div>
+
+                    <div className="p-6 bg-gray-900 pb-12 z-10">
+                        <label className="flex items-center justify-center w-full bg-white/10 border border-white/20 rounded-xl py-4 cursor-pointer active:bg-white/20 transition-all">
+                            <Icons.Upload /> 
+                            <span className="font-semibold text-sm">Pilih QRIS dari Galeri</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                        </label>
+                    </div>
+                </div>
+            );
+        };
+
+        const PaymentView = ({ qrisData, onReset }) => {
+            const [amount, setAmount] = useState(qrisData.amount || "");
+            const [selectedWallet, setSelectedWallet] = useState(null);
+
+            const wallets = [
+                { id: 'gopay', name: 'GoPay', color: 'bg-blue-500', intent: `gojek://pay?amount=${amount}&code=${encodeURIComponent(qrisData.raw)}` },
+                { id: 'ovo', name: 'OVO', color: 'bg-purple-600', intent: `ovo://pay?amount=${amount}&code=${encodeURIComponent(qrisData.raw)}` },
+                { id: 'dana', name: 'DANA', color: 'bg-blue-400', intent: `dana://pay?amount=${amount}&code=${encodeURIComponent(qrisData.raw)}` },
+            ];
+
+            const handlePay = () => {
+                if (!amount || amount < 100) return alert("Minimal nominal Rp 100");
+                if (!selectedWallet) return alert("Pilih metode pembayaran");
+
+                const wallet = wallets.find(w => w.id === selectedWallet);
+                const history = JSON.parse(localStorage.getItem('sky_tx_history') || '[]');
+                localStorage.setItem('sky_tx_history', JSON.stringify([{
+                    id: Date.now(), merchant: qrisData.merchantName, amount: Number(amount), wallet: wallet.name, date: new Date().toISOString()
+                }, ...history]));
+
+                window.location.href = wallet.intent;
+                setTimeout(() => alert("Jika aplikasi tidak terbuka, pastikan aplikasi dompet digital sudah terinstall."), 2000);
+            };
+
+            return (
+                <div className="fade-in-up p-6 pb-24 min-h-screen">
+                    <div className="bg-brand-50 p-6 rounded-2xl border border-brand-100 mb-6 text-center">
+                        <h2 className="text-[10px] font-bold text-brand-600 uppercase tracking-[2px] mb-1">Penerima</h2>
+                        <p className="text-xl font-bold text-gray-800">{qrisData.merchantName}</p>
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Nominal</label>
+                        <div className="relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">Rp</span>
+                            <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} disabled={qrisData.isDynamic}
+                                className="w-full pl-12 pr-4 py-4 text-2xl font-bold rounded-2xl border border-gray-200 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all disabled:bg-gray-50"
+                                placeholder="0" />
+                        </div>
+                    </div>
+
+                    <div className="mb-8">
+                        <label className="block text-xs font-bold text-gray-400 uppercase mb-3">Metode Pembayaran</label>
+                        <div className="grid grid-cols-3 gap-3">
+                            {wallets.map(w => (
+                                <button key={w.id} onClick={() => setSelectedWallet(w.id)} 
+                                    className={`py-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2
+                                    ${selectedWallet === w.id ? `border-brand-500 bg-brand-50` : `border-gray-100 bg-white`}`}>
+                                    <div className={`w-3 h-3 rounded-full ${w.color}`}></div>
+                                    <span className={`text-[11px] font-bold ${selectedWallet === w.id ? 'text-brand-700' : 'text-gray-500'}`}>{w.name}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <button onClick={handlePay} className="w-full bg-brand-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform mb-4">
+                        Bayar Sekarang
+                    </button>
+                    <button onClick={onReset} className="w-full text-gray-400 font-bold py-2 text-sm">Batalkan</button>
+                </div>
+            );
+        };
+
+        const HistoryView = () => {
+            const history = JSON.parse(localStorage.getItem('sky_tx_history') || '[]');
+            return (
+                <div className="fade-in-up p-6 pb-24">
+                    <h2 className="text-xl font-bold text-gray-800 mb-6">Riwayat Terakhir</h2>
+                    {history.length === 0 ? (
+                        <div className="text-center py-20 text-gray-400 text-sm">Belum ada riwayat pembayaran.</div>
+                    ) : (
+                        <div className="space-y-4">
+                            {history.map(tx => (
+                                <div key={tx.id} className="bg-white p-4 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm">
+                                    <div className="overflow-hidden">
+                                        <p className="font-bold text-gray-800 truncate">{tx.merchant}</p>
+                                        <p className="text-[10px] text-gray-400">{new Date(tx.date).toLocaleString('id-ID')}</p>
+                                    </div>
+                                    <div className="text-right ml-2 shrink-0">
+                                        <p className="font-bold text-brand-600">{formatRupiah(tx.amount)}</p>
+                                        <p className="text-[9px] font-bold text-gray-400 uppercase">{tx.wallet}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // --- MAIN APP ---
+        const App = () => {
+            const [view, setView] = useState('home');
+            const [qrisData, setQrisData] = useState(null);
+            const [errorMsg, setErrorMsg] = useState("");
+
+            const handleDecode = (text) => {
+                const data = parseQRIS(text);
+                if (data) {
+                    setQrisData(data);
+                    setView('payment');
+                    setErrorMsg("");
+                } else {
+                    setErrorMsg("Format QRIS tidak valid.");
+                    setView('home');
+                }
+            };
+
+            return (
+                <div id="app-container">
+                    {errorMsg && (
+                        <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-[380px] bg-red-500 text-white px-4 py-3 rounded-xl z-[100] shadow-xl flex justify-between items-center" onClick={() => setErrorMsg("")}>
+                            <span className="text-xs font-bold">{errorMsg}</span>
+                            <span className="text-lg">&times;</span>
+                        </div>
+                    )}
+
+                    <div className="h-full overflow-y-auto pb-20">
+                        {view === 'home' && <HomeView onScanClick={() => setView('scan')} />}
+                        {view === 'scan' && <ScannerView onDecode={handleDecode} onError={(e) => { setErrorMsg(e); setView('home'); }} />}
+                        {view === 'payment' && <PaymentView qrisData={qrisData} onReset={() => setView('home')} />}
+                        {view === 'history' && <HistoryView />}
+                    </div>
+
+                    <nav className="fixed bottom-0 w-full max-w-[420px] bg-white/80 backdrop-blur-lg border-t border-gray-100 flex justify-around items-center pb-6 pt-3 z-40">
+                        <button onClick={() => setView('home')} className={`flex flex-col items-center flex-1 ${view === 'home' ? 'text-brand-600' : 'text-gray-300'}`}>
+                            <Icons.Home /> <span className="text-[10px] mt-1 font-bold">Home</span>
+                        </button>
+                        <button onClick={() => setView('scan')} className="relative -top-8 bg-brand-600 text-white p-4 rounded-full shadow-xl active:scale-90 transition-transform">
+                            <Icons.Scan />
+                        </button>
+                        <button onClick={() => setView('history')} className={`flex flex-col items-center flex-1 ${view === 'history' ? 'text-brand-600' : 'text-gray-300'}`}>
+                            <Icons.History /> <span className="text-[10px] mt-1 font-bold">History</span>
+                        </button>
+                    </nav>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
