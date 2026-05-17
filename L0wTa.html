@@ -1,0 +1,3831 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arduino Converter Pro + AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+:root {
+  --bg: #0a0e1a;
+  --card: #111827;
+  --card2: #161f2e;
+  --border: rgba(255,255,255,.08);
+  --cyan: #00e5ff;
+  --green: #00e676;
+  --purple: #b47cff;
+  --orange: #ff9800;
+  --red: #ff5252;
+  --blue: #1e90ff;
+  --yellow: #ffd966;
+  --text: #e8eaf0;
+  --text2: #7b8499;
+  --radius: 14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding-bottom:40px}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(0,229,255,.06),transparent);pointer-events:none;z-index:0}
+
+/* ── HEADER ── */
+.header{background:rgba(17,24,39,.95);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;letter-spacing:.5px;color:var(--cyan)}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--cyan),var(--blue));border-radius:8px;display:grid;place-items:center;font-size:15px;flex-shrink:0}
+.badge-v{background:rgba(0,229,255,.15);color:var(--cyan);border:1px solid rgba(0,229,255,.3);border-radius:20px;font-size:10px;font-weight:700;padding:2px 7px}
+.header-right{display:flex;align-items:center;gap:8px}
+.hbadge{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--border);background:rgba(255,255,255,.03);cursor:default}
+.hbadge .dot{width:6px;height:6px;border-radius:50%}
+.status-badge{background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.3);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:5px}
+.status-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px;position:relative;z-index:1}
+
+/* ── TABS ── */
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.tab{padding:13px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;letter-spacing:.3px}
+.tab.active{background:rgba(0,229,255,.1);border-color:var(--cyan);color:var(--cyan)}
+.tab:hover:not(.active){border-color:rgba(255,255,255,.2);color:var(--text)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px}
+.card-title{font-size:12px;font-weight:700;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* ── INPUT MODE TOGGLE ── */
+.mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.mode-btn{padding:11px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .2s}
+.mode-btn.active{background:rgba(0,229,255,.1);border-color:var(--cyan);color:var(--cyan)}
+.mode-btn:hover:not(.active){border-color:rgba(255,255,255,.2);color:var(--text)}
+
+/* ── DROPZONE ── */
+.dropzone{border:2px dashed var(--border);border-radius:12px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dropzone:hover,.dropzone.dragover{border-color:var(--cyan);background:rgba(0,229,255,.04)}
+.dropzone.has-file{border-style:solid;border-color:var(--green);background:rgba(0,230,118,.05)}
+.dropzone input[type=file]{display:none}
+.dz-icon{font-size:40px;margin-bottom:10px}
+.dz-title{font-size:16px;font-weight:600;margin-bottom:5px}
+.dz-sub{color:var(--text2);font-size:13px}
+.dz-file{font-size:12px;color:var(--green);font-weight:600;margin-top:6px;font-family:'JetBrains Mono',monospace}
+.dz-clear{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;background:rgba(255,82,82,.2);border:1px solid rgba(255,82,82,.3);color:var(--red);font-size:13px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .2s}
+.dropzone.has-file .dz-clear{display:flex}
+.dz-clear:hover{background:rgba(255,82,82,.4)}
+
+/* ── CODE EDITOR ── */
+.code-wrap{display:none}
+.code-wrap.show{display:block}
+.code-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.code-label{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.5px}
+.code-actions{display:flex;gap:6px}
+.code-btn{padding:4px 11px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.code-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+textarea.code-input{width:100%;min-height:260px;padding:14px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:10px;color:#e0e0e0;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;resize:vertical;transition:border-color .2s}
+textarea.code-input:focus{outline:none;border-color:var(--cyan)}
+.code-fname-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.code-fname-label{font-size:12px;color:var(--text2);white-space:nowrap}
+.code-fname-input{flex:1;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-size:13px;font-family:'JetBrains Mono',monospace}
+.code-fname-input:focus{outline:none;border-color:var(--cyan)}
+.code-chars{font-size:11px;color:var(--text2)}
+
+/* ── MULTI-TAB EDITOR ── */
+.editor-tabs-bar{display:flex;align-items:center;gap:0;border-bottom:2px solid var(--border);margin-bottom:0;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+.editor-tabs-bar::-webkit-scrollbar{display:none}
+.editor-tab{display:flex;align-items:center;gap:6px;padding:8px 14px;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--text2);cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:8px 8px 0 0;white-space:nowrap;transition:all .15s;background:transparent;position:relative;top:2px;flex-shrink:0}
+.editor-tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.editor-tab.active{background:var(--card2);border-color:var(--border);color:var(--cyan);border-bottom-color:var(--card2)}
+.editor-tab .tab-ext{font-size:10px;opacity:.6}
+.editor-tab .tab-close{width:16px;height:16px;border-radius:50%;background:transparent;border:none;color:var(--text2);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;padding:0;line-height:1}
+.editor-tab .tab-close:hover{background:rgba(255,82,82,.25);color:var(--red)}
+.editor-tab-add{padding:6px 10px;font-size:16px;color:var(--text2);cursor:pointer;border-radius:6px;transition:all .15s;flex-shrink:0;background:none;border:none;top:2px;position:relative}
+.editor-tab-add:hover{color:var(--cyan);background:rgba(0,229,255,.08)}
+.editor-tab-name{outline:none;background:transparent;border:none;color:inherit;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;width:80px;cursor:text}
+.editor-tab-name:focus{border-bottom:1px solid var(--cyan);color:var(--cyan)}
+.editor-body{background:rgba(0,0,0,.4);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:14px;min-height:260px;position:relative}
+.editor-pane{display:none}
+.editor-pane.active{display:flex;flex-direction:column;gap:8px}
+textarea.tab-code{width:100%;min-height:220px;padding:0;background:transparent;border:none;color:#e0e0e0;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;resize:vertical;outline:none}
+.editor-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.etool-btn{padding:4px 11px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.etool-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.etool-label{font-size:11px;color:var(--text2)}
+.new-tab-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:3000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.new-tab-modal.show{display:flex}
+.new-tab-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;width:320px;max-width:90vw}
+.new-tab-box h4{font-size:15px;font-weight:700;color:var(--cyan);margin-bottom:14px}
+.new-tab-type{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ntt-btn{padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .2s}
+.ntt-btn:hover,.ntt-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.08)}
+.new-tab-input{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:12px}
+.new-tab-input:focus{outline:none;border-color:var(--cyan)}
+.new-tab-actions{display:flex;gap:8px}
+.new-tab-actions button{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.nta-ok{background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#000}
+.nta-ok:hover{transform:translateY(-1px)}
+.nta-cancel{border:1px solid var(--border);background:transparent;color:var(--text2)}
+.nta-cancel:hover{border-color:var(--red);color:var(--red)}
+
+/* ── BOARD GRID ── */
+.board-section{margin-bottom:20px}
+.board-cat{font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
+.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:15px}
+.board-btn{padding:10px 8px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;line-height:1.4}
+.board-btn:hover{border-color:var(--cyan);color:var(--text);transform:translateY(-2px)}
+.board-btn.selected{background:rgba(0,229,255,.15);border-color:var(--cyan);color:var(--cyan)}
+.board-btn.avr.selected{background:rgba(30,144,255,.15);border-color:var(--blue);color:var(--blue)}
+.board-btn.esp8.selected{background:rgba(0,230,118,.15);border-color:var(--green);color:var(--green)}
+.board-btn.esp32.selected{background:rgba(180,124,255,.15);border-color:var(--purple);color:var(--purple)}
+.board-btn.rp2040.selected{background:rgba(255,152,0,.15);border-color:var(--orange);color:var(--orange)}
+.board-btn.stm32.selected{background:rgba(100,108,255,.15);border-color:#646cff;color:#a5b4ff}
+.board-btn.teensy.selected{background:rgba(255,217,102,.15);border-color:var(--yellow);color:var(--yellow)}
+
+/* ── QUEUE BOX ── */
+.queue-box{display:none;padding:14px;border-radius:12px;margin-bottom:12px;background:rgba(180,124,255,.08);border:1px solid rgba(180,124,255,.25)}
+.queue-box.show{display:block}
+.queue-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.queue-icon{font-size:20px}
+.queue-title{font-weight:700;font-size:13px;color:var(--purple)}
+.queue-pos{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--purple);color:#000;font-weight:700;font-size:13px;margin-left:auto;flex-shrink:0}
+.q-spinner{width:15px;height:15px;border:2px solid rgba(180,124,255,.3);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-right:4px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.q-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.q-badge.waiting{background:rgba(180,124,255,.15);color:var(--purple);border:1px solid rgba(180,124,255,.3)}
+.q-badge.running{background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
+
+/* ── PROGRESS ── */
+.progress{display:none;margin-bottom:12px}
+.progress.show{display:block}
+.progress-track{height:6px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:4px;transition:width .5s ease,background .3s}
+.progress-info{display:flex;justify-content:space-between;font-size:12px;color:var(--text2)}
+
+/* ── STATUS ── */
+.status{display:none;padding:13px 16px;border-radius:10px;margin-bottom:12px;font-size:13px;white-space:pre-wrap;line-height:1.6;font-family:'JetBrains Mono',monospace;font-size:12px}
+.status.show{display:block}
+.status.loading{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan)}
+.status.success{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);color:var(--green)}
+.status.error{background:rgba(255,82,82,.08);border:1px solid rgba(255,82,82,.2);color:#ff8a80}
+
+/* ── BUTTONS ── */
+.btn-primary{width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#000;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,150,238,.35)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-primary.multi{background:linear-gradient(135deg,#00b09b,var(--green))}
+.btn-download{display:none;width:100%;padding:12px;border-radius:12px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:var(--green);font-size:14px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;transition:all .2s;margin-top:8px}
+.btn-download.show{display:block}
+.btn-download:hover{background:rgba(0,230,118,.2)}
+.btn-recompile{display:none;width:100%;padding:12px;border-radius:12px;border:2px solid var(--cyan);background:rgba(0,229,255,.07);color:var(--cyan);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px}
+.btn-recompile.show{display:block}
+.btn-recompile:hover{background:rgba(0,229,255,.15)}
+.lib-notice{display:none;padding:11px 14px;border-radius:10px;margin-top:8px;background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.3);font-size:13px;color:var(--green)}
+.lib-notice.show{display:block}
+
+/* ── ERROR LOG ── */
+.log-toggle{display:none;align-items:center;gap:6px;background:transparent;border:none;color:var(--text2);font-size:12px;cursor:pointer;padding:6px 0;margin-top:6px;font-family:'JetBrains Mono',monospace}
+.log-toggle.show{display:inline-flex}
+.log-toggle:hover{color:var(--cyan)}
+.log-box{display:none;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#ff8a80;white-space:pre-wrap;max-height:240px;overflow-y:auto;margin-top:6px;line-height:1.5}
+.log-box.show{display:block}
+
+/* ── AI FIX ── */
+.ai-panel{display:none;margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid rgba(180,124,255,.35)}
+.ai-panel.show{display:block}
+.ai-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(180,124,255,.1);border-bottom:1px solid rgba(180,124,255,.2)}
+.ai-title{font-size:13px;font-weight:700;color:var(--purple)}
+.ai-sub{font-size:11px;color:var(--text2);margin-top:1px}
+.ai-fix-btn{padding:5px 13px;border-radius:7px;border:1px solid rgba(180,124,255,.4);background:rgba(180,124,255,.1);color:var(--purple);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.ai-fix-btn:hover{background:rgba(180,124,255,.2)}
+.ai-fix-btn:disabled{opacity:.5;cursor:not-allowed}
+.ai-body{padding:12px 14px}
+.ai-explain{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px;white-space:pre-wrap}
+.ai-code{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#e0e0e0;white-space:pre-wrap;overflow-x:auto;max-height:300px;overflow-y:auto;margin-bottom:10px;line-height:1.5}
+.ai-actions{display:flex;gap:8px}
+.btn-apply{flex:1;padding:10px;border-radius:8px;background:rgba(180,124,255,.12);border:1px solid rgba(180,124,255,.35);color:var(--purple);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-apply:hover{background:rgba(180,124,255,.22)}
+.btn-apply-compile{flex:1;padding:10px;border-radius:8px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);color:var(--cyan);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-apply-compile:hover{background:rgba(0,229,255,.18)}
+.ai-loading{display:flex;align-items:center;gap:10px;padding:14px 0;color:var(--text2);font-size:13px}
+.ai-spinner{width:18px;height:18px;border:2px solid rgba(180,124,255,.3);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+
+/* ── TEMPLATE MODAL ── */
+.modal-template{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.modal-content{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:900px;width:95%;max-height:85vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.modal-header h3{font-size:20px;color:var(--cyan)}
+.modal-close{background:none;border:none;color:var(--text2);font-size:24px;cursor:pointer;padding:0 8px}
+.modal-close:hover{color:var(--cyan)}
+.template-cat{font-size:16px;font-weight:700;color:var(--cyan);margin:25px 0 15px;border-left:3px solid var(--cyan);padding-left:12px}
+.template-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:20px}
+.template-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:15px;cursor:pointer;transition:all .2s}
+.template-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 5px 20px rgba(0,229,255,.15)}
+.template-name{font-weight:700;font-size:14px;margin-bottom:6px;color:var(--cyan)}
+.template-desc{font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5}
+.template-meta{display:flex;gap:8px;font-size:11px;flex-wrap:wrap}
+.template-difficulty{background:rgba(255,255,255,.1);padding:3px 8px;border-radius:4px}
+.template-libs{color:var(--green);background:rgba(0,230,118,.1);padding:3px 8px;border-radius:4px}
+
+/* ── INFO CHIPS ── */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text2)}
+
+/* ── SERVER QUEUE BADGE ── */
+#sqInfo .dot{transition:background .3s}
+
+/* ── AI CHATBOT ── */
+.ai-chat-wrap{margin-top:14px;border-radius:14px;border:1px solid rgba(0,229,255,.25);overflow:hidden;background:rgba(0,229,255,.03)}
+.ai-chat-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;background:rgba(0,229,255,.07);transition:background .2s}
+.ai-chat-hdr:hover{background:rgba(0,229,255,.12)}
+.ai-chat-title{font-size:14px;font-weight:700;color:var(--cyan)}
+.ai-chat-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.ai-chat-badge{background:rgba(0,229,255,.15);color:var(--cyan);border:1px solid rgba(0,229,255,.3);border-radius:20px;font-size:10px;font-weight:700;padding:3px 9px}
+.ai-chat-toggle-icon{color:var(--text2);font-size:12px;transition:transform .2s}
+.ai-chat-wrap.collapsed .ai-chat-toggle-icon{transform:rotate(-90deg)}
+.ai-chat-body{display:block}
+.ai-chat-wrap.collapsed .ai-chat-body{display:none}
+.ai-chat-msgs{max-height:380px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.ai-chat-welcome{text-align:center;padding:20px 10px}
+.ai-chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;justify-content:center}
+.ai-chat-suggestions button{padding:7px 13px;border-radius:20px;border:1px solid rgba(0,229,255,.25);background:rgba(0,229,255,.07);color:var(--cyan);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.ai-chat-suggestions button:hover{background:rgba(0,229,255,.18);border-color:var(--cyan)}
+.ai-msg{display:flex;gap:10px;max-width:100%}
+.ai-msg.user{flex-direction:row-reverse}
+.ai-msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ai-msg.user .ai-msg-avatar{background:rgba(0,229,255,.2)}
+.ai-msg.bot .ai-msg-avatar{background:rgba(180,124,255,.2)}
+.ai-msg-bubble{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.ai-msg.user .ai-msg-bubble{background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.2);color:var(--text);border-radius:12px 4px 12px 12px}
+.ai-msg.bot .ai-msg-bubble{background:rgba(180,124,255,.1);border:1px solid rgba(180,124,255,.2);color:var(--text);border-radius:4px 12px 12px 12px}
+.ai-msg-bubble code{background:rgba(0,0,0,.4);padding:1px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.ai-msg-bubble pre{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px;overflow-x:auto;margin:8px 0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.5}
+.ai-msg-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ai-msg-action-btn{padding:4px 10px;border-radius:6px;border:1px solid rgba(180,124,255,.3);background:rgba(180,124,255,.08);color:var(--purple);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.ai-msg-action-btn:hover{background:rgba(180,124,255,.2)}
+.ai-msg-action-btn.green{border-color:rgba(0,230,118,.3);background:rgba(0,230,118,.08);color:var(--green)}
+.ai-msg-action-btn.green:hover{background:rgba(0,230,118,.2)}
+.ai-chat-typing{display:flex;gap:5px;align-items:center;padding:8px 14px;background:rgba(180,124,255,.08);border-radius:12px;border:1px solid rgba(180,124,255,.15);width:fit-content}
+.ai-typing-dot{width:7px;height:7px;border-radius:50%;background:var(--purple);animation:typingBounce 1.2s infinite}
+.ai-typing-dot:nth-child(2){animation-delay:.2s}
+.ai-typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.ai-chat-input-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);align-items:flex-end}
+.ai-chat-input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-size:13px;font-family:'Inter',sans-serif;resize:none;line-height:1.5;transition:border-color .2s}
+.ai-chat-input:focus{outline:none;border-color:var(--cyan)}
+.ai-chat-send{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#000;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.ai-chat-send:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,150,238,.4)}
+.ai-chat-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ── TOAST ── */
+#toastWrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:var(--card);border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,.4);font-size:13px;font-weight:600;min-width:220px;max-width:320px;pointer-events:auto;animation:slideIn .3s ease;backdrop-filter:blur(20px)}
+.toast.success{border-color:rgba(0,230,118,.3);color:var(--green)}
+.toast.error{border-color:rgba(255,82,82,.3);color:#ff8a80}
+.toast.info{border-color:rgba(0,229,255,.3);color:var(--cyan)}
+.toast.warning{border-color:rgba(255,152,0,.3);color:var(--orange)}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── LIB PANEL ── */
+.lib-panel{position:fixed;bottom:24px;left:24px;width:280px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);z-index:1000;transition:all .3s;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.lib-panel.collapsed .lib-body{display:none}
+.lib-ph{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;border-bottom:1px solid var(--border)}
+.lib-ph-title{font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:.5px}
+.lib-ph-right{display:flex;align-items:center;gap:8px}
+.lib-count-badge{background:rgba(180,124,255,.15);color:var(--purple);border:1px solid rgba(180,124,255,.3);border-radius:20px;font-size:11px;font-weight:700;padding:2px 8px}
+.lib-body{padding:16px}
+.lib-search{width:100%;padding:8px 12px;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:12px}
+.lib-search:focus{outline:none;border-color:var(--cyan)}
+.lib-list{max-height:200px;overflow-y:auto;font-size:11px;color:var(--text2);font-family:'JetBrains Mono',monospace;margin-bottom:12px}
+.lib-item{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.05)}
+.lib-actions{display:flex;gap:8px}
+.lib-btn{flex:1;padding:8px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.lib-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.lib-btn.primary{background:rgba(0,229,255,.1);border-color:var(--cyan);color:var(--cyan)}
+
+/* ── INSTALL MODAL ── */
+.install-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.install-modal.show{display:flex}
+.install-content{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;width:360px;max-width:90vw}
+.install-title{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--cyan)}
+.install-input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--text);font-size:14px;margin-bottom:12px}
+.install-input:focus{outline:none;border-color:var(--cyan)}
+.install-actions{display:flex;gap:8px}
+.install-btn{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.install-btn.primary{background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#000}
+.install-btn.primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,229,255,.3)}
+.install-btn.secondary{border:1px solid var(--border);background:transparent;color:var(--text2)}
+.install-btn.secondary:hover{border-color:var(--cyan);color:var(--cyan)}
+.install-status{margin-top:12px;font-size:12px;color:var(--text2);min-height:20px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .header-inner{padding:0 10px}
+  .logo span{display:none}
+  .board-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+  .lib-panel{width:240px}
+}
+@media(max-width:640px){
+  .lib-panel{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="toastWrap"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <span>ARDUINO CONVERTER PRO + AI</span>
+      <span class="badge-v">v2.5</span>
+    </div>
+    <div class="header-right">
+      <div class="hbadge" id="sqInfo" title="Antrian server">
+        <div class="dot" style="background:var(--green)"></div>
+        <span id="sqText">Antrian: kosong</span>
+      </div>
+      <div class="hbadge" onclick="toggleLibPanel()" style="cursor:pointer" title="Library terinstall (162 library)">
+        <span>📚</span>
+        <span id="libCountHdr">162 library</span>
+      </div>
+      <div class="hbadge" onclick="showTemplateModal()" style="cursor:pointer" title="35 template project">
+        <span>📋</span>
+        <span>35 Template</span>
+      </div>
+      <div class="status-badge">SERVER AKTIF</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="wrap">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('single')">⚡ SINGLE BOARD</div>
+    <div class="tab" onclick="switchTab('multi')">🔀 MULTI BOARD</div>
+  </div>
+
+  <!-- ══ SINGLE TAB ══ -->
+  <div id="tabSingle" class="tab-content active">
+
+    <!-- Input Card -->
+    <div class="card">
+      <div class="card-title"><span>📁</span> INPUT KODE</div>
+
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="modeFileBtn" onclick="setInputMode('file')">📂 Upload File .ino</button>
+        <button class="mode-btn" id="modeCodeBtn" onclick="setInputMode('code')">✏️ Paste Kode</button>
+      </div>
+
+      <!-- File mode -->
+      <div id="fileWrap">
+        <div class="dropzone" id="dropS"
+             onclick="document.getElementById('fileS').click()"
+             ondragover="onDragOver(event,'S')" ondragleave="onDragLeave(event,'S')" ondrop="onDrop(event,'S')">
+          <button class="dz-clear" onclick="clearFile('S',event)" title="Hapus">✕</button>
+          <div class="dz-icon" id="iconS">📄</div>
+          <div class="dz-title" id="titleS">Drop file .ino atau .zip di sini</div>
+          <div class="dz-sub">atau <strong>klik untuk pilih file</strong> &nbsp;·&nbsp; ZIP berisi folder sketch Arduino</div>
+          <div class="dz-file" id="fileInfoS"></div>
+          <input type="file" id="fileS" accept=".ino,.zip" onchange="onFileSelect('S',this)">
+        </div>
+      </div>
+
+      <!-- Code mode: Multi-Tab Editor -->
+      <div class="code-wrap" id="codeWrap">
+        <div class="editor-toolbar">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="etool-label" id="editorTabCount">1 file</span>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="etool-btn" onclick="showTemplateModal()">📋 Template</button>
+            <button class="etool-btn" onclick="editorImportFile()">📂 Import</button>
+            <button class="etool-btn" onclick="editorClearAll()">🗑 Hapus Semua</button>
+          </div>
+        </div>
+        <div class="editor-tabs-bar" id="editorTabsBar">
+          <!-- tabs injected by JS -->
+          <button class="editor-tab-add" onclick="showNewTabModal()" title="Tambah file baru">＋</button>
+        </div>
+        <div class="editor-body" id="editorBody">
+          <!-- panes injected by JS -->
+        </div>
+        <!-- hidden file input for import -->
+        <input type="file" id="editorImportInput" style="display:none" accept=".ino,.h,.cpp,.c" multiple onchange="editorHandleImport(this)">
+      </div>
+
+      <!-- New Tab Modal -->
+      <div class="new-tab-modal" id="newTabModal">
+        <div class="new-tab-box">
+          <h4>➕ Tambah File Baru</h4>
+          <div class="new-tab-type">
+            <button class="ntt-btn active" id="nttIno" onclick="setNewTabType('ino')">📄 .ino</button>
+            <button class="ntt-btn" id="nttH" onclick="setNewTabType('h')">📋 .h</button>
+          </div>
+          <input type="text" class="new-tab-input" id="newTabName" placeholder="Nama file..." maxlength="40"
+                 onkeydown="if(event.key==='Enter')confirmNewTab()">
+          <div class="new-tab-actions">
+            <button class="nta-ok" onclick="confirmNewTab()">✅ Buat</button>
+            <button class="nta-cancel" onclick="closeNewTabModal()">✕ Batal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Board Card -->
+    <div class="card">
+      <div class="card-title"><span>🎯</span> PILIH BOARD TARGET (85+ BOARD)</div>
+      
+      <div class="board-section">
+        <div class="board-cat">🔵 AVR — ARDUINO CLASSIC (8-BIT)</div>
+        <div class="board-grid" id="boardAvr"></div>
+      </div>
+      
+      <div class="board-section">
+        <div class="board-cat">🟢 ESP8266 — WIFI SOC</div>
+        <div class="board-grid" id="boardEsp8"></div>
+      </div>
+      
+      <div class="board-section">
+        <div class="board-cat">🟣 ESP32 — DUAL-CORE WIFI+BT</div>
+        <div class="board-grid" id="boardEsp32"></div>
+      </div>
+      
+      <div class="board-section">
+        <div class="board-cat">🟠 RP2040 — RASPBERRY PI SILICON</div>
+        <div class="board-grid" id="boardRp2040"></div>
+      </div>
+      
+      <div class="board-section">
+        <div class="board-cat">🔴 STM32 — ARM CORTEX</div>
+        <div class="board-grid" id="boardStm32"></div>
+      </div>
+      
+      <div class="board-section">
+        <div class="board-cat">🟡 TEENSY — HIGH PERFORMANCE</div>
+        <div class="board-grid" id="boardTeensy"></div>
+      </div>
+    </div>
+
+    <!-- Compile Card -->
+    <div class="card">
+      <div class="card-title"><span>⚙️</span> KOMPILASI + AI ANALYZER</div>
+
+      <div class="queue-box" id="qboxS">
+        <div class="queue-row">
+          <span class="queue-icon">🕐</span>
+          <div>
+            <div class="queue-title" id="qtitleS">Menunggu antrian...</div>
+            <div style="font-size:11px;color:var(--text2);margin-top:2px">Compile berjalan satu per satu</div>
+          </div>
+          <div class="queue-pos" id="qposS">1</div>
+        </div>
+        <span class="q-badge waiting" id="qbadgeS"><span class="q-spinner"></span> WAITING</span>
+      </div>
+
+      <div class="progress" id="progS">
+        <div class="progress-track"><div class="progress-bar" id="progBarS"></div></div>
+        <div class="progress-info">
+          <span id="progLabelS">Memulai...</span>
+          <span id="progPctS">0%</span>
+        </div>
+      </div>
+
+      <div class="status" id="statusS"></div>
+
+      <button class="btn-primary" id="btnCompileS" onclick="compileSingle()" disabled>
+        ⚡ KOMPILASI SEKARANG
+      </button>
+
+      <button class="btn-download" id="btnDlS" onclick="triggerDownload('S')" style="width:100%;text-decoration:none;background:none;cursor:pointer">⬇ DOWNLOAD HASIL</button>
+
+      <div class="lib-notice" id="libNoticeS"></div>
+      <button class="btn-recompile" id="btnRecompileS" onclick="recompile()">
+        🔄 COMPILE ULANG (library sudah terinstall)
+      </button>
+
+      <button class="log-toggle" id="logToggleS" onclick="toggleLog('S')">
+        <span id="logArrowS">▶</span>&nbsp;LIHAT ERROR LOG
+      </button>
+      <div class="log-box" id="logS"></div>
+
+      <!-- AI Fix -->
+      <div class="ai-panel" id="aiPanelS">
+        <div class="ai-hdr">
+          <div>
+            <div class="ai-title">🤖 Local AI Analyzer</div>
+            <div class="ai-sub">Deteksi error otomatis tanpa internet</div>
+          </div>
+          <button class="ai-fix-btn" id="aiBtnS" onclick="analyzeError()">🔍 Analisis Error</button>
+        </div>
+        <div class="ai-body" id="aiBodyS">
+          <div style="font-size:13px;color:var(--text2);padding:6px 0">
+            Klik <strong style="color:var(--purple)">🔍 Analisis Error</strong> untuk analisis error terakhir.
+          </div>
+        </div>
+      </div>
+
+      <!-- AI CHATBOT -->
+      <div class="ai-chat-wrap" id="aiChatWrap">
+        <div class="ai-chat-hdr" onclick="toggleAiChat()">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px">🤖</span>
+            <div>
+              <div class="ai-chat-title">Tanya AI tentang Kode</div>
+              <div class="ai-chat-sub">Fungsi, saran, fix error, optimasi — semua bisa ditanya</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="ai-chat-badge" id="aiChatBadge">OpenRouter AI</span>
+            <span class="ai-chat-toggle-icon" id="aiChatIcon">▼</span>
+          </div>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+          <div class="ai-chat-msgs" id="aiChatMsgs">
+            <div class="ai-chat-welcome">
+              <div style="font-size:28px;margin-bottom:8px">👋</div>
+              <div style="font-weight:700;color:var(--cyan);margin-bottom:6px">Halo! Aku RF Project Assistant</div>
+              <div style="color:var(--text2);font-size:13px;line-height:1.6">Tanya aku tentang kode kamu:<br>fungsi, error, optimasi, atau saran</div>
+              <div class="ai-chat-suggestions">
+                <button onclick="chatSuggest('Jelaskan fungsi kode ini secara keseluruhan')">📖 Jelaskan fungsi kode</button>
+                <button onclick="chatSuggest('Apakah ada masalah atau bug di kode ini?')">🐛 Cek bug / masalah</button>
+                <button onclick="chatSuggest('Berikan saran optimasi untuk kode ini')">⚡ Saran optimasi</button>
+                <button onclick="chatSuggest('Library apa saja yang dibutuhkan kode ini?')">📚 Cek library</button>
+                <button onclick="chatSuggest('Bagaimana cara upload kode ini ke board?')">📤 Cara upload</button>
+                <button onclick="chatSuggest('Tambahkan komentar penjelasan di setiap bagian kode')">💬 Tambah komentar</button>
+              </div>
+            </div>
+          </div>
+          <div class="ai-chat-input-row">
+            <textarea class="ai-chat-input" id="aiChatInput" placeholder="Tanya sesuatu tentang kode kamu..." rows="2"
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+            <button class="ai-chat-send" id="aiChatSendBtn" onclick="sendChat()">
+              <span id="aiChatSendIcon">➤</span>
+            </button>
+          </div>
+          <div style="font-size:11px;color:var(--text2);margin-top:6px;text-align:center">
+            Enter untuk kirim · Shift+Enter untuk baris baru · AI otomatis baca kode kamu
+          </div>
+        </div>
+      </div>
+
+      <div class="chips">
+        <span class="chip">🔵 AVR</span><span class="chip">🟢 ESP8266</span>
+        <span class="chip">🟣 ESP32</span><span class="chip">🟠 RP2040</span>
+        <span class="chip">🔴 STM32</span><span class="chip">🟡 Teensy</span>
+        <span class="chip">⚡ 85+ Board</span><span class="chip">📋 35 Template</span>
+        <span class="chip">📚 162 Library</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MULTI TAB ══ -->
+  <div id="tabMulti" class="tab-content">
+
+    <div class="card">
+      <div class="card-title"><span>📁</span> UPLOAD FILE .INO</div>
+      <div class="dropzone" id="dropM"
+           onclick="document.getElementById('fileM').click()"
+           ondragover="onDragOver(event,'M')" ondragleave="onDragLeave(event,'M')" ondrop="onDrop(event,'M')">
+        <button class="dz-clear" onclick="clearFile('M',event)" title="Hapus">✕</button>
+        <div class="dz-icon" id="iconM">📄</div>
+        <div class="dz-title" id="titleM">Drop file .ino di sini</div>
+        <div class="dz-sub">atau <strong>klik untuk pilih file</strong></div>
+        <div class="dz-file" id="fileInfoM"></div>
+        <input type="file" id="fileM" accept=".ino" onchange="onFileSelect('M',this)">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🎯</span> PILIH BOARD TARGET (bisa pilih banyak)</div>
+      <div class="board-section">
+        <div class="board-cat">🔵 AVR</div>
+        <div class="board-grid" id="mboardAvr"></div>
+      </div>
+      <div class="board-section">
+        <div class="board-cat">🟢 ESP8266</div>
+        <div class="board-grid" id="mboardEsp8"></div>
+      </div>
+      <div class="board-section">
+        <div class="board-cat">🟣 ESP32</div>
+        <div class="board-grid" id="mboardEsp32"></div>
+      </div>
+      <div style="font-size:12px;color:var(--text2);margin-top:10px">
+        Dipilih: <strong id="selCount" style="color:var(--cyan)">0</strong> board
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>⚙️</span> KOMPILASI MULTI BOARD</div>
+
+      <div class="queue-box" id="qboxM">
+        <div class="queue-row">
+          <span class="queue-icon">🕐</span>
+          <div>
+            <div class="queue-title" id="qtitleM">Menunggu antrian...</div>
+            <div style="font-size:11px;color:var(--text2);margin-top:2px">Board dikompilasi satu per satu</div>
+          </div>
+          <div class="queue-pos" id="qposM">1</div>
+        </div>
+        <span class="q-badge waiting" id="qbadgeM"><span class="q-spinner"></span> WAITING</span>
+      </div>
+
+      <div class="progress" id="progM">
+        <div class="progress-track"><div class="progress-bar" id="progBarM"></div></div>
+        <div class="progress-info"><span id="progLabelM">Memulai...</span><span id="progPctM">0%</span></div>
+      </div>
+
+      <div class="status" id="statusM"></div>
+
+      <button class="btn-primary multi" id="btnCompileM" onclick="compileMulti()" disabled>
+        🔀 KOMPILASI SEMUA BOARD
+      </button>
+
+      <button class="btn-download" id="btnDlM" onclick="triggerDownload('M')" style="width:100%;text-decoration:none;background:none;cursor:pointer">⬇ DOWNLOAD HASIL</button>
+
+      <button class="log-toggle" id="logToggleM" onclick="toggleLog('M')">
+        <span id="logArrowM">▶</span>&nbsp;LIHAT ERROR LOG
+      </button>
+      <div class="log-box" id="logM"></div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- LIBRARY PANEL -->
+<div class="lib-panel collapsed" id="libPanel">
+  <div class="lib-ph" onclick="toggleLibPanel()">
+    <span class="lib-ph-title">📚 INSTALLED LIBRARIES</span>
+    <div class="lib-ph-right">
+      <span class="lib-count-badge" id="libCount">162</span>
+      <span style="font-size:11px;color:var(--text2)" id="libArrow">▲</span>
+    </div>
+  </div>
+  <div class="lib-body">
+    <input class="lib-search" id="libSearch" placeholder="Cari library..." oninput="filterLibs()">
+    <div class="lib-list" id="libList">⏳ Memuat 162 library...</div>
+    <div class="lib-actions">
+      <button class="lib-btn" onclick="loadLibs()">🔄 Refresh</button>
+      <button class="lib-btn primary" onclick="showInstallModal()">+ Install</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATE MODAL -->
+<div id="templateModal" class="modal-template" onclick="if(event.target===this) closeTemplateModal()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>📋 TEMPLATE PROJECT (35+ TEMPLATE)</h3>
+      <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="templateList">⏳ Memuat template...</div>
+  </div>
+</div>
+
+<!-- INSTALL MODAL -->
+<div id="installModal" class="install-modal" onclick="if(event.target===this) closeModal()">
+  <div class="install-content">
+    <div class="install-title">📦 Install Library Baru</div>
+    <input class="install-input" id="libInstallInput" placeholder="Nama library (contoh: ArduinoJson)" onkeydown="if(event.key==='Enter')installLib()">
+    <div class="install-actions">
+      <button class="install-btn secondary" onclick="closeModal()">Batal</button>
+      <button class="install-btn primary" onclick="installLib()">Install</button>
+    </div>
+    <div class="install-status" id="installStatus"></div>
+  </div>
+</div>
+
+<script>
+// ============== BOARDS DATA (85+ board) ==============
+const BOARDS = {
+  // AVR (15 board)
+  "uno": {label:"Arduino Uno", cat:"avr", emoji:"🔵"},
+  "nano": {label:"Arduino Nano", cat:"avr", emoji:"🔵"},
+  "nano_old": {label:"Nano Old BL", cat:"avr", emoji:"🔵"},
+  "mega": {label:"Mega 2560", cat:"avr", emoji:"🔵"},
+  "pro_mini_5v": {label:"Pro Mini 5V", cat:"avr", emoji:"🔵"},
+  "pro_mini_3v": {label:"Pro Mini 3.3V", cat:"avr", emoji:"🔵"},
+  "leonardo": {label:"Leonardo", cat:"avr", emoji:"🔵"},
+  "micro": {label:"Micro", cat:"avr", emoji:"🔵"},
+  "due": {label:"Due", cat:"avr", emoji:"🔵"},
+  "yun": {label:"Yun", cat:"avr", emoji:"🔵"},
+  "esplora": {label:"Esplora", cat:"avr", emoji:"🔵"},
+  "robot": {label:"Robot", cat:"avr", emoji:"🔵"},
+  "zero": {label:"Zero", cat:"avr", emoji:"🔵"},
+  "mkr1000": {label:"MKR1000", cat:"avr", emoji:"🔵"},
+  "mkr_wifi_1010": {label:"MKR WiFi 1010", cat:"avr", emoji:"🔵"},
+  
+  // ESP8266 (10 board)
+  "nodemcu": {label:"NodeMCU 1.0", cat:"esp8", emoji:"🟢"},
+  "wemos_d1": {label:"Wemos D1 Mini", cat:"esp8", emoji:"🟢"},
+  "esp01": {label:"ESP-01", cat:"esp8", emoji:"🟢"},
+  "esp12e": {label:"ESP-12E", cat:"esp8", emoji:"🟢"},
+  "esp07": {label:"ESP-07", cat:"esp8", emoji:"🟢"},
+  "esp8266_generic": {label:"ESP8266 Generic", cat:"esp8", emoji:"🟢"},
+  "d1_mini_pro": {label:"D1 Mini Pro", cat:"esp8", emoji:"🟢"},
+  "wemos_d1_r32": {label:"Wemos D1 R32", cat:"esp8", emoji:"🟢"},
+  "espduino": {label:"ESPduino", cat:"esp8", emoji:"🟢"},
+  "huzzah": {label:"Adafruit Huzzah", cat:"esp8", emoji:"🟢"},
+  
+  // ESP32 (15 board)
+  "esp32": {label:"ESP32 Dev", cat:"esp32", emoji:"🟣"},
+  "esp32s3": {label:"ESP32-S3", cat:"esp32", emoji:"🟣"},
+  "esp32c3": {label:"ESP32-C3", cat:"esp32", emoji:"🟣"},
+  "esp32c6": {label:"ESP32-C6", cat:"esp32", emoji:"🟣"},
+  "esp32s2": {label:"ESP32-S2", cat:"esp32", emoji:"🟣"},
+  "lolin32": {label:"Lolin32", cat:"esp32", emoji:"🟣"},
+  "ttgo_t7": {label:"TTGO T7", cat:"esp32", emoji:"🟣"},
+  "ttgo_t_display": {label:"TTGO T-Display", cat:"esp32", emoji:"🟣"},
+  "heltec_wifi_kit_32": {label:"Heltec WiFi Kit 32", cat:"esp32", emoji:"🟣"},
+  "heltec_wifi_lora_32": {label:"Heltec WiFi LoRa 32", cat:"esp32", emoji:"🟣"},
+  "m5stack_core": {label:"M5Stack Core", cat:"esp32", emoji:"🟣"},
+  "m5stick_c": {label:"M5Stick-C", cat:"esp32", emoji:"🟣"},
+  "esp32_poe": {label:"ESP32-PoE", cat:"esp32", emoji:"🟣"},
+  "esp32_eth": {label:"ESP32 Ethernet", cat:"esp32", emoji:"🟣"},
+  "esp32_pico": {label:"ESP32-PICO", cat:"esp32", emoji:"🟣"},
+  
+  // RP2040 (8 board)
+  "pico": {label:"RPi Pico", cat:"rp2040", emoji:"🟠"},
+  "pico_w": {label:"Pico W", cat:"rp2040", emoji:"🟠"},
+  "feather_rp2040": {label:"Feather RP2040", cat:"rp2040", emoji:"🟠"},
+  "qtpy_rp2040": {label:"QT Py RP2040", cat:"rp2040", emoji:"🟠"},
+  "itsybitsy_rp2040": {label:"ItsyBitsy RP2040", cat:"rp2040", emoji:"🟠"},
+  "nano_rp2040": {label:"Nano RP2040", cat:"rp2040", emoji:"🟠"},
+  "waveshare_rp2040": {label:"Waveshare RP2040", cat:"rp2040", emoji:"🟠"},
+  "xiao_rp2040": {label:"XIAO RP2040", cat:"rp2040", emoji:"🟠"},
+  
+  // STM32 (12 board)
+  "bluepill": {label:"Blue Pill", cat:"stm32", emoji:"🔴"},
+  "blackpill_f4": {label:"Black Pill F4", cat:"stm32", emoji:"🔴"},
+  "blackpill_f411": {label:"Black Pill F411", cat:"stm32", emoji:"🔴"},
+  "nucleo_f103": {label:"Nucleo F103", cat:"stm32", emoji:"🔴"},
+  "nucleo_f401": {label:"Nucleo F401", cat:"stm32", emoji:"🔴"},
+  "nucleo_f411": {label:"Nucleo F411", cat:"stm32", emoji:"🔴"},
+  "stm32f103": {label:"STM32F103", cat:"stm32", emoji:"🔴"},
+  "stm32f407": {label:"STM32F407", cat:"stm32", emoji:"🔴"},
+  "stm32f746": {label:"STM32F746", cat:"stm32", emoji:"🔴"},
+  "stm32h743": {label:"STM32H743", cat:"stm32", emoji:"🔴"},
+  "stm32g070": {label:"STM32G070", cat:"stm32", emoji:"🔴"},
+  "stm32l476": {label:"STM32L476", cat:"stm32", emoji:"🔴"},
+  
+  // Teensy (6 board)
+  "teensy41": {label:"Teensy 4.1", cat:"teensy", emoji:"🟡"},
+  "teensy40": {label:"Teensy 4.0", cat:"teensy", emoji:"🟡"},
+  "teensy36": {label:"Teensy 3.6", cat:"teensy", emoji:"🟡"},
+  "teensy35": {label:"Teensy 3.5", cat:"teensy", emoji:"🟡"},
+  "teensy32": {label:"Teensy 3.2", cat:"teensy", emoji:"🟡"},
+  "teensy_2": {label:"Teensy 2.0", cat:"teensy", emoji:"🟡"},
+};
+
+// ============== TEMPLATE PROJECTS (35+ template) ==============
+const TEMPLATES = {
+  // BASIC (5)
+  "blink": {
+    name: "💡 LED Blink",
+    desc: "LED kedip sederhana - program pertama Arduino",
+    cat: "basic",
+    diff: "Pemula",
+    libs: [],
+    code: `// LED Blink - Program pertama Arduino
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000);
+}`
+  },
+  "fade": {
+    name: "✨ LED Fade",
+    desc: "LED fade dengan PWM",
+    cat: "basic",
+    diff: "Pemula",
+    libs: [],
+    code: `// LED Fade dengan PWM
+int led = 9;
+int brightness = 0;
+int fadeAmount = 5;
+
+void setup() {
+  pinMode(led, OUTPUT);
+}
+
+void loop() {
+  analogWrite(led, brightness);
+  brightness += fadeAmount;
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+  delay(30);
+}`
+  },
+  "button": {
+    name: "🔘 Button Input",
+    desc: "Baca input tombol dengan debounce",
+    cat: "basic",
+    diff: "Pemula",
+    libs: [],
+    code: `// Button Input dengan debounce
+const int button = 2;
+int lastState = HIGH;
+unsigned long lastDebounce = 0;
+unsigned long debounceDelay = 50;
+
+void setup() {
+  pinMode(button, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int reading = digitalRead(button);
+  if (reading != lastState) {
+    lastDebounce = millis();
+  }
+  if ((millis() - lastDebounce) > debounceDelay) {
+    if (reading == LOW) {
+      Serial.println("Tombol ditekan!");
+    }
+  }
+  lastState = reading;
+}`
+  },
+  "serial": {
+    name: "📟 Serial Monitor",
+    desc: "Komunikasi serial dasar",
+    cat: "basic",
+    diff: "Pemula",
+    libs: [],
+    code: `// Serial Monitor - Kirim dan terima data
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Arduino siap!");
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char data = Serial.read();
+    Serial.print("Menerima: ");
+    Serial.println(data);
+  }
+  delay(100);
+}`
+  },
+  "analog_read": {
+    name: "📊 Analog Read",
+    desc: "Baca sensor analog (potensiometer)",
+    cat: "basic",
+    diff: "Pemula",
+    libs: [],
+    code: `// Baca nilai analog dari potensiometer
+int potPin = A0;
+int ledPin = 9;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  int value = analogRead(potPin);
+  int brightness = map(value, 0, 1023, 0, 255);
+  analogWrite(ledPin, brightness);
+  
+  Serial.print("Nilai: ");
+  Serial.print(value);
+  Serial.print(" -> Brightness: ");
+  Serial.println(brightness);
+  delay(100);
+}`
+  },
+  
+  // SENSOR (10)
+  "dht11": {
+    name: "🌡️ DHT11",
+    desc: "Suhu & kelembaban DHT11",
+    cat: "sensor",
+    diff: "Menengah",
+    libs: ["DHT sensor library"],
+    code: `#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  delay(2000);
+  
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Gagal membaca sensor!");
+    return;
+  }
+  
+  Serial.print("Kelembaban: ");
+  Serial.print(h);
+  Serial.print("%  Suhu: ");
+  Serial.print(t);
+  Serial.println("°C");
+}`
+  },
+  "dht22": {
+    name: "🌡️ DHT22",
+    desc: "Suhu & kelembaban DHT22 (lebih akurat)",
+    cat: "sensor",
+    diff: "Menengah",
+    libs: ["DHT sensor library"],
+    code: `#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  delay(2000);
+  
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Gagal membaca sensor!");
+    return;
+  }
+  
+  Serial.print("Kelembaban: ");
+  Serial.print(h);
+  Serial.print("%  Suhu: ");
+  Serial.print(t);
+  Serial.println("°C");
+}`
+  },
+  "ultrasonic": {
+    name: "📏 HC-SR04",
+    desc: "Pengukur jarak ultrasonic",
+    cat: "sensor",
+    diff: "Menengah",
+    libs: [],
+    code: `// HC-SR04 Ultrasonic tanpa library
+#define TRIG 9
+#define ECHO 10
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+}
+
+void loop() {
+  delay(1000);
+  
+  digitalWrite(TRIG, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG, LOW);
+  
+  long duration = pulseIn(ECHO, HIGH);
+  int distance = duration * 0.034 / 2;
+  
+  Serial.print("Jarak: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+}`
+  },
+  "bmp280": {
+    name: "🌡️ BMP280",
+    desc: "Tekanan & suhu",
+    cat: "sensor",
+    diff: "Lanjutan",
+    libs: ["Adafruit BMP280 Library"],
+    code: `#include <Wire.h>
+#include <Adafruit_BMP280.h>
+
+Adafruit_BMP280 bmp;
+
+void setup() {
+  Serial.begin(9600);
+  if (!bmp.begin(0x76)) {
+    Serial.println("BMP280 tidak ditemukan!");
+    while(1);
+  }
+}
+
+void loop() {
+  delay(2000);
+  Serial.print("Suhu: ");
+  Serial.print(bmp.readTemperature());
+  Serial.print(" C, Tekanan: ");
+  Serial.print(bmp.readPressure() / 100);
+  Serial.println(" hPa");
+}`
+  },
+  "ds18b20": {
+    name: "🌡️ DS18B20",
+    desc: "Sensor suhu 1-Wire",
+    cat: "sensor",
+    diff: "Lanjutan",
+    libs: ["OneWire", "DallasTemperature"],
+    code: `#include <OneWire.h>
+#include <DallasTemperature.h>
+
+#define ONE_WIRE_BUS 2
+
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+
+void setup() {
+  Serial.begin(9600);
+  sensors.begin();
+}
+
+void loop() {
+  sensors.requestTemperatures();
+  float temp = sensors.getTempCByIndex(0);
+  Serial.print("Suhu: ");
+  Serial.println(temp);
+  delay(1000);
+}`
+  },
+  "mq135": {
+    name: "🌫️ MQ-135",
+    desc: "Kualitas udara",
+    cat: "sensor",
+    diff: "Lanjutan",
+    libs: [],
+    code: `// MQ-135 Air Quality Sensor
+#define MQ135 A0
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(MQ135);
+  float voltage = value * (5.0 / 1023.0);
+  
+  Serial.print("Nilai: ");
+  Serial.print(value);
+  Serial.print(" | Voltase: ");
+  Serial.print(voltage);
+  Serial.println(" V");
+  
+  if (value < 200) {
+    Serial.println("Kualitas Udara: Baik");
+  } else if (value < 400) {
+    Serial.println("Kualitas Udara: Sedang");
+  } else {
+    Serial.println("Kualitas Udara: Buruk!");
+  }
+  
+  delay(2000);
+}`
+  },
+  "ldr": {
+    name: "☀️ LDR Sensor",
+    desc: "Sensor cahaya LDR",
+    cat: "sensor",
+    diff: "Pemula",
+    libs: [],
+    code: `// LDR Light Sensor
+#define LDR_PIN A0
+#define LED_PIN 9
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  int light = analogRead(LDR_PIN);
+  int brightness = map(light, 0, 1023, 255, 0);
+  analogWrite(LED_PIN, brightness);
+  
+  Serial.print("Cahaya: ");
+  Serial.print(light);
+  Serial.print(" -> LED: ");
+  Serial.println(brightness);
+  delay(200);
+}`
+  },
+  "pir": {
+    name: "🚶 PIR Motion",
+    desc: "Sensor gerak PIR",
+    cat: "sensor",
+    diff: "Pemula",
+    libs: [],
+    code: `// PIR Motion Sensor
+#define PIR_PIN 2
+#define LED_PIN 13
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(PIR_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  int motion = digitalRead(PIR_PIN);
+  if (motion == HIGH) {
+    digitalWrite(LED_PIN, HIGH);
+    Serial.println("Gerakan terdeteksi!");
+  } else {
+    digitalWrite(LED_PIN, LOW);
+  }
+  delay(200);
+}`
+  },
+  "soil_moisture": {
+    name: "💧 Soil Moisture",
+    desc: "Sensor kelembaban tanah",
+    cat: "sensor",
+    diff: "Pemula",
+    libs: [],
+    code: `// Soil Moisture Sensor
+#define SOIL_PIN A0
+#define LED_PIN 9
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  int moisture = analogRead(SOIL_PIN);
+  int dryness = map(moisture, 1023, 0, 0, 255);
+  analogWrite(LED_PIN, dryness);
+  
+  Serial.print("Kelembaban: ");
+  Serial.println(moisture);
+  
+  if (moisture < 300) {
+    Serial.println("Tanah basah");
+  } else if (moisture < 700) {
+    Serial.println("Tanah lembab");
+  } else {
+    Serial.println("Tanah kering - perlu disiram!");
+  }
+  
+  delay(1000);
+}`
+  },
+  
+  // DISPLAY (5)
+  "lcd_i2c": {
+    name: "🖥️ LCD 16x2 I2C",
+    desc: "Tampilan karakter LCD I2C",
+    cat: "display",
+    diff: "Menengah",
+    libs: ["LiquidCrystal I2C"],
+    code: `#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Hello World!");
+  lcd.setCursor(0, 1);
+  lcd.print("Arduino LCD");
+}
+
+void loop() {
+  static int count = 0;
+  lcd.setCursor(0, 1);
+  lcd.print("Count: ");
+  lcd.print(count);
+  count++;
+  delay(1000);
+}`
+  },
+  "oled_ssd1306": {
+    name: "🖥️ OLED SSD1306",
+    desc: "Display OLED 128x64 I2C",
+    cat: "display",
+    diff: "Lanjutan",
+    libs: ["Adafruit GFX Library", "Adafruit SSD1306"],
+    code: `#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_ADDR 0x3C
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+void setup() {
+  if(!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {
+    while(1);
+  }
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,0);
+  display.println("Hello OLED!");
+  display.display();
+}
+
+void loop() {
+  // animate bouncing ball
+  static int x = 10, y = 10;
+  static int dx = 2, dy = 3;
+  
+  display.clearDisplay();
+  display.fillCircle(x, y, 5, SSD1306_WHITE);
+  display.display();
+  
+  x += dx;
+  y += dy;
+  
+  if (x <= 5 || x >= SCREEN_WIDTH - 5) dx = -dx;
+  if (y <= 5 || y >= SCREEN_HEIGHT - 5) dy = -dy;
+  
+  delay(30);
+}`
+  },
+  "tft_st7735": {
+    name: "🎨 TFT ST7735",
+    desc: "TFT color display",
+    cat: "display",
+    diff: "Lanjutan",
+    libs: ["Adafruit GFX Library", "Adafruit ST7735 and ST7789 Library"],
+    code: `#include <Adafruit_GFX.h>
+#include <Adafruit_ST7735.h>
+#include <SPI.h>
+
+#define TFT_CS 10
+#define TFT_DC 9
+#define TFT_RST 8
+
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
+
+void setup() {
+  tft.initR(INITR_BLACKTAB);
+  tft.fillScreen(ST77XX_BLACK);
+  tft.setTextColor(ST77XX_WHITE);
+  tft.setTextSize(1);
+  tft.setCursor(0, 10);
+  tft.println("Hello TFT!");
+}
+
+void loop() {
+  // Draw colorful rectangles
+  for(int i=0; i<10; i++) {
+    tft.fillRect(random(10, 118), random(10, 140), 20, 20, 
+                 random(0x0000, 0xFFFF));
+    delay(100);
+  }
+}`
+  },
+  "led_matrix": {
+    name: "🎨 LED Matrix 8x8",
+    desc: "MAX7219 LED Matrix",
+    cat: "display",
+    diff: "Lanjutan",
+    libs: ["LedControl"],
+    code: `#include <LedControl.h>
+
+#define DIN 12
+#define CS 10
+#define CLK 11
+
+LedControl lc = LedControl(DIN, CLK, CS, 1);
+
+byte smiley[8] = {
+  B00111100,
+  B01000010,
+  B10100101,
+  B10000001,
+  B10100101,
+  B10011001,
+  B01000010,
+  B00111100
+};
+
+void setup() {
+  lc.shutdown(0, false);
+  lc.setIntensity(0, 8);
+  lc.clearDisplay(0);
+  
+  for (int row = 0; row < 8; row++) {
+    lc.setRow(0, row, smiley[row]);
+  }
+}
+
+void loop() { }`
+  },
+  "seven_segment": {
+    name: "🔢 7-Segment",
+    desc: "TM1637 4-digit display",
+    cat: "display",
+    diff: "Menengah",
+    libs: ["TM1637"],
+    code: `#include <TM1637Display.h>
+
+#define CLK 2
+#define DIO 3
+
+TM1637Display display(CLK, DIO);
+
+void setup() {
+  display.setBrightness(7);
+}
+
+void loop() {
+  for(int i=0; i<10000; i++) {
+    display.showNumberDec(i);
+    delay(100);
+  }
+}`
+  },
+  
+  // IOT (6)
+  "wifi_scan": {
+    name: "📡 WiFi Scanner",
+    desc: "Scan jaringan WiFi sekitar",
+    cat: "iot",
+    diff: "Menengah",
+    libs: [],
+    code: `#include <WiFi.h>
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+  delay(100);
+}
+
+void loop() {
+  Serial.println("Scanning WiFi...");
+  int n = WiFi.scanNetworks();
+  
+  if (n == 0) {
+    Serial.println("Tidak ada jaringan ditemukan");
+  } else {
+    Serial.print(n);
+    Serial.println(" jaringan ditemukan:");
+    
+    for (int i = 0; i < n; ++i) {
+      Serial.print(i + 1);
+      Serial.print(": ");
+      Serial.print(WiFi.SSID(i));
+      Serial.print(" (");
+      Serial.print(WiFi.RSSI(i));
+      Serial.print(" dBm) ");
+      Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? "Open" : "Encrypted");
+      delay(10);
+    }
+  }
+  Serial.println();
+  delay(5000);
+}`
+  },
+  "mqtt_client": {
+    name: "📨 MQTT Client",
+    desc: "Pub/Sub MQTT",
+    cat: "iot",
+    diff: "Lanjutan",
+    libs: ["PubSubClient"],
+    code: `#include <WiFi.h>
+#include <PubSubClient.h>
+
+const char* ssid = "WIFI_SSID";
+const char* password = "WIFI_PASSWORD";
+const char* mqtt_server = "broker.emqx.io";
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Pesan dari [");
+  Serial.print(topic);
+  Serial.print("]: ");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+}
+
+void reconnect() {
+  while (!client.connected()) {
+    if (client.connect("ESP32Client")) {
+      client.subscribe("test/topic");
+    } else {
+      delay(5000);
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+}`
+  },
+  "webserver": {
+    name: "🌐 Web Server",
+    desc: "Kontrol LED via browser",
+    cat: "iot",
+    diff: "Lanjutan",
+    libs: [],
+    code: `#include <WiFi.h>
+
+const char* ssid = "WIFI_SSID";
+const char* password = "WIFI_PASSWORD";
+
+WiFiServer server(80);
+String ledState = "OFF";
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
+  
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("IP: ");
+  Serial.println(WiFi.localIP());
+  
+  server.begin();
+}
+
+void loop() {
+  WiFiClient client = server.available();
+  if (client) {
+    String request = client.readStringUntil('\\r');
+    client.flush();
+    
+    if (request.indexOf("/LED=ON") != -1) {
+      digitalWrite(LED_BUILTIN, HIGH);
+      ledState = "ON";
+    } else if (request.indexOf("/LED=OFF") != -1) {
+      digitalWrite(LED_BUILTIN, LOW);
+      ledState = "OFF";
+    }
+    
+    String html = "HTTP/1.1 200 OK\\r\\n";
+    html += "Content-Type: text/html\\r\\n\\r\\n";
+    html += "<!DOCTYPE html><html><body>";
+    html += "<h1>ESP32 Web Server</h1>";
+    html += "<p>LED: " + ledState + "</p>";
+    html += "<a href=\"/LED=ON\"><button>ON</button></a>";
+    html += "<a href=\"/LED=OFF\"><button>OFF</button></a>";
+    html += "</body></html>";
+    
+    client.print(html);
+    client.stop();
+  }
+}`
+  },
+  "bluetooth_esp32": {
+    name: "📱 Bluetooth Serial",
+    desc: "Komunikasi via Bluetooth",
+    cat: "iot",
+    diff: "Menengah",
+    libs: ["BluetoothSerial"],
+    code: `#include "BluetoothSerial.h"
+
+BluetoothSerial SerialBT;
+
+void setup() {
+  Serial.begin(115200);
+  SerialBT.begin("ESP32_BT");
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  if (SerialBT.available()) {
+    char c = SerialBT.read();
+    if (c == '1') {
+      digitalWrite(LED_BUILTIN, HIGH);
+      SerialBT.println("LED ON");
+    } else if (c == '0') {
+      digitalWrite(LED_BUILTIN, LOW);
+      SerialBT.println("LED OFF");
+    } else {
+      SerialBT.print("Echo: ");
+      SerialBT.println(c);
+    }
+  }
+  
+  if (Serial.available()) {
+    SerialBT.write(Serial.read());
+  }
+  delay(20);
+}`
+  },
+  "ntp_clock": {
+    name: "⏰ NTP Clock",
+    desc: "Dapatkan waktu dari internet",
+    cat: "iot",
+    diff: "Lanjutan",
+    libs: ["NTPClient"],
+    code: `#include <WiFi.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+
+const char* ssid = "WIFI_SSID";
+const char* password = "WIFI_PASSWORD";
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", 25200); // GMT+7
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  timeClient.begin();
+}
+
+void loop() {
+  timeClient.update();
+  Serial.println(timeClient.getFormattedTime());
+  delay(1000);
+}`
+  },
+  "http_client": {
+    name: "🌐 HTTP Client",
+    desc: "Request ke web API",
+    cat: "iot",
+    diff: "Lanjutan",
+    libs: ["ArduinoHttpClient"],
+    code: `#include <WiFi.h>
+#include <HttpClient.h>
+
+const char* ssid = "WIFI_SSID";
+const char* password = "WIFI_PASSWORD";
+const char* server = "api.weather.com";
+
+WiFiClient wifi;
+HttpClient client = HttpClient(wifi, server, 80);
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+}
+
+void loop() {
+  client.get("/v1/weather");
+  int statusCode = client.responseStatusCode();
+  String response = client.responseBody();
+  
+  Serial.print("Status: ");
+  Serial.println(statusCode);
+  Serial.print("Response: ");
+  Serial.println(response);
+  
+  delay(10000);
+}`
+  },
+  
+  // ACTUATOR (4)
+  "servo": {
+    name: "🦾 Servo Motor",
+    desc: "Kontrol servo dengan potensiometer",
+    cat: "actuator",
+    diff: "Menengah",
+    libs: ["Servo"],
+    code: `#include <Servo.h>
+
+Servo myservo;
+int potPin = A0;
+
+void setup() {
+  myservo.attach(9);
+}
+
+void loop() {
+  int val = analogRead(potPin);
+  val = map(val, 0, 1023, 0, 180);
+  myservo.write(val);
+  delay(15);
+}`
+  },
+  "stepper": {
+    name: "⚙️ Stepper Motor",
+    desc: "28BYJ-48 stepper dengan ULN2003",
+    cat: "actuator",
+    diff: "Lanjutan",
+    libs: ["Stepper"],
+    code: `#include <Stepper.h>
+
+const int stepsPerRev = 2048;
+Stepper myStepper(stepsPerRev, 8, 10, 9, 11);
+
+void setup() {
+  myStepper.setSpeed(15);
+}
+
+void loop() {
+  myStepper.step(stepsPerRev);
+  delay(1000);
+  myStepper.step(-stepsPerRev);
+  delay(1000);
+}`
+  },
+  "dc_motor": {
+    name: "⚡ DC Motor",
+    desc: "Kontrol motor DC dengan L298N",
+    cat: "actuator",
+    diff: "Menengah",
+    libs: [],
+    code: `// DC Motor dengan L298N
+#define ENA 5
+#define IN1 6
+#define IN2 7
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+}
+
+void loop() {
+  // Maju
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  for (int speed = 0; speed <= 255; speed++) {
+    analogWrite(ENA, speed);
+    delay(10);
+  }
+  delay(2000);
+  
+  // Mundur
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  for (int speed = 0; speed <= 255; speed++) {
+    analogWrite(ENA, speed);
+    delay(10);
+  }
+  delay(2000);
+  
+  // Stop
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  delay(2000);
+}`
+  },
+  "relay": {
+    name: "🔌 Relay Control",
+    desc: "Kontrol perangkat listrik",
+    cat: "actuator",
+    diff: "Pemula",
+    libs: [],
+    code: `// Relay Control
+#define RELAY_PIN 7
+
+void setup() {
+  pinMode(RELAY_PIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Serial.available()) {
+    char c = Serial.read();
+    if (c == '1') {
+      digitalWrite(RELAY_PIN, HIGH);
+      Serial.println("Relay ON");
+    } else if (c == '0') {
+      digitalWrite(RELAY_PIN, LOW);
+      Serial.println("Relay OFF");
+    }
+  }
+}`
+  },
+  
+  // RFID (1)
+  "rfid_rc522": {
+    name: "🆔 RFID RC522",
+    desc: "Membaca kartu RFID",
+    cat: "rfid",
+    diff: "Lanjutan",
+    libs: ["MFRC522"],
+    code: `#include <SPI.h>
+#include <MFRC522.h>
+
+#define RST_PIN 9
+#define SS_PIN 10
+
+MFRC522 rfid(SS_PIN, RST_PIN);
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin();
+  rfid.PCD_Init();
+}
+
+void loop() {
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+    return;
+  }
+  
+  Serial.print("UID: ");
+  for (byte i = 0; i < rfid.uid.size; i++) {
+    if (rfid.uid.uidByte[i] < 0x10) Serial.print(" 0");
+    else Serial.print(" ");
+    Serial.print(rfid.uid.uidByte[i], HEX);
+  }
+  Serial.println();
+  
+  rfid.PICC_HaltA();
+}`
+  },
+  
+  // GPS (1)
+  "gps_neo6m": {
+    name: "📍 GPS NEO-6M",
+    desc: "Membaca data GPS",
+    cat: "gps",
+    diff: "Lanjutan",
+    libs: ["TinyGPSPlus"],
+    code: `#include <TinyGPS++.h>
+#include <SoftwareSerial.h>
+
+TinyGPSPlus gps;
+SoftwareSerial ss(4, 3);
+
+void setup() {
+  Serial.begin(115200);
+  ss.begin(9600);
+}
+
+void loop() {
+  while (ss.available() > 0) {
+    gps.encode(ss.read());
+  }
+  
+  if (gps.location.isUpdated()) {
+    Serial.print("Lat: ");
+    Serial.println(gps.location.lat(), 6);
+    Serial.print("Lng: ");
+    Serial.println(gps.location.lng(), 6);
+    Serial.print("Sat: ");
+    Serial.println(gps.satellites.value());
+    Serial.print("Alt: ");
+    Serial.print(gps.altitude.meters());
+    Serial.println(" m");
+    Serial.println();
+  }
+}`
+  },
+  
+  // RTC (1)
+  "rtc_ds3231": {
+    name: "⏰ RTC DS3231",
+    desc: "Real Time Clock",
+    cat: "rtc",
+    diff: "Menengah",
+    libs: ["RTClib"],
+    code: `#include <Wire.h>
+#include <RTClib.h>
+
+RTC_DS3231 rtc;
+
+void setup() {
+  Serial.begin(9600);
+  if (!rtc.begin()) {
+    Serial.println("RTC tidak ditemukan!");
+    while(1);
+  }
+  
+  if (rtc.lostPower()) {
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+}
+
+void loop() {
+  DateTime now = rtc.now();
+  
+  Serial.print(now.hour());
+  Serial.print(":");
+  Serial.print(now.minute());
+  Serial.print(":");
+  Serial.print(now.second());
+  Serial.print("  ");
+  Serial.print(now.day());
+  Serial.print("/");
+  Serial.print(now.month());
+  Serial.print("/");
+  Serial.println(now.year());
+  
+  delay(1000);
+}`
+  },
+  
+  // IR (1)
+  "ir_remote": {
+    name: "📼 IR Remote",
+    desc: "Baca remote IR",
+    cat: "ir",
+    diff: "Menengah",
+    libs: ["IRremote"],
+    code: `#include <IRremote.h>
+
+int RECV_PIN = 11;
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+
+void setup() {
+  Serial.begin(9600);
+  irrecv.enableIRIn();
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  if (irrecv.decode(&results)) {
+    Serial.print("Kode: 0x");
+    Serial.println(results.value, HEX);
+    
+    if (results.value == 0xFF00FF) {
+      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    }
+    
+    irrecv.resume();
+  }
+}`
+  },
+  
+  // AUDIO (1)
+  "buzzer": {
+    name: "🎵 Buzzer Melody",
+    desc: "Memainkan nada",
+    cat: "audio",
+    diff: "Menengah",
+    libs: [],
+    code: `#define BUZZER 8
+
+void setup() {
+  pinMode(BUZZER, OUTPUT);
+}
+
+void loop() {
+  // Super Mario theme intro
+  tone(BUZZER, 660, 100); delay(150);
+  tone(BUZZER, 660, 100); delay(300);
+  tone(BUZZER, 660, 100); delay(300);
+  tone(BUZZER, 510, 100); delay(100);
+  tone(BUZZER, 660, 100); delay(300);
+  tone(BUZZER, 770, 100); delay(550);
+  tone(BUZZER, 380, 100); delay(575);
+  
+  delay(2000);
+}`
+  },
+  
+  // PROJECT (3)
+  "smart_home": {
+    name: "🏠 Smart Home",
+    desc: "Sistem smart home sederhana",
+    cat: "project",
+    diff: "Lanjutan",
+    libs: ["DHT sensor library"],
+    code: `#include <WiFi.h>
+#include <DHT.h>
+
+#define DHTPIN 4
+#define DHTTYPE DHT11
+#define RELAY1 5
+#define RELAY2 18
+
+DHT dht(DHTPIN, DHTTYPE);
+
+const char* ssid = "WIFI_SSID";
+const char* password = "WIFI_PASSWORD";
+
+WiFiServer server(80);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+  pinMode(RELAY1, OUTPUT);
+  pinMode(RELAY2, OUTPUT);
+  digitalWrite(RELAY1, HIGH);
+  digitalWrite(RELAY2, HIGH);
+  
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  server.begin();
+}
+
+void loop() {
+  WiFiClient client = server.available();
+  if (client) {
+    String request = client.readStringUntil('\\r');
+    client.flush();
+    
+    if (request.indexOf("/relay1/on") != -1) {
+      digitalWrite(RELAY1, LOW);
+    } else if (request.indexOf("/relay1/off") != -1) {
+      digitalWrite(RELAY1, HIGH);
+    } else if (request.indexOf("/relay2/on") != -1) {
+      digitalWrite(RELAY2, LOW);
+    } else if (request.indexOf("/relay2/off") != -1) {
+      digitalWrite(RELAY2, HIGH);
+    }
+    
+    float temp = dht.readTemperature();
+    float hum = dht.readHumidity();
+    
+    String html = "HTTP/1.1 200 OK\\r\\n";
+    html += "Content-Type: text/html\\r\\n\\r\\n";
+    html += "<!DOCTYPE html><html><body>";
+    html += "<h1>Smart Home</h1>";
+    html += "<p>Suhu: " + String(temp) + "C</p>";
+    html += "<p>Kelembaban: " + String(hum) + "%</p>";
+    html += "<a href=\"/relay1/on\"><button>Lampu ON</button></a>";
+    html += "<a href=\"/relay1/off\"><button>Lampu OFF</button></a><br>";
+    html += "<a href=\"/relay2/on\"><button>Kipas ON</button></a>";
+    html += "<a href=\"/relay2/off\"><button>Kipas OFF</button></a>";
+    html += "</body></html>";
+    
+    client.print(html);
+    client.stop();
+  }
+}`
+  },
+  "weather_station": {
+    name: "☁️ Weather Station",
+    desc: "Stasiun cuaca sederhana",
+    cat: "project",
+    diff: "Lanjutan",
+    libs: ["DHT sensor library", "Adafruit BMP280 Library"],
+    code: `#include <Wire.h>
+#include <DHT.h>
+#include <Adafruit_BMP280.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+Adafruit_BMP280 bmp;
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+  if (!bmp.begin(0x76)) {
+    Serial.println("BMP280 tidak ditemukan!");
+  }
+}
+
+void loop() {
+  delay(2000);
+  
+  float h = dht.readHumidity();
+  float t1 = dht.readTemperature();
+  
+  float t2 = bmp.readTemperature();
+  float p = bmp.readPressure() / 100.0;
+  
+  Serial.println("=== Weather Station ===");
+  Serial.print("DHT11 - Suhu: ");
+  Serial.print(t1);
+  Serial.print(" C, Kelembaban: ");
+  Serial.print(h);
+  Serial.println(" %");
+  
+  Serial.print("BMP280 - Suhu: ");
+  Serial.print(t2);
+  Serial.print(" C, Tekanan: ");
+  Serial.print(p);
+  Serial.println(" hPa");
+  Serial.println();
+}`
+  },
+  "rfid_access": {
+    name: "🔐 RFID Access Control",
+    desc: "Sistem akses dengan RFID",
+    cat: "project",
+    diff: "Lanjutan",
+    libs: ["MFRC522"],
+    code: `#include <SPI.h>
+#include <MFRC522.h>
+
+#define RST_PIN 9
+#define SS_PIN 10
+#define RELAY_PIN 7
+#define BUZZER_PIN 8
+
+MFRC522 rfid(SS_PIN, RST_PIN);
+
+byte authorizedUID[4] = {0xDE, 0xAD, 0xBE, 0xEF};
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin();
+  rfid.PCD_Init();
+  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, HIGH);
+}
+
+void loop() {
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+    return;
+  }
+  
+  Serial.print("UID: ");
+  for (byte i = 0; i < rfid.uid.size; i++) {
+    Serial.print(rfid.uid.uidByte[i] < 0x10 ? " 0" : " ");
+    Serial.print(rfid.uid.uidByte[i], HEX);
+  }
+  Serial.println();
+  
+  bool authorized = true;
+  for (byte i = 0; i < 4; i++) {
+    if (rfid.uid.uidByte[i] != authorizedUID[i]) {
+      authorized = false;
+      break;
+    }
+  }
+  
+  if (authorized) {
+    Serial.println("Akses DITERIMA!");
+    digitalWrite(RELAY_PIN, LOW);
+    tone(BUZZER_PIN, 1000, 200);
+    delay(3000);
+    digitalWrite(RELAY_PIN, HIGH);
+  } else {
+    Serial.println("Akses DITOLAK!");
+    tone(BUZZER_PIN, 500, 500);
+  }
+  
+  rfid.PICC_HaltA();
+}`
+  }
+};
+
+// ============== STATE ==============
+let inputMode = 'file';
+let fileS = null, fileM = null;
+let selS = 'uno';
+let selM = new Set();
+let pollTimers = {};
+let lastError = '', lastCode = '', lastBoard = 'uno';
+let logOpen = {S: false, M: false};
+let allLibs = [];
+
+// ============== 162 LIBRARIES ==============
+const LIBRARY_LIST = [
+  "DHT sensor library v1.4.4",
+  "Adafruit Unified Sensor v1.1.9",
+  "PubSubClient v2.8.0",
+  "ArduinoJson v6.21.3",
+  "FastLED v3.6.0",
+  "LiquidCrystal I2C v1.1.2",
+  "Servo v1.1.1",
+  "Wire v1.0",
+  "SPI v1.0",
+  "SD v1.2.4",
+  "Ethernet v2.0.1",
+  "WiFi v1.2.7",
+  "BLE v1.0",
+  "BluetoothSerial v1.0",
+  "ESP8266WiFi v1.0",
+  "ESP32 BLE Arduino v2.0",
+  "BleKeyboard v0.1",
+  "BLEMouse v0.1",
+  "MFRC522 v1.4.10",
+  "RTClib v2.1.0",
+  "OneWire v2.3.7",
+  "DallasTemperature v3.9.0",
+  "TinyGPSPlus v1.0.3",
+  "NewPing v1.9.7",
+  "IRremote v3.6.0",
+  "IRremoteESP8266 v2.8.2",
+  "Keypad v3.1.1",
+  "Encoder v1.4.2",
+  "ESP32Encoder v0.11.0",
+  "Adafruit GFX Library v1.11.5",
+  "Adafruit SSD1306 v2.5.7",
+  "Adafruit BMP280 Library v2.6.2",
+  "Adafruit BME280 Library v2.2.2",
+  "Adafruit ST7735 and ST7789 Library v1.9.3",
+  "Adafruit ILI9341 v1.5.13",
+  "U8g2 v2.34.21",
+  "TFT_eSPI v2.5.0",
+  "LovyanGFX v1.1.1",
+  "MCUFRIEND_kbv v2.9.9",
+  "hd44780 v1.3.2",
+  "LedControl v1.0.6",
+  "Max72xxPanel v1.0.0",
+  "TM1637 v1.2.0",
+  "Adafruit NeoPixel v1.10.6",
+  "Adafruit DotStar v1.4.0",
+  "NeoPixelBus v2.7.3",
+  "ESP32Servo v3.0.3",
+  "Adafruit Motor Shield V2 Library v1.1.0",
+  "AccelStepper v1.61",
+  "TMCStepper v0.7.2",
+  "L298N v1.0.0",
+  "Stepper v1.0.0",
+  "ESP32Ping v1.0",
+  "ESP8266Ping v1.0",
+  "NTPClient v3.2.1",
+  "ezTime v1.2.0",
+  "TimeLib v1.6.1",
+  "Timezone v1.2.4",
+  "ArduinoHttpClient v0.5.0",
+  "WiFiClient v1.0",
+  "WiFiServer v1.0",
+  "WiFiUdp v1.0",
+  "ESP8266WebServer v1.0",
+  "ESP8266HTTPClient v1.2",
+  "WebServer v1.0",
+  "HTTPClient v1.2",
+  "HTTPUpdate v1.0",
+  "ESP8266mDNS v1.2",
+  "ESPmDNS v1.0",
+  "DNSServer v1.1.1",
+  "AsyncTCP v1.1.1",
+  "ESPAsyncWebServer v1.2.3",
+  "AsyncUDP v1.0",
+  "WebSockets v2.3.6",
+  "ArduinoOTA v1.0",
+  "ElegantOTA v2.2.9",
+  "Preferences v2.0.0",
+  "SPIFFS v2.0.0",
+  "LittleFS v2.0.0",
+  "SD_MMC v1.0",
+  "FS v2.0.0",
+  "CRC32 v2.0.0",
+  "Base64 v1.0.0",
+  "StringSplitter v1.0.0",
+  "StreamUtils v1.7.0",
+  "TaskScheduler v3.6.0",
+  "Ticker v4.0.0",
+  "SimpleTimer v1.0.0",
+  "MillisTimer v1.0.0",
+  "ElapsedTimer v1.0.0",
+  "RunningAverage v0.3.4",
+  "MovingAverage v1.0.0",
+  "PID v1.2.1",
+  "Fuzzy v1.0.0",
+  "ArduinoSort v1.0.0",
+  "LinkedList v1.2.3",
+  "Queue v1.0.0",
+  "Stack v1.0.0",
+  "Vector v1.2.2",
+  "Array v1.0.0",
+  "Map v1.0.0",
+  "Set v1.0.0",
+  "Adafruit LIS3DH v1.2.3",
+  "Adafruit LSM6DS v1.1.0",
+  "Adafruit MPU6050 v2.2.3",
+  "Adafruit ADXL345 v1.3.1",
+  "Adafruit HMC5883 Unified v1.1.5",
+  "QMC5883LCompass v1.2.2",
+  "MPU6050 v0.0.1",
+  "I2Cdevlib-MPU6050 v1.0.0",
+  "MadgwickAHRS v1.2.0",
+  "Mahony v1.0.0",
+  "Adafruit TSL2591 Library v1.4.3",
+  "Adafruit TSL2561 Unified v1.2.2",
+  "BH1750 v1.3.0",
+  "MAX44009 v1.2.0",
+  "Adafruit VL53L0X v1.2.1",
+  "VL53L1X v1.2.0",
+  "Ultrasonic v3.0.0",
+  "HCSR04 v1.4.0",
+  "Adafruit SGP30 Library v2.0.0",
+  "Adafruit CCS811 Library v1.0.6",
+  "MQ135 v1.0.0",
+  "MQUnifiedsensor v1.0.4",
+  "Adafruit SCD30 v1.0.9",
+  "Adafruit BMP085 Unified v1.0.0",
+  "SparkFun MS5803-14BA v1.0.0",
+  "Adafruit INA219 v1.2.1",
+  "INA226 v1.0.4",
+  "ACS712 v1.0.0",
+  "Adafruit FRAM I2C v1.2.0",
+  "SdFat v2.2.2",
+  "MIDIUSB v1.0.5",
+  "I2S v1.0.0",
+  "Audio v1.0.0",
+  "AudioGenerator v1.0.0",
+  "AudioOutput v1.0.0",
+  "AudioFileSource v1.0.0",
+  "ESP8266Audio v1.9.7",
+  "ESP32-audioI2S v2.0.0",
+  "CapacitiveSensor v0.5.1",
+  "TouchScreen v1.0.0",
+  "XPT2046_Touchscreen v1.4.0",
+  "Adafruit TouchScreen v1.1.1",
+  "Adafruit STMPE610 v1.0.2",
+  "Adafruit RA8875 v1.2.4",
+  "Adafruit HX8357 v1.0.9",
+  "Adafruit_ImageReader v1.0.6",
+  "TJpg_Decoder v1.0.0",
+  "JPEGDecoder v1.0.0",
+  "PNGdec v1.0.0",
+  "GIFDecoder v1.0.0",
+  "Adafruit Si7021 v1.1.0",
+  "Adafruit AHTX0 v2.0.1",
+  "SHT31 v1.0.0",
+  "HTU21D v1.0.0",
+  "SparkFun BME280 v2.0.5",
+  "MCP9808 temperature sensor v1.1.1",
+  "Adafruit PM25AQI v1.0.6",
+  "Adafruit PMW3901 v1.0.0",
+  "Adafruit LPS35HW v1.0.0",
+  "Adafruit LSM9DS1 v1.2.0",
+  "Adafruit FXOS8700 v1.1.0",
+  "Adafruit FXAS21002C v1.1.0",
+  "Adafruit BNO055 v1.6.1",
+  "Adafruit BNO08x v1.1.1",
+  "Adafruit VCNL4040 v1.0.3",
+  "Adafruit VEML6070 v1.1.1",
+  "Adafruit VEML7700 v1.0.5",
+  "Adafruit AS7341 v1.0.5",
+  "Adafruit AMG88xx v1.0.6",
+  "Adafruit MLX90614 v2.0.0",
+  "Adafruit MLX90640 v1.1.5"
+];
+
+allLibs = [...LIBRARY_LIST];
+
+// ============== BUILD BOARDS ==============
+function buildBoards() {
+  const categories = {
+    avr: 'boardAvr',
+    esp8: 'boardEsp8',
+    esp32: 'boardEsp32',
+    rp2040: 'boardRp2040',
+    stm32: 'boardStm32',
+    teensy: 'boardTeensy'
+  };
+  
+  const multiCategories = {
+    avr: 'mboardAvr',
+    esp8: 'mboardEsp8',
+    esp32: 'mboardEsp32'
+  };
+  
+  // Build single board grids
+  Object.entries(categories).forEach(([cat, id]) => {
+    const html = Object.entries(BOARDS)
+      .filter(([, b]) => b.cat === cat)
+      .map(([key, b]) => 
+        `<button class="board-btn ${cat}${key === selS ? ' selected' : ''}" 
+                 data-key="${key}" 
+                 onclick="selectSingle('${key}')">
+          ${b.emoji} ${b.label}
+        </button>`
+      ).join('');
+    document.getElementById(id).innerHTML = html || '<div style="color:var(--text2);padding:8px">Tidak ada board</div>';
+  });
+  
+  // Build multi board grids
+  Object.entries(multiCategories).forEach(([cat, id]) => {
+    const html = Object.entries(BOARDS)
+      .filter(([, b]) => b.cat === cat)
+      .map(([key, b]) => 
+        `<button class="board-btn ${cat}${selM.has(key) ? ' selected' : ''}" 
+                 data-key="${key}" 
+                 onclick="toggleMulti('${key}')">
+          ${b.emoji} ${b.label}
+        </button>`
+      ).join('');
+    document.getElementById(id).innerHTML = html || '<div style="color:var(--text2);padding:8px">Tidak ada board</div>';
+  });
+}
+
+function selectSingle(key) {
+  selS = key;
+  document.querySelectorAll('#boardAvr .board-btn, #boardEsp8 .board-btn, #boardEsp32 .board-btn, #boardRp2040 .board-btn, #boardStm32 .board-btn, #boardTeensy .board-btn')
+    .forEach(el => el.classList.toggle('selected', el.dataset.key === key));
+  checkCompileBtn();
+}
+
+function toggleMulti(key) {
+  if (selM.has(key)) {
+    selM.delete(key);
+  } else {
+    selM.add(key);
+  }
+  document.querySelectorAll('#mboardAvr .board-btn, #mboardEsp8 .board-btn, #mboardEsp32 .board-btn')
+    .forEach(el => el.classList.toggle('selected', selM.has(el.dataset.key)));
+  document.getElementById('selCount').textContent = selM.size;
+  checkCompileBtn();
+}
+
+// ============== TEMPLATE FUNCTIONS ==============
+function showTemplateModal() {
+  const modal = document.getElementById('templateModal');
+  const list = document.getElementById('templateList');
+  
+  const categories = {
+    'basic': 'BASIC (5)',
+    'sensor': 'SENSOR (10)',
+    'display': 'DISPLAY (5)',
+    'iot': 'IOT (6)',
+    'actuator': 'ACTUATOR (4)',
+    'rfid': 'RFID (1)',
+    'gps': 'GPS (1)',
+    'rtc': 'RTC (1)',
+    'ir': 'IR (1)',
+    'audio': 'AUDIO (1)',
+    'project': 'PROJECT (3)'
+  };
+  
+  const catTemplates = {};
+  Object.entries(TEMPLATES).forEach(([id, t]) => {
+    if (!catTemplates[t.cat]) catTemplates[t.cat] = [];
+    catTemplates[t.cat].push({id, ...t});
+  });
+  
+  let html = '';
+  Object.entries(categories).forEach(([cat, title]) => {
+    if (catTemplates[cat] && catTemplates[cat].length > 0) {
+      html += `<div class="template-cat">${title}</div>`;
+      html += `<div class="template-grid">`;
+      catTemplates[cat].forEach(t => {
+        html += `<div class="template-card" onclick="useTemplate('${t.id}')">`;
+        html += `<div class="template-name">${t.name}</div>`;
+        html += `<div class="template-desc">${t.desc}</div>`;
+        html += `<div class="template-meta">`;
+        html += `<span class="template-difficulty">${t.diff}</span>`;
+        if (t.libs && t.libs.length > 0) {
+          html += `<span class="template-libs">📚 ${t.libs.length} libs</span>`;
+        }
+        html += `</div></div>`;
+      });
+      html += `</div>`;
+    }
+  });
+  
+  list.innerHTML = html;
+  modal.style.display = 'flex';
+}
+
+function closeTemplateModal() {
+  document.getElementById('templateModal').style.display = 'none';
+}
+
+function useTemplate(id) {
+  const template = TEMPLATES[id];
+  if (template) {
+    setInputMode('code');
+    // Load into first .ino tab (or create one)
+    const inoTab = editorTabs.find(t => t.ext === 'ino');
+    if (inoTab) {
+      inoTab.code = template.code;
+      inoTab.name = id;
+      editorSwitchTo(inoTab.id);
+    } else {
+      editorAddTab(id, 'ino', template.code);
+    }
+    editorRender();
+    // Update textarea live
+    const ta = document.getElementById('code_' + editorActive);
+    if (ta) ta.value = template.code;
+    closeTemplateModal();
+    showToast('success', 'Template dimuat', template.name);
+    if (template.libs && template.libs.length > 0) {
+      showToast('info', 'Library diperlukan', template.libs.join(', '));
+    }
+    checkCompileBtn();
+  }
+}
+
+// ============== INPUT MODE ==============
+function setInputMode(mode) {
+  inputMode = mode;
+  document.getElementById('modeFileBtn').classList.toggle('active', mode === 'file');
+  document.getElementById('modeCodeBtn').classList.toggle('active', mode === 'code');
+  document.getElementById('fileWrap').style.display = mode === 'file' ? 'block' : 'none';
+  document.getElementById('codeWrap').classList.toggle('show', mode === 'code');
+  checkCompileBtn();
+}
+
+function onCodeChange() {
+  checkCompileBtn();
+}
+
+function clearCode() {
+  editorInit();
+}
+
+function getCodeAsFile() {
+  // Handled by getEditorFiles() in compileSingle — this is fallback
+  editorSaveCurrentCode();
+  const mainTab = editorTabs.find(t => t.ext === 'ino') || editorTabs[0];
+  const blob = new Blob([mainTab.code], { type: 'text/plain' });
+  return new File([blob], mainTab.name + '.ino', { type: 'text/plain' });
+}
+
+// ============== FILE HANDLING ==============
+function onFileSelect(slot, input) {
+  const f = input.files[0];
+  if (!f) return;
+  if (f.name.endsWith('.zip')) {
+    handleZipFile(slot, f);
+  } else if (f.name.endsWith('.ino')) {
+    setFile(slot, f);
+  } else {
+    showToast('error', 'Format salah', 'Hanya file .ino atau .zip');
+  }
+}
+
+// ZIP extra files storage per slot
+const zipExtraFiles = { S: [], M: [] };
+
+async function handleZipFile(slot, zipFile) {
+  const drop = document.getElementById('drop' + slot);
+  document.getElementById('icon' + slot).textContent = '⏳';
+  document.getElementById('title' + slot).textContent = 'Membaca ZIP...';
+
+  try {
+    const zip = await JSZip.loadAsync(zipFile);
+    const allFiles = Object.keys(zip.files).filter(n => !zip.files[n].dir);
+
+    // Cari file .ino
+    const inoEntry = allFiles.find(n => n.endsWith('.ino'));
+    if (!inoEntry) {
+      showToast('error', 'Tidak ada .ino', 'ZIP harus mengandung file .ino');
+      document.getElementById('icon' + slot).textContent = '❌';
+      document.getElementById('title' + slot).textContent = 'ZIP tidak valid';
+      return;
+    }
+
+    // Baca file .ino sebagai File object
+    const inoBlob = await zip.files[inoEntry].async('blob');
+    const inoName = inoEntry.split('/').pop();
+    const inoFileObj = new File([inoBlob], inoName, { type: 'text/plain' });
+
+    // Baca file extra (.h, .cpp, .c) — semua selain .ino
+    const extras = [];
+    for (const fname of allFiles) {
+      if (!fname.endsWith('.ino')) {
+        const ext = fname.split('.').pop().toLowerCase();
+        if (['h','hpp','cpp','c'].includes(ext)) {
+          const blob = await zip.files[fname].async('blob');
+          const justName = fname.split('/').pop();
+          extras.push(new File([blob], justName, { type: 'text/plain' }));
+        }
+      }
+    }
+
+    zipExtraFiles[slot] = extras;
+    setFile(slot, inoFileObj, extras.length);
+    // Re-cache dengan semua file setelah extras siap
+    if (slot === 'S') await cacheFileCode(inoFileObj);
+
+    const info = extras.length > 0
+      ? `${inoName} + ${extras.length} file extra (${extras.map(f=>f.name).join(', ')})`
+      : inoName;
+    document.getElementById('fileInfo' + slot).textContent = info;
+    showToast('success', 'ZIP berhasil dibaca', `${allFiles.length} file ditemukan`);
+
+  } catch (err) {
+    showToast('error', 'Gagal baca ZIP', err.message);
+    document.getElementById('icon' + slot).textContent = '❌';
+    document.getElementById('title' + slot).textContent = 'Gagal membaca ZIP';
+  }
+}
+
+function setFile(slot, f, extraCount) {
+  if (slot === 'S') { fileS = f; cacheFileCode(f); } else fileM = f;
+  const drop = document.getElementById('drop' + slot);
+  drop.classList.add('has-file');
+  document.getElementById('icon' + slot).textContent = '✅';
+  document.getElementById('title' + slot).textContent = f.name;
+  document.getElementById('fileInfo' + slot).textContent = extraCount
+    ? `${(f.size/1024).toFixed(1)} KB · +${extraCount} header file`
+    : `${(f.size/1024).toFixed(1)} KB`;
+  checkCompileBtn();
+}
+
+function clearFile(slot, e) {
+  e.stopPropagation();
+  if (slot === 'S') {
+    fileS = null;
+    document.getElementById('fileS').value = '';
+    zipExtraFiles.S = [];
+    window._cachedFileCode = '';
+  } else {
+    fileM = null;
+    document.getElementById('fileM').value = '';
+    zipExtraFiles.M = [];
+  }
+  const drop = document.getElementById('drop' + slot);
+  drop.classList.remove('has-file');
+  document.getElementById('icon' + slot).textContent = '📄';
+  document.getElementById('title' + slot).textContent = 'Drop file .ino atau .zip di sini';
+  document.getElementById('fileInfo' + slot).textContent = '';
+  checkCompileBtn();
+}
+
+function onDragOver(e, slot) {
+  e.preventDefault();
+  document.getElementById('drop' + slot).classList.add('dragover');
+}
+
+function onDragLeave(e, slot) {
+  document.getElementById('drop' + slot).classList.remove('dragover');
+}
+
+function onDrop(e, slot) {
+  e.preventDefault();
+  document.getElementById('drop' + slot).classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (!f) return;
+  if (f.name.endsWith('.zip')) {
+    handleZipFile(slot, f);
+  } else if (f.name.endsWith('.ino')) {
+    setFile(slot, f);
+  } else {
+    showToast('error', 'Format salah', 'Hanya file .ino atau .zip');
+  }
+}
+
+function checkCompileBtn() {
+  let okS = false;
+  if (inputMode === 'code') {
+    // Multi-tab: check if any .ino tab has content
+    const inoTab = editorTabs && editorTabs.find(t => t.ext === 'ino');
+    if (inoTab) {
+      // Also check live textarea if active
+      const ta = document.getElementById('code_' + editorActive);
+      const liveCode = (ta && editorActive === inoTab.id) ? ta.value : inoTab.code;
+      okS = liveCode.trim().length >= 5;
+    }
+  } else {
+    okS = !!fileS;
+  }
+  document.getElementById('btnCompileS').disabled = !okS;
+  document.getElementById('btnCompileM').disabled = !(fileM && selM.size > 0);
+}
+
+// ============== RESET FUNCTIONS ==============
+function resetOut(slot) {
+  const elements = [
+    'status' + slot, 'prog' + slot, 'btnDl' + slot,
+    'logToggle' + slot, 'log' + slot, 'qbox' + slot,
+    'libNoticeS', 'btnRecompileS', 'aiPanelS'
+  ];
+  
+  elements.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show', 'success', 'error', 'loading');
+  });
+  
+  const status = document.getElementById('status' + slot);
+  if (status) {
+    status.className = 'status';
+    status.textContent = '';
+  }
+  
+  const download = document.getElementById('btnDl' + slot);
+  if (download) {
+    download.className = 'btn-download';
+    download.href = '#';
+    download.removeAttribute('data-url');
+    download.textContent = '⬇ DOWNLOAD HASIL';
+  }
+  
+  const log = document.getElementById('log' + slot);
+  if (log) log.textContent = '';
+  
+  logOpen[slot] = false;
+  const arrow = document.getElementById('logArrow' + slot);
+  if (arrow) arrow.textContent = '▶';
+  
+  const bar = document.getElementById('progBar' + slot);
+  if (bar) {
+    bar.style.width = '0%';
+    bar.style.background = '';
+  }
+  
+  const label = document.getElementById('progLabel' + slot);
+  if (label) label.textContent = 'Memulai...';
+  
+  const pct = document.getElementById('progPct' + slot);
+  if (pct) pct.textContent = '0%';
+  
+  if (pollTimers[slot]) { clearInterval(pollTimers[slot]); delete pollTimers[slot]; }
+}
+
+function showStatus(slot, text, type) {
+  const el = document.getElementById('status' + slot);
+  el.className = 'status show ' + type;
+  el.textContent = text;
+}
+
+function toggleLog(slot) {
+  logOpen[slot] = !logOpen[slot];
+  document.getElementById('log' + slot).classList.toggle('show', logOpen[slot]);
+  document.getElementById('logArrow' + slot).textContent = logOpen[slot] ? '▼' : '▶';
+}
+
+// ============== QUEUE FUNCTIONS ==============
+function setQueueBadge(slot, status, position) {
+  const badge = document.getElementById('qbadge' + slot);
+  const posEl = document.getElementById('qpos' + slot);
+  const title = document.getElementById('qtitle' + slot);
+  const box = document.getElementById('qbox' + slot);
+  
+  if (!badge) return;
+  
+  if (status === 'waiting') {
+    badge.className = 'q-badge waiting';
+    badge.innerHTML = `<span class="q-spinner"></span> ANTRIAN #${position}`;
+    if (posEl) posEl.textContent = position;
+    if (title) title.textContent = `Menunggu giliran... (posisi #${position})`;
+    box.classList.add('show');
+  } else if (status === 'compiling') {
+    badge.className = 'q-badge running';
+    badge.innerHTML = `<span class="q-spinner"></span> SEDANG DIKOMPILASI`;
+    if (posEl) posEl.textContent = '▶';
+    if (title) title.textContent = 'Sedang dikompilasi sekarang!';
+    box.classList.add('show');
+  } else {
+    box.classList.remove('show');
+  }
+}
+
+function startProgress(slot, isEsp) {
+  document.getElementById('prog' + slot).classList.add('show');
+  _setProgress(slot, 5, 'Memulai...');
+}
+
+function endProgress(slot, success) {
+  if (success) _setProgress(slot, 100, '✅ Selesai!');
+  else         _setProgress(slot, 100, '❌ Gagal', true);
+}
+
+function _setProgress(slot, pct, label, isError) {
+  const bar   = document.getElementById('progBar'   + slot);
+  const lbl   = document.getElementById('progLabel' + slot);
+  const pctEl = document.getElementById('progPct'   + slot);
+  if (bar) {
+    bar.style.width = pct + '%';
+    bar.style.background = isError
+      ? 'var(--red)'
+      : 'linear-gradient(90deg,var(--blue),var(--cyan))';
+  }
+  if (lbl)   lbl.textContent   = label || '';
+  if (pctEl) pctEl.textContent = pct   + '%';
+}
+
+// ============== COMPILE FUNCTIONS ==============
+// ============== COMPILE FUNCTIONS (REAL) ==============
+async function compileSingle() {
+  resetOut('S');
+
+  const btn = document.getElementById('btnCompileS');
+  btn.disabled = true;
+  btn.textContent = '⏳ MENGIRIM...';
+
+  const formData = new FormData();
+  formData.append('board', selS);
+
+  if (inputMode === 'code') {
+    // Multi-tab editor
+    editorSaveCurrentCode();
+    const files = getEditorFiles();
+    const mainFile = files.find(f => f.name.endsWith('.ino'));
+    if (!mainFile) {
+      showToast('warning', 'Tidak ada file .ino', 'Minimal satu tab harus berekstensi .ino');
+      btn.disabled = false;
+      btn.textContent = '⚡ KOMPILASI SEKARANG';
+      return;
+    }
+    const mainCode = await mainFile.text();
+    if (mainCode.trim().length < 5) {
+      showToast('warning', 'Kode terlalu pendek', 'Minimal 5 karakter di file .ino');
+      btn.disabled = false;
+      btn.textContent = '⚡ KOMPILASI SEKARANG';
+      return;
+    }
+    // Primary file
+    formData.append('file', mainFile);
+    // Extra files (headers etc.)
+    files.filter(f => f !== mainFile).forEach(f => formData.append('extra_files', f));
+  } else {
+    if (!fileS) {
+      showToast('warning', 'File belum dipilih', 'Pilih file .ino atau .zip terlebih dahulu');
+      btn.disabled = false;
+      btn.textContent = '⚡ KOMPILASI SEKARANG';
+      return;
+    }
+    formData.append('file', fileS);
+    // Extra files dari ZIP
+    (zipExtraFiles.S || []).forEach(f => formData.append('extra_files', f));
+  }
+  
+  try {
+    const response = await fetch('/compile', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const data = await response.json();
+    
+    if (!data.ok || !data.job_id) {
+      showStatus('S', '❌ ' + (data.error || 'Gagal mengirim'), 'error');
+      btn.disabled = false;
+      btn.textContent = '⚡ KOMPILASI SEKARANG';
+      return;
+    }
+    
+    btn.textContent = '⏳ DALAM ANTRIAN...';
+    currentJobId = data.job_id;
+    
+    // Mulai polling status job (REAL)
+    pollJob(data.job_id);
+    
+  } catch (error) {
+    showStatus('S', '❌ Error: ' + error.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '⚡ KOMPILASI SEKARANG';
+  }
+}
+
+function pollJob(jobId) {
+  if (pollTimers['S']) clearInterval(pollTimers['S']);
+  let compileTick = 0;
+
+  pollTimers['S'] = setInterval(async () => {
+    try {
+      const response = await fetch(`/queue/status/${jobId}`);
+      if (!response.ok) return;
+      const data = await response.json();
+
+      if (!data.ok) {
+        clearInterval(pollTimers['S']);
+        document.getElementById('btnCompileS').disabled = false;
+        document.getElementById('btnCompileS').textContent = '⚡ KOMPILASI SEKARANG';
+        return;
+      }
+
+      if (data.status === 'waiting') {
+        const pos = data.position || 1;
+        document.getElementById('qboxS').classList.add('show');
+        document.getElementById('qtitleS').textContent = `Menunggu giliran... Posisi #${pos}`;
+        document.getElementById('qposS').textContent = pos;
+        document.getElementById('qbadgeS').className = 'q-badge waiting';
+        document.getElementById('qbadgeS').innerHTML = `<span class="q-spinner"></span> ANTRIAN #${pos}`;
+        document.getElementById('progS').classList.add('show');
+        _setProgress('S', Math.min(15, 5 + pos), `Antrian #${pos}...`);
+
+      } else if (data.status === 'compiling') {
+        document.getElementById('qboxS').classList.remove('show');
+        document.getElementById('qbadgeS').className = 'q-badge running';
+        document.getElementById('qbadgeS').innerHTML = `<span class="q-spinner"></span> SEDANG DIKOMPILASI`;
+        document.getElementById('progS').classList.add('show');
+        showStatus('S', '⚙️ Mengkompilasi...', 'loading');
+        compileTick++;
+        _setProgress('S', Math.min(88, 20 + compileTick * 3), 'Mengkompilasi...');
+
+      } else if (data.status === 'done') {
+        clearInterval(pollTimers['S']);
+        document.getElementById('qboxS').classList.remove('show');
+
+        if (data.ready) {
+          _setProgress('S', 100, '✅ Selesai!');
+          showStatus('S', '✅ Kompilasi berhasil!', 'success');
+          const dlBtn = document.getElementById('btnDlS');
+          dlBtn.dataset.url = data.download_url || data.download || `/queue/download/${jobId}`;
+          dlBtn.textContent = '⬇ DOWNLOAD FILE (ZIP)';
+          dlBtn.classList.add('show');
+          lastError = '';
+          showToast('success', 'Kompilasi Selesai!', 'File siap didownload');
+        } else {
+          const errMsg = data.error || 'Gagal dikompilasi';
+          _setProgress('S', 100, '❌ Gagal', true);
+          showStatus('S', '❌ Kompilasi gagal:\n' + errMsg, 'error');
+          document.getElementById('logS').textContent = errMsg;
+          document.getElementById('logToggleS').classList.add('show');
+          lastError = errMsg;
+          lastBoard = selS;
+          if (data.missing_libs && data.missing_libs.length > 0) {
+            document.getElementById('libNoticeS').innerHTML =
+              '📚 Library diperlukan: <strong>' + data.missing_libs.join(', ') + '</strong>';
+            document.getElementById('libNoticeS').classList.add('show');
+            document.getElementById('btnRecompileS').classList.add('show');
+          }
+          if (data.need_install) {
+            const pkg = data.package || '';
+            document.getElementById('libNoticeS').innerHTML =
+              `⚠️ Board package belum terinstall. ` +
+              `<button onclick="installBoardPackage('${pkg}','${data.url||''}')" ` +
+              `style="margin-left:6px;padding:3px 10px;background:var(--cyan);color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:700">⬇ Install</button>`;
+            document.getElementById('libNoticeS').classList.add('show');
+          }
+          document.getElementById('aiPanelS').classList.add('show');
+          setTimeout(requestFix, 500);
+        }
+        document.getElementById('btnCompileS').disabled = false;
+        document.getElementById('btnCompileS').textContent = '⚡ KOMPILASI SEKARANG';
+
+      } else if (data.status === 'error') {
+        clearInterval(pollTimers['S']);
+        _setProgress('S', 100, '❌ Error', true);
+        showStatus('S', '❌ ' + (data.error || 'Server error'), 'error');
+        document.getElementById('btnCompileS').disabled = false;
+        document.getElementById('btnCompileS').textContent = '⚡ KOMPILASI SEKARANG';
+      }
+    } catch (err) { console.error('Poll error:', err); }
+  }, 1500);
+}
+
+// Fungsi install board package (endpoint /install-board)
+async function installBoardPackage(boardPkg, boardUrl) {
+  const noticeEl = document.getElementById('libNoticeS');
+  showToast('info', 'Memulai install board...', 'Proses 5-15 menit, jangan tutup!');
+
+  // Buat log box jika belum ada
+  let logBox = document.getElementById('boardInstallLog');
+  if (!logBox) {
+    logBox = document.createElement('div');
+    logBox.id = 'boardInstallLog';
+    logBox.style.cssText = 'margin-top:8px;padding:8px;background:rgba(0,0,0,.5);border-radius:6px;font-family:monospace;font-size:11px;color:#aef;max-height:160px;overflow-y:auto;white-space:pre-wrap;border:1px solid rgba(255,255,255,.1)';
+    if (noticeEl) noticeEl.parentNode.insertBefore(logBox, noticeEl.nextSibling);
+  }
+  logBox.style.display = 'block';
+  logBox.textContent = '⏳ Install ' + boardPkg + '...';
+
+  try {
+    const res  = await fetch('/install-board', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ platform: boardPkg })
+    });
+    const data = await res.json();
+
+    if (!data.ok) {
+      showToast('error', 'Gagal mulai install', data.error || '');
+      logBox.textContent += '❌ ' + (data.error || 'Gagal memulai');
+      return;
+    }
+
+    const jobId = data.job_id;
+    const timer = setInterval(async () => {
+      try {
+        const sr = await fetch(`/install-board/status/${jobId}`);
+        const sd = await sr.json();
+        if (sd.log && sd.log.length) {
+          logBox.textContent = sd.log.join('\n');
+          logBox.scrollTop = logBox.scrollHeight;
+        }
+        if (sd.status === 'done') {
+          clearInterval(timer);
+          logBox.textContent += '\n✅ Install selesai!';
+          showToast('success', 'Board terinstall!', 'Klik Compile Ulang');
+          if (noticeEl) {
+            noticeEl.innerHTML = '✅ Board package berhasil diinstall! <button onclick="compileSingle()" style="margin-left:6px;padding:3px 10px;background:var(--green);color:#000;border:none;border-radius:6px;cursor:pointer;font-weight:700">⚡ Compile Ulang</button>';
+          }
+        } else if (sd.status === 'error') {
+          clearInterval(timer);
+          logBox.textContent += '\n❌ Install gagal!';
+          showToast('error', 'Gagal install board', 'Lihat log');
+        }
+      } catch(e) { console.error('install-board poll:', e); }
+    }, 2000);
+  } catch(err) {
+    showToast('error', 'Error', err.message);
+    logBox.textContent += '\n❌ ' + err.message;
+  }
+}
+
+// Multi compile (REAL)
+async function compileMulti() {
+  if (!fileM) {
+    showToast('warning', 'File belum dipilih', 'Pilih file .ino terlebih dahulu');
+    return;
+  }
+  
+  if (selM.size === 0) {
+    showToast('warning', 'Board belum dipilih', 'Pilih minimal 1 board');
+    return;
+  }
+  
+  resetOut('M');
+  
+  const btn = document.getElementById('btnCompileM');
+  btn.disabled = true;
+  btn.textContent = '⏳ MENGIRIM...';
+  
+  const formData = new FormData();
+  formData.append('file', fileM);
+  selM.forEach(board => formData.append('boards', board));
+  
+  try {
+    const response = await fetch('/compile-multi', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const data = await response.json();
+    
+    if (!data.ok) {
+      showStatus('M', '❌ ' + (data.error || 'Gagal mengirim'), 'error');
+      btn.disabled = false;
+      btn.textContent = '🔀 KOMPILASI SEMUA BOARD';
+      return;
+    }
+    
+    btn.textContent = `⏳ ${selM.size} BOARD DALAM ANTRIAN...`;
+    
+    // Poll job pertama untuk status
+    if (data.job_ids && data.job_ids.length > 0) {
+      pollMultiJob(data.job_ids[0], selM.size);
+    }
+    
+  } catch (error) {
+    showStatus('M', '❌ Error: ' + error.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '🔀 KOMPILASI SEMUA BOARD';
+  }
+}
+
+function pollMultiJob(jobId, totalBoards) {
+  if (pollTimers['M']) clearInterval(pollTimers['M']);
+  let compileTick = 0;
+
+  pollTimers['M'] = setInterval(async () => {
+    try {
+      const response = await fetch(`/queue/status/${jobId}`);
+      if (!response.ok) return;
+      const data = await response.json();
+
+      if (!data.ok) {
+        clearInterval(pollTimers['M']);
+        document.getElementById('btnCompileM').disabled = false;
+        document.getElementById('btnCompileM').textContent = '🔀 KOMPILASI SEMUA BOARD';
+        return;
+      }
+
+      if (data.status === 'waiting') {
+        const pos = data.position || 1;
+        document.getElementById('qboxM').classList.add('show');
+        document.getElementById('qtitleM').textContent = `Menunggu giliran... Posisi #${pos}`;
+        document.getElementById('qposM').textContent = pos;
+        document.getElementById('qbadgeM').className = 'q-badge waiting';
+        document.getElementById('qbadgeM').innerHTML = `<span class="q-spinner"></span> ANTRIAN #${pos}`;
+        document.getElementById('progM').classList.add('show');
+        _setProgress('M', Math.min(15, 5 + pos), `Antrian #${pos}`);
+
+      } else if (data.status === 'compiling') {
+        document.getElementById('qboxM').classList.remove('show');
+        document.getElementById('progM').classList.add('show');
+        compileTick++;
+        const done = data.boards_done || 0;
+        const label = done > 0 ? `Board ${done}/${totalBoards}...` : `Mengkompilasi ${totalBoards} board...`;
+        _setProgress('M', Math.min(88, 20 + compileTick * 2), label);
+        showStatus('M', '⚙️ ' + label, 'loading');
+
+      } else if (data.status === 'done') {
+        clearInterval(pollTimers['M']);
+        document.getElementById('qboxM').classList.remove('show');
+        _setProgress('M', 100, `✅ ${totalBoards} board selesai!`);
+        const dlBtn = document.getElementById('btnDlM');
+        dlBtn.dataset.url = data.download_url || data.download || `/queue/download/${jobId}`;
+        dlBtn.textContent = '⬇ DOWNLOAD ZIP';
+        dlBtn.classList.add('show');
+        showStatus('M', `✅ Kompilasi ${totalBoards} board selesai!`, 'success');
+        showToast('success', 'Multi Compile Selesai!', 'ZIP siap didownload');
+        document.getElementById('btnCompileM').disabled = false;
+        document.getElementById('btnCompileM').textContent = '🔀 KOMPILASI SEMUA BOARD';
+
+      } else if (data.status === 'error') {
+        clearInterval(pollTimers['M']);
+        _setProgress('M', 100, '❌ Error', true);
+        showStatus('M', '❌ ' + (data.error || 'Server error'), 'error');
+        document.getElementById('logM').textContent = data.error || '';
+        document.getElementById('logToggleM').classList.add('show');
+        document.getElementById('btnCompileM').disabled = false;
+        document.getElementById('btnCompileM').textContent = '🔀 KOMPILASI SEMUA BOARD';
+      }
+    } catch (err) { console.error('Multi poll error:', err); }
+  }, 1500);
+}
+
+// ============== AI ANALYZER ==============
+async function analyzeError() {
+  if (!lastError) {
+    showToast('warning', 'Tidak ada error', 'Compile dulu untuk mendapatkan error');
+    return;
+  }
+  document.getElementById('aiPanelS').classList.add('show');
+  await requestFix();
+}
+
+// Analisis lokal cepat (offline, instant)
+function _localAnalyze(errText, board) {
+  if (!errText) return null;
+  const e = errText.toLowerCase();
+  const isEsp = board && /esp32|esp8266|nodemcu|wemos/.test(board.toLowerCase());
+  if (isEsp && /wifi|wl_connected|bledevice|webserver|httpclient/.test(e) && /not declared|no such file/.test(e)) {
+    return { type: 'esp_not_installed', explanation: 'Board package ESP belum terinstall.\nWiFi dan fitur ESP tidak bisa dikenali sebelum package diinstall.' };
+  }
+  const libM = errText.match(/fatal error:\s*(.+?\.h):\s*No such file|[<"](.+?\.h)[>"]\s*No such file/i);
+  if (libM) {
+    const h = libM[1] || libM[2];
+    return { type: 'missing_lib', explanation: 'Library tidak ditemukan: ' + h + '\nInstall via panel Library di bawah.' };
+  }
+  const symM = errText.match(/'(.+?)' was not declared in this scope/);
+  if (symM) {
+    return { type: 'undeclared', explanation: "Simbol '" + symM[1] + "' tidak dikenal.\nPastikan library sudah di-#include." };
+  }
+  if (/expected ';'|expected '}'|expected '\)'/.test(errText)) {
+    return { type: 'syntax', explanation: 'Kesalahan sintaks.\nPeriksa tanda baca: titik koma, kurung kurawal, atau tanda kutip.' };
+  }
+  return null;
+}
+
+let _fixedCode = '';
+
+async function requestFix() {
+  if (!lastError) return;
+  const btn  = document.getElementById('aiBtnS');
+  const body = document.getElementById('aiBodyS');
+  document.getElementById('aiPanelS').classList.add('show');
+
+  const local = _localAnalyze(lastError, lastBoard);
+  if (local && local.type === 'esp_not_installed') {
+    const isESP32 = ['esp32','esp32s3','esp32c3'].includes(lastBoard);
+    const plat = isESP32 ? 'esp32:esp32' : 'esp8266:esp8266';
+    body.innerHTML = `<div class="ai-explain">⚠️ <strong>Board package belum terinstall!</strong><br>WiFi dan fitur ESP tidak bisa dikenali sebelum package diinstall.</div><div class="ai-actions" style="margin-top:10px"><button class="btn-apply-compile" onclick="installBoardPackage('${plat}','')">⬇ Install ${isESP32?'ESP32':'ESP8266'} Package</button></div>`;
+    return;
+  }
+
+  const localHtml = local ? '<div class="ai-explain" style="white-space:pre-wrap">' + local.explanation + '</div><hr style="border:none;border-top:1px solid var(--border);margin:10px 0">' : '';
+  body.innerHTML = localHtml + '<div class="ai-loading"><div class="ai-spinner"></div><span style="font-size:12px;color:var(--text2)">Groq AI menganalisis...</span></div>';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Menganalisis...'; }
+
+  try {
+    const res  = await fetch('/ai-fix', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: lastError, board: lastBoard || selS, code: lastCode || '' })
+    });
+    const data = await res.json();
+
+    if (!data.ok) {
+      const c = data.code || '';
+      let msg = c === 'no_key'
+        ? '<strong>Groq AI belum aktif.</strong><br><br>Cara aktifkan (GRATIS):<br>1. Buka <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan)">console.groq.com/keys</a><br>2. Create API Key → salin<br>3. Buka app.py → isi GROQ_KEY<br>4. Restart server'
+        : '❌ AI error: ' + (data.error || c);
+      body.innerHTML = localHtml + '<div class="ai-explain" style="color:var(--orange)">' + msg + '</div>';
+      return;
+    }
+
+    const explanation = (data.explanation || '').trim();
+    _fixedCode = (data.fixed_code || '').trim();
+    body.innerHTML = '';
+    if (explanation) {
+      const el = document.createElement('div');
+      el.className = 'ai-explain'; el.textContent = explanation;
+      body.appendChild(el);
+    }
+    if (_fixedCode) {
+      const ce = document.createElement('div');
+      ce.className = 'ai-code'; ce.textContent = _fixedCode;
+      body.appendChild(ce);
+      const ae = document.createElement('div');
+      ae.className = 'ai-actions';
+      ae.innerHTML = lastCode
+        ? '<button class="btn-apply" onclick="applyFix()">📋 Terapkan ke Editor</button><button class="btn-apply-compile" onclick="applyAndCompile()">⚡ Terapkan & Compile</button>'
+        : '<button class="btn-apply-compile" onclick="applyAndCompile()">📋 Salin & Compile</button>';
+      body.appendChild(ae);
+      showToast('success', 'AI Fix siap!', 'Klik Terapkan untuk apply');
+    }
+  } catch(e) {
+    body.innerHTML = localHtml + '<div class="ai-explain" style="color:var(--red)">Tidak bisa hubungi AI: ' + e.message + '</div>';
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔍 Analisis Error'; }
+  }
+}
+
+function applyFix() {
+  if (!_fixedCode) return;
+  setInputMode('code');
+  // Write fix into the active .ino tab
+  const inoTab = editorTabs.find(t => t.ext === 'ino') || editorTabs[0];
+  if (inoTab) {
+    inoTab.code = _fixedCode;
+    editorSwitchTo(inoTab.id);
+    const ta = document.getElementById('code_' + inoTab.id);
+    if (ta) ta.value = _fixedCode;
+  }
+  lastCode = _fixedCode;
+  checkCompileBtn();
+  showToast('success', 'Kode diterapkan!', 'Klik Compile untuk compile ulang');
+}
+
+function applyAndCompile() {
+  applyFix();
+  setTimeout(compileSingle, 300);
+}
+
+// ============== DOWNLOAD HANDLER ==============
+function triggerDownload(slot) {
+  const btn = document.getElementById('btnDl' + slot);
+  if (!btn) return;
+  const url = btn.dataset.url || btn.getAttribute('href');
+  if (!url || url === '#') {
+    showToast('warning', 'File belum siap', 'Compile dulu');
+    return;
+  }
+  // Buat link sementara untuk force download (tidak buka tab baru)
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = ''; // browser tentukan nama dari Content-Disposition header
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// ============== RECOMPILE ==============
+function recompile() {
+  document.getElementById('libNoticeS').classList.remove('show');
+  document.getElementById('btnRecompileS').classList.remove('show');
+  compileSingle();
+}
+
+// ============== TOAST ==============
+function showToast(type, title, sub) {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+  const wrap = document.getElementById('toastWrap');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.innerHTML = `<span>${icons[type] || '•'}</span><div><div style="font-weight:700">${title}</div><div style="font-size:11px;opacity:.7">${sub}</div></div>`;
+  wrap.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(20px)';
+    toast.style.transition = 'all .3s';
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ============== LIBRARY FUNCTIONS ==============
+function toggleLibPanel() {
+  const panel = document.getElementById('libPanel');
+  const collapsed = panel.classList.toggle('collapsed');
+  document.getElementById('libArrow').textContent = collapsed ? '▲' : '▼';
+  if (!collapsed) loadLibs();
+}
+
+async function loadLibs() {
+  const list = document.getElementById('libList');
+  list.innerHTML = '⏳ Memuat library dari server...';
+  try {
+    const res  = await fetch('/libraries');
+    const data = await res.json();
+    if (data.ok && data.libraries && data.libraries.length > 0) {
+      allLibs = data.libraries;
+    } else {
+      allLibs = LIBRARY_LIST;
+    }
+  } catch(e) {
+    allLibs = LIBRARY_LIST;
+  }
+  renderLibs(allLibs);
+  const cnt = allLibs.length;
+  const countEl = document.getElementById('libCount');
+  const hdrEl   = document.getElementById('libCountHdr');
+  if (countEl) countEl.textContent = cnt;
+  if (hdrEl)   hdrEl.textContent = cnt + ' library';
+}
+
+function renderLibs(libs) {
+  const list = document.getElementById('libList');
+  if (!libs || libs.length === 0) {
+    list.innerHTML = '<span style="color:var(--text2)">Tidak ada library</span>';
+    return;
+  }
+  
+  list.innerHTML = libs.map(lib => {
+    if (typeof lib === 'string') {
+      return `<div class="lib-item">${lib}</div>`;
+    } else if (lib.name) {
+      return `<div class="lib-item">${lib.name} v${lib.version || '?'}</div>`;
+    }
+    return '';
+  }).join('');
+}
+
+function filterLibs() {
+  const search = document.getElementById('libSearch').value.toLowerCase();
+  if (!search) {
+    renderLibs(allLibs);
+    return;
+  }
+  
+  const filtered = allLibs.filter(lib => {
+    if (typeof lib === 'string') {
+      return lib.toLowerCase().includes(search);
+    } else if (lib.name) {
+      return lib.name.toLowerCase().includes(search);
+    }
+    return false;
+  });
+  
+  renderLibs(filtered);
+}
+
+function showInstallModal() {
+  document.getElementById('installModal').classList.add('show');
+  document.getElementById('libInstallInput').value = '';
+  document.getElementById('installStatus').textContent = '';
+  setTimeout(() => document.getElementById('libInstallInput').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('installModal').classList.remove('show');
+  document.getElementById('installStatus').textContent = '';
+}
+
+async function installLib() {
+  const name = document.getElementById('libInstallInput').value.trim();
+  if (!name) {
+    showToast('warning', 'Nama library', 'Masukkan nama library dulu');
+    return;
+  }
+  const statusEl = document.getElementById('installStatus');
+  const btn = document.querySelector('#installModal button');
+  if (btn) btn.disabled = true;
+  statusEl.textContent = '⏳ Menginstall "' + name + '"...';
+  statusEl.style.color = 'var(--cyan)';
+  try {
+    const res  = await fetch('/install-library', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ library: name })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      statusEl.textContent = '✅ ' + name + ' berhasil diinstall!';
+      statusEl.style.color = 'var(--green)';
+      showToast('success', 'Library terinstall!', name);
+      await loadLibs();
+      setTimeout(closeModal, 1500);
+    } else {
+      const msg = data.error || 'Gagal install';
+      statusEl.textContent = '❌ ' + msg;
+      statusEl.style.color = 'var(--red)';
+      showToast('error', 'Gagal install', msg);
+    }
+  } catch(err) {
+    statusEl.textContent = '❌ ' + err.message;
+    statusEl.style.color = 'var(--red)';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+// ============== SWITCH TAB ==============
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((el, i) => {
+    el.classList.toggle('active', (tab === 'single' && i === 0) || (tab === 'multi' && i === 1));
+  });
+  document.getElementById('tabSingle').classList.toggle('active', tab === 'single');
+  document.getElementById('tabMulti').classList.toggle('active', tab === 'multi');
+}
+
+// ============== SERVER QUEUE INFO ==============
+async function refreshQueueInfo() {
+  try {
+    const response = await fetch('/queue/info');
+    const data = await response.json();
+    
+    if (data.ok) {
+      const total = data.waiting + data.compiling;
+      const el = document.getElementById('sqText');
+      const dot = document.querySelector('#sqInfo .dot');
+      
+      if (total === 0) {
+        el.textContent = 'Antrian: kosong';
+        if (dot) dot.style.background = 'var(--green)';
+      } else if (data.compiling > 0) {
+        el.textContent = `${data.waiting} tunggu · 1 berjalan`;
+        if (dot) dot.style.background = 'var(--cyan)';
+      } else {
+        el.textContent = `Antrian: ${total} menunggu`;
+        if (dot) dot.style.background = 'var(--orange)';
+      }
+    }
+  } catch (e) {
+    // Fallback jika server belum ready
+    document.getElementById('sqText').textContent = 'Antrian: kosong';
+  }
+}
+
+// ============== MULTI-TAB EDITOR ==============
+let editorTabs = [];   // [{id, name, ext, code}]
+let editorActive = null;
+let editorIdSeq = 0;
+let newTabType = 'ino';
+
+function editorInit() {
+  editorTabs = [];
+  editorActive = null;
+  editorIdSeq = 0;
+  editorAddTab('sketch', 'ino',
+    '// Paste kode Arduino kamu di sini...\n\nvoid setup() {\n  // setup\n}\n\nvoid loop() {\n  // main loop\n}'
+  );
+}
+
+function editorAddTab(name, ext, code) {
+  const id = 'et' + (++editorIdSeq);
+  editorTabs.push({ id, name: name || ('file' + editorIdSeq), ext: ext || 'ino', code: code || '' });
+  editorRender();
+  editorSwitchTo(id);
+  return id;
+}
+
+function editorRender() {
+  const bar  = document.getElementById('editorTabsBar');
+  const body = document.getElementById('editorBody');
+  if (!bar || !body) return;
+
+  // Build tab buttons
+  const addBtn = '<button class="editor-tab-add" onclick="showNewTabModal()" title="Tambah file baru">＋</button>';
+  bar.innerHTML = editorTabs.map(t => {
+    const isActive = t.id === editorActive;
+    const canClose = editorTabs.length > 1;
+    return `<div class="editor-tab${isActive ? ' active' : ''}" id="tab_${t.id}" onclick="editorSwitchTo('${t.id}')">
+      <input class="editor-tab-name" id="tabname_${t.id}" value="${t.name}"
+             style="width:${Math.max(40, t.name.length * 8)}px"
+             onclick="event.stopPropagation()"
+             onblur="editorRenameTab('${t.id}',this.value)"
+             onkeydown="if(event.key==='Enter')this.blur()"
+             title="Klik untuk rename">
+      <span class="tab-ext">.${t.ext}</span>
+      ${canClose ? `<button class="tab-close" onclick="editorCloseTab('${t.id}',event)" title="Tutup">✕</button>` : ''}
+    </div>`;
+  }).join('') + addBtn;
+
+  // Build editor panes
+  body.innerHTML = editorTabs.map(t => `
+    <div class="editor-pane${t.id === editorActive ? ' active' : ''}" id="pane_${t.id}">
+      <textarea class="tab-code" id="code_${t.id}"
+        placeholder="${t.ext === 'ino' ? '// Kode Arduino .ino...' : '// Header file .h...'}"
+        oninput="editorSaveCode('${t.id}',this.value)"
+        spellcheck="false">${escHtml(t.code)}</textarea>
+    </div>`
+  ).join('');
+
+  // Update counter
+  const cnt = document.getElementById('editorTabCount');
+  if (cnt) cnt.textContent = editorTabs.length + ' file' + (editorTabs.length > 1 ? 's' : '');
+
+  // Sync checkCompileBtn
+  checkCompileBtn();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function editorSwitchTo(id) {
+  // Save current code first
+  if (editorActive) editorSaveCurrentCode();
+  editorActive = id;
+  editorRender();
+  // Focus textarea
+  const ta = document.getElementById('code_' + id);
+  if (ta) setTimeout(() => ta.focus(), 50);
+}
+
+function editorSaveCurrentCode() {
+  if (!editorActive) return;
+  const ta = document.getElementById('code_' + editorActive);
+  if (ta) {
+    const t = editorTabs.find(x => x.id === editorActive);
+    if (t) t.code = ta.value;
+  }
+}
+
+function editorSaveCode(id, value) {
+  const t = editorTabs.find(x => x.id === id);
+  if (t) t.code = value;
+  checkCompileBtn();
+}
+
+function editorRenameTab(id, newName) {
+  const clean = newName.replace(/[^a-zA-Z0-9_]/g, '') || 'file';
+  const t = editorTabs.find(x => x.id === id);
+  if (t) { t.name = clean; editorRender(); }
+}
+
+function editorCloseTab(id, event) {
+  event.stopPropagation();
+  if (editorTabs.length <= 1) return;
+  const idx = editorTabs.findIndex(x => x.id === id);
+  editorTabs.splice(idx, 1);
+  if (editorActive === id) {
+    editorActive = editorTabs[Math.max(0, idx - 1)].id;
+  }
+  editorRender();
+}
+
+function editorClearAll() {
+  if (!confirm('Hapus semua tab dan kode?')) return;
+  editorInit();
+}
+
+function editorImportFile() {
+  document.getElementById('editorImportInput').click();
+}
+
+function editorHandleImport(input) {
+  Array.from(input.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const parts = file.name.split('.');
+      const ext   = parts.pop();
+      const name  = parts.join('.');
+      // Check if tab with same name exists
+      const existing = editorTabs.find(t => t.name === name && t.ext === ext);
+      if (existing) {
+        existing.code = e.target.result;
+        editorSwitchTo(existing.id);
+      } else {
+        editorAddTab(name, ext, e.target.result);
+      }
+    };
+    reader.readAsText(file);
+  });
+  input.value = '';
+}
+
+// New Tab Modal
+function showNewTabModal() {
+  newTabType = 'ino';
+  document.getElementById('nttIno').classList.add('active');
+  document.getElementById('nttH').classList.remove('active');
+  document.getElementById('newTabName').value = '';
+  document.getElementById('newTabModal').classList.add('show');
+  setTimeout(() => document.getElementById('newTabName').focus(), 100);
+}
+
+function closeNewTabModal() {
+  document.getElementById('newTabModal').classList.remove('show');
+}
+
+function setNewTabType(type) {
+  newTabType = type;
+  document.getElementById('nttIno').classList.toggle('active', type === 'ino');
+  document.getElementById('nttH').classList.toggle('active',   type === 'h');
+}
+
+function confirmNewTab() {
+  const raw   = document.getElementById('newTabName').value.trim();
+  const name  = raw.replace(/[^a-zA-Z0-9_]/g, '') || ('file' + (editorIdSeq + 1));
+  editorAddTab(name, newTabType, '');
+  closeNewTabModal();
+}
+
+// Override getCodeAsFile to support multi-tab
+function getCodeAsFile() {
+  // Save current textarea
+  editorSaveCurrentCode();
+
+  const mainTab = editorTabs.find(t => t.ext === 'ino') || editorTabs[0];
+  const sketchName = mainTab.name || 'sketch';
+
+  if (editorTabs.length === 1) {
+    // Single file — original behaviour
+    const blob = new Blob([mainTab.code], { type: 'text/plain' });
+    return new File([blob], sketchName + '.ino', { type: 'text/plain' });
+  }
+
+  // Multi-file: build a ZIP in JS (native, no lib needed — just use a simple tar-less zip via JSZip if available, otherwise fallback)
+  // We'll pass files via FormData with multiple entries
+  return null; // signal to compileSingle to use multi-file path
+}
+
+// Returns all editor files as an array of File objects
+function getEditorFiles() {
+  editorSaveCurrentCode();
+  return editorTabs.map(t => {
+    const blob = new Blob([t.code], { type: 'text/plain' });
+    return new File([blob], t.name + '.' + t.ext, { type: 'text/plain' });
+  });
+}
+
+// Patch useTemplate to load into editor
+const _origUseTemplate = typeof useTemplate === 'function' ? useTemplate : null;
+
+// ============== AI CHATBOT ==============
+let chatHistory = [];
+let chatOpen = true;
+
+function toggleAiChat() {
+  const wrap = document.getElementById('aiChatWrap');
+  wrap.classList.toggle('collapsed');
+}
+
+function chatSuggest(text) {
+  document.getElementById('aiChatInput').value = text;
+  sendChat();
+}
+
+function getCurrentCode() {
+  if (inputMode === 'code') {
+    editorSaveCurrentCode();
+    return editorTabs.map(t => `// === ${t.name}.${t.ext} ===\n${t.code}`).join('\n\n');
+  } else if (fileS) {
+    // File mode — baca isi file async, tapi untuk chat kita cache dulu
+    return window._cachedFileCode || `// File: ${fileS.name} (belum dibaca)`;
+  }
+  return '';
+}
+
+// Cache isi file saat dipilih supaya AI bisa baca
+async function cacheFileCode(file) {
+  try {
+    const text = await file.text();
+    window._cachedFileCode = `// === ${file.name} ===\n${text}`;
+    // Extra files dari ZIP
+    if (zipExtraFiles.S && zipExtraFiles.S.length > 0) {
+      for (const ef of zipExtraFiles.S) {
+        const etxt = await ef.text();
+        window._cachedFileCode += `\n\n// === ${ef.name} ===\n${etxt}`;
+      }
+    }
+  } catch(e) {
+    window._cachedFileCode = `// File: ${file.name}`;
+  }
+}
+
+function appendChatMsg(role, text, actions) {
+  const msgs = document.getElementById('aiChatMsgs');
+  // Remove welcome if exists
+  const welcome = msgs.querySelector('.ai-chat-welcome');
+  if (welcome) welcome.remove();
+
+  const div = document.createElement('div');
+  div.className = `ai-msg ${role}`;
+
+  const avatar = role === 'user' ? '👤' : '🤖';
+  
+  // Format bot text: markdown → HTML
+  let formatted = text
+    // Escape HTML dulu
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    // Code blocks (sebelum inline code)
+    .replace(/```(?:cpp|arduino|c|ino|bash|)?\n?([\s\S]*?)```/g, (_,c)=>`<pre>${c.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')}</pre>`)
+    // Inline code
+    .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/__(.+?)__/g, '<em>$1</em>')
+    // Numbered list item
+    .replace(/^(\d+)\.\s+(.+)$/gm, '<div style="margin:3px 0 3px 14px"><span style="color:var(--cyan);font-weight:700">$1.</span> $2</div>')
+    // Bullet list item
+    .replace(/^[•\-\*]\s+(.+)$/gm, '<div style="margin:3px 0 3px 14px"><span style="color:var(--cyan)">•</span> $1</div>')
+    // Line breaks
+    .replace(/\n/g, '<br>');
+
+  let actionsHtml = '';
+  if (actions && actions.length) {
+    actionsHtml = '<div class="ai-msg-actions">' +
+      actions.map(a => `<button class="ai-msg-action-btn ${a.cls||''}" data-action="${a.action}" data-key="${a.key||''}">${a.label}</button>`).join('') +
+      '</div>';
+  }
+
+  div.innerHTML = `
+    <div class="ai-msg-avatar">${avatar}</div>
+    <div>
+      <div class="ai-msg-bubble">${formatted}</div>
+      ${actionsHtml}
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('aiChatMsgs');
+  const div = document.createElement('div');
+  div.className = 'ai-msg bot';
+  div.id = 'typingIndicator';
+  div.innerHTML = `
+    <div class="ai-msg-avatar">🤖</div>
+    <div class="ai-chat-typing">
+      <div class="ai-typing-dot"></div>
+      <div class="ai-typing-dot"></div>
+      <div class="ai-typing-dot"></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+// Storage untuk kode dari AI (hindari inline JSON di onclick)
+const _aiCodeStore = {};
+let _aiCodeSeq = 0;
+function _storeCode(val) {
+  const key = 'c' + (++_aiCodeSeq);
+  _aiCodeStore[key] = val;
+  return key;
+}
+
+// Event delegation untuk tombol action di chat
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const key    = btn.dataset.key;
+  if (action === 'apply') {
+    applyCodeFromChat(_aiCodeStore[key], false);
+  } else if (action === 'apply-compile') {
+    applyCodeFromChat(_aiCodeStore[key], true);
+  } else if (action === 'install-libs') {
+    installLibsFromChat(_aiCodeStore[key] || []);
+  }
+});
+
+async function sendChat() {
+  const input = document.getElementById('aiChatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const sendBtn = document.getElementById('aiChatSendBtn');
+  sendBtn.disabled = true;
+  input.value = '';
+
+  // Tampilkan hanya pertanyaan user (tanpa kode)
+  appendChatMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+
+  // Show typing
+  showTyping();
+
+  // Kode dikirim ke server tapi TIDAK ditampilkan di chat
+  const code = getCurrentCode();
+
+  try {
+    const res = await fetch('/ai-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        code: code,
+        board: selS || '',
+        history: chatHistory.slice(-8), // last 8 turns
+        last_error: lastError || ''
+      })
+    });
+    const data = await res.json();
+    removeTyping();
+
+    if (!data.ok) {
+      appendChatMsg('bot', '❌ ' + (data.error || 'Terjadi kesalahan'));
+      if (data.code === 'no_key') {
+        appendChatMsg('bot', '🔑 OpenRouter key belum diisi di app.py\nBuka app.py → isi OPENROUTER_KEY → restart server');
+      }
+    } else {
+      const reply = data.reply || '';
+      chatHistory.push({ role: 'assistant', content: reply });
+
+      // Build action buttons based on reply content
+      const actions = [];
+      if (data.has_code) {
+        const codeKey = _storeCode(data.fixed_code);
+        actions.push({ label: '📋 Terapkan ke Editor', cls: '',      action: 'apply',         key: codeKey });
+        actions.push({ label: '⚡ Terapkan & Compile',  cls: 'green', action: 'apply-compile', key: codeKey });
+      }
+      if (data.has_libs) {
+        const libsKey = _storeCode(data.libs);
+        actions.push({ label: '📦 Install Library', cls: '', action: 'install-libs', key: libsKey });
+      }
+
+      appendChatMsg('bot', reply, actions);
+    }
+  } catch (err) {
+    removeTyping();
+    appendChatMsg('bot', '❌ Tidak bisa hubungi server: ' + err.message);
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+function applyCodeFromChat(code, andCompile) {
+  if (!code) return;
+  setInputMode('code');
+  const inoTab = editorTabs.find(t => t.ext === 'ino') || editorTabs[0];
+  if (inoTab) {
+    inoTab.code = code;
+    editorSwitchTo(inoTab.id);
+    const ta = document.getElementById('code_' + inoTab.id);
+    if (ta) ta.value = code;
+  }
+  lastCode = code;
+  checkCompileBtn();
+  showToast('success', 'Kode diterapkan!', '');
+  if (andCompile) setTimeout(compileSingle, 300);
+}
+
+async function installLibsFromChat(libs) {
+  if (!libs || !libs.length) return;
+  appendChatMsg('user', `Install library: ${libs.join(', ')}`);
+  showTyping();
+  try {
+    for (const lib of libs) {
+      const res = await fetch('/install-library', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ library: lib })
+      });
+      const d = await res.json();
+      removeTyping();
+      appendChatMsg('bot', d.ok ? `✅ ${lib} berhasil diinstall!` : `❌ Gagal install ${lib}: ${d.error}`);
+      showTyping();
+    }
+    removeTyping();
+    appendChatMsg('bot', '✅ Selesai! Kamu bisa compile ulang sekarang.');
+  } catch(e) {
+    removeTyping();
+    appendChatMsg('bot', '❌ Error: ' + e.message);
+  }
+}
+
+// ============== INITIALIZATION ==============
+document.addEventListener('DOMContentLoaded', function() {
+  editorInit();
+  buildBoards();
+  loadLibs();
+  refreshQueueInfo();
+  
+  // Set interval untuk heartbeat dan queue info
+  setInterval(() => {
+    fetch('/heartbeat', { method: 'POST' }).catch(() => {});
+  }, 30000);
+  
+  setInterval(refreshQueueInfo, 5000);
+  
+  // Keyboard shortcut: Enter untuk compile
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      const isMulti = document.getElementById('tabMulti').classList.contains('active');
+      const btn = document.getElementById(isMulti ? 'btnCompileM' : 'btnCompileS');
+      if (btn && !btn.disabled) btn.click();
+    }
+  });
+  
+  // Notification permission
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+});
+</script>
+</body>
+</html>
