@@ -1,0 +1,56 @@
+#!/bin/bash
+# One-command setup: install + configure all security tools
+# Run: sudo bash setup.sh
+
+set -e
+
+echo "=== Installing Security Tools ==="
+
+# Install packages
+apt-get update -qq
+apt-get install -y -qq tor proxychains4 2>/dev/null
+
+# Configure Tor
+mkdir -p /etc/tor
+cat > /etc/tor/torrc << 'EOF'
+SOCKSPort 9050
+DNSPort 5353
+AutomapHostsOnResolve 1
+VirtualAddrNetworkIPv4 10.192.0.0/10
+RunAsDaemon 1
+EOF
+
+# Configure proxychains
+cat > /etc/proxychains4.conf << 'EOF'
+strict_chain
+proxy_dns
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+[ProxyList]
+socks4 127.0.0.1 9050
+EOF
+
+# Start Tor
+killall tor 2>/dev/null || true
+sleep 1
+tor 2>/dev/null &
+sleep 3
+
+# Verify
+echo ""
+echo "=== Verification ==="
+TOR_IP=$(curl --socks5-hostname 127.0.0.1:9050 -s --max-time 15 https://check.torproject.org/api/ip 2>/dev/null | python3 -c "import sys,json; print(json.load(sys.stdin).get('IP','FAIL'))" 2>/dev/null)
+echo "Tor exit IP: $TOR_IP"
+
+PROXY_IP=$(proxychains4 -q curl -s --max-time 15 https://api.ipify.org 2>/dev/null)
+echo "Proxychains IP: $PROXY_IP"
+
+echo ""
+echo "=== USAGE ==="
+echo "  proxychains4 -q curl https://target.com/"
+echo "  proxychains4 -q python3 script.py"
+echo ""
+echo "  Or use the Python module:"
+echo "  from http_client import SecureSession"
+echo "  s = SecureSession()"
+echo "  r = s.get('https://target.com/')"
