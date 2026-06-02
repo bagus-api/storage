@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/js/prebid.js" async></script>
+<script defer data-domain="fileditchfiles.me" src="/js/render.js" data-api="/cunt/cunt"></script>
+<script>
+window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}
+function prepareUrl(p){const u=new URL(location.href),q=new URLSearchParams(location.search);let c=u.protocol+"//"+u.hostname;for(const n of p){const v=q.get(n);if(v)c+=v}return c}
+plausible('pageview',{u:prepareUrl(["f"])+window.location.search})
+document.addEventListener('DOMContentLoaded',()=>{
+  const video=document.querySelector('video')
+  if(video)video.addEventListener('play',()=>plausible('Video Played',{u:prepareUrl(["f"])+window.location.search}),{once:true})
+  const dl=document.querySelector('a.btn-main[download]')
+  if(dl)dl.addEventListener('click',()=>plausible('File Downloaded',{u:prepareUrl(["f"])+window.location.search}),{once:true})
+})
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Viewer</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:radial-gradient(1000px 500px at 50% -200px,#1b2233,transparent),linear-gradient(135deg,#08090e,#12141b);color:#eee;padding:30px}
+.wrap{width:100%;max-width:900px;background:rgba(255,255,255,.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.notif{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:12px 16px;border-radius:10px;background:rgba(255,152,0,.08);border:1px solid rgba(255,152,0,.25);font-size:.88rem;color:#ffcc80;line-height:1.5}
+.notif .notif-icon{font-size:1.1rem;flex-shrink:0}
+.notif .notif-close{margin-left:auto;cursor:pointer;opacity:.6;font-size:1rem;flex-shrink:0;background:none;border:none;color:inherit;padding:0 4px}
+.notif .notif-close:hover{opacity:1}
+.pathline{font-size:.9rem;color:#9aa0a6;word-break:break-all;display:flex;align-items:baseline;flex-wrap:wrap;gap:8px}
+.pathline .size{color:#ff9800;font-weight:600;font-size:.85rem;white-space:nowrap}
+.pathline .size::before{content:"·";margin-right:8px;color:#5a5f6a;font-weight:400}
+.preview{margin:18px 0}
+video,img{width:100%;max-height:520px;border-radius:14px;background:#000}
+.controls{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn{padding:14px 26px;border-radius:12px;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:.2s}
+.btn-main{background:linear-gradient(135deg,#ff9800,#ffb74d);color:#000}
+.btn-main:hover{transform:translateY(-1px);box-shadow:0 10px 25px rgba(255,152,0,.4)}
+.btn-alt{background:rgba(255,255,255,.07);color:#eee}
+.btn-alt:hover{background:rgba(255,255,255,.12)}
+.foot{margin-top:26px;text-align:center;font-size:.85rem;color:#9aa0a6}
+.foot a{color:#ff9800;text-decoration:none}
+.error-badge{display:inline-block;margin-top:4px;padding:6px 14px;border-radius:8px;background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.3);color:#ff6b6b;font-size:.82rem;text-align:center;width:100%}
+.gone{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 30px;gap:14px}
+.gone .gone-icon{font-size:3.5rem;line-height:1;opacity:.85}
+.gone h2{font-size:1.5rem;font-weight:800;color:#fff;margin:0;letter-spacing:-.02em}
+.gone p{font-size:.95rem;color:#9aa0a6;max-width:420px;margin:0;line-height:1.6}
+.gone .gone-path{margin-top:8px;font-family:ui-monospace,Menlo,Monaco,Consolas,monospace;font-size:.82rem;color:#7a7f8a;word-break:break-all;background:rgba(255,255,255,.04);padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.06)}
+.verifying-overlay{position:fixed;inset:0;background:rgba(8,9,14,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9998;backdrop-filter:blur(4px)}
+.verifying-overlay p{margin:0;font-size:.95rem;color:#9aa0a6}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,152,0,.2);border-top-color:#ff9800;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#o9bef884c0e3dff{display:none;position:fixed;inset:0;background:rgba(8,9,14,.97);backdrop-filter:blur(12px);z-index:9997;align-items:center;justify-content:center;flex-direction:column;gap:24px;text-align:center;padding:40px}
+#o9bef884c0e3dff.a9bef884c0e3dff{display:flex}
+#o9bef884c0e3dff .ab-icon{font-size:4rem;line-height:1}
+#o9bef884c0e3dff h2{font-size:1.6rem;font-weight:800;color:#fff;margin:0;letter-spacing:-.02em}
+#o9bef884c0e3dff p{font-size:.95rem;color:#9aa0a6;max-width:420px;margin:0;line-height:1.7}
+#o9bef884c0e3dff .ab-reload{padding:16px 40px;border-radius:12px;font-weight:700;border:none;cursor:pointer;background:linear-gradient(135deg,#ff9800,#ffb74d);color:#000;font-size:1.05rem;transition:.2s;margin-top:8px}
+#o9bef884c0e3dff .ab-reload:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,152,0,.5)}
+#b9bef884c0e3dff{display:none;position:fixed;bottom:0;left:0;right:0;z-index:9990;background:linear-gradient(135deg,#1a1400,#2a1f00);border-top:2px solid #ff9800;padding:28px 32px;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;box-shadow:0 -8px 40px rgba(255,152,0,.2)}
+#b9bef884c0e3dff.a9bef884c0e3dff{display:flex}
+#b9bef884c0e3dff .ab-text{flex:1;min-width:260px}
+#b9bef884c0e3dff .ab-text strong{display:block;font-size:1.05rem;color:#fff;font-weight:700;margin-bottom:6px}
+#b9bef884c0e3dff .ab-text span{font-size:.85rem;color:#9aa0a6;line-height:1.5}
+#b9bef884c0e3dff .ab-actions{display:flex;gap:12px;align-items:center;flex-shrink:0}
+#b9bef884c0e3dff .ab-close{padding:14px 28px;border-radius:10px;font-weight:700;border:none;cursor:pointer;background:linear-gradient(135deg,#ff9800,#ffb74d);color:#000;font-size:.95rem;transition:.2s;white-space:nowrap}
+#b9bef884c0e3dff .ab-close:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(255,152,0,.4)}
+#b9bef884c0e3dff .ab-dismiss{padding:14px 20px;border-radius:10px;font-weight:600;border:1px solid rgba(255,255,255,.15);cursor:pointer;background:transparent;color:#9aa0a6;font-size:.9rem;transition:.2s;white-space:nowrap}
+#b9bef884c0e3dff .ab-dismiss:hover{background:rgba(255,255,255,.07);color:#eee}
+/* Cosmetic bait — uBO/EasyList hides anything matching .adsbox, .adsbygoogle, etc. */
+.y9bef884c0e3dff{position:absolute;left:-9999px;top:0;width:300px;height:50px;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="o9bef884c0e3dff" data-c="a9bef884c0e3dff">
+  <div class="ab-icon">🚫</div>
+  <h2>Adblocker detected</h2>
+  <p>FileDitch is completely free and anonymous. Ads are the only thing keeping it alive — please whitelist <strong style="color:#ff9800">fileditchfiles.me</strong> and reload to access your file.</p>
+  <button class="ab-reload" onclick="location.reload()">✓ I've disabled it — reload</button>
+</div>
+<div id="b9bef884c0e3dff" data-c="a9bef884c0e3dff">
+  <div class="ab-text">
+    <strong>⚠️ Adblocker detected</strong>
+    <span>FileDitch is free and anonymous — ads keep it running. Please whitelist <strong style="color:#ff9800">fileditchfiles.me</strong> to support the service.</span>
+  </div>
+  <div class="ab-actions">
+    <button class="ab-close" onclick="location.reload()">I've disabled it — reload</button>
+    <button class="ab-dismiss" data-bn="b9bef884c0e3dff" data-c="a9bef884c0e3dff">Dismiss</button>
+  </div>
+</div>
+<div class="wrap">
+<div class="pathline">
+  <span>/alpha6/ca1937e51beca8e94ec9/IMG-20260530-WA4407.jpg</span>
+  </div>
+<div class="preview" id="v9bef884c0e3dff">
+    <img src="https://thegumonmyshoe.me/alpha6/ca1937e51beca8e94ec9/IMG-20260530-WA4407.jpg?md5=CjnqRmftDjZLbCKZQKYV0Q&amp;expires=1780456907" alt="">
+  </div>
+<div class="controls" id="c9bef884c0e3dff">
+  <a href="https://thegumonmyshoe.me/alpha6/ca1937e51beca8e94ec9/IMG-20260530-WA4407.jpg?md5=CjnqRmftDjZLbCKZQKYV0Q&amp;expires=1780456907" class="btn btn-main" id="d9bef884c0e3dff" download>⬇ Download</a>
+  <button id="share-button" class="btn btn-alt">🔗 Share</button>
+  <a href="https://abuse.fileditch.com/report.php?f=%2Falpha6%2Fca1937e51beca8e94ec9%2FIMG-20260530-WA4407.jpg" target="_blank" class="btn btn-alt">🚨 Report</a>
+</div>
+<div class="foot">Visit <a href="https://new.fileditch.com" target="_blank">fileditch.com</a></div>
+<script src="share.js"></script>
+<div id="x9bef884c0e3dff" class="y9bef884c0e3dff adsbox ad-banner adsbygoogle pub_300x250">&nbsp;</div>
+<script>
+(function(d,w){
+  // Dismiss button on banner — wired here (no inline onclick, no class literals)
+  var dms = d.querySelectorAll("b-(u-(t-(t-(o-(n-([-(d-(a-(t-(a-(--(b-(n-(]".split("-(").join(""));
+  for (var i = 0; i < dms.length; i++) {
+    (function(btn){
+      btn.addEventListener(atob("Y2xpY2s="), function(){
+        var bn = d.getElementById(btn.getAttribute(('\x64'+'\x61'+'\x74'+'\x61'+'\x2d'+'\x62'+'\x6e')));
+        var cl = btn.getAttribute(('\x64'+'\x61'+'\x74'+'\x61'+'\x2d'+'\x63'));
+        if (bn && cl) bn.classList.remove(cl);
+      });
+    })(dms[i]);
+  }
+
+  var h9bef884c0e3dff = false;
+  var p9bef884c0e3dff = true;
+  var o9bef884c0e3dff = d.getElementById("o$.9$.b$.e$.f$.8$.8$.4$.c$.0$.e$.3$.d$.f$.f".split("$.").join(""));
+  var r9bef884c0e3dff = d.getElementById(('\x62'+'\x39'+'\x62'+'\x65'+'\x66'+'\x38'+'\x38'+'\x34'+'\x63'+'\x30'+'\x65'+'\x33'+'\x64'+'\x66'+'\x66'));
+  var g9bef884c0e3dff = d.getElementById(atob("eDliZWY4ODRjMGUzZGZm"));
+  var v9bef884c0e3dff = d.getElementById(atob("djliZWY4ODRjMGUzZGZm"));
+  var c9bef884c0e3dff = d.getElementById(atob("YzliZWY4ODRjMGUzZGZm"));
+  // Activation class read from data-c attribute — never appears as a string literal.
+  var k9bef884c0e3dff = (o9bef884c0e3dff || r9bef884c0e3dff);
+  k9bef884c0e3dff = k9bef884c0e3dff ? k9bef884c0e3dff.getAttribute(atob("ZGF0YS1j")) : null;
+
+  setTimeout(function(){
+    // Signal A: prebid.js bait global (existing mechanism — survives if /js/prebid.js loads)
+    var a9bef884c0e3dff = !!w.__adOk;
+    // Signal B: cosmetic bait was hidden by uBO/EasyList cosmetic filter
+    var b9bef884c0e3dff = false;
+    try {
+      if (!g9bef884c0e3dff) { b9bef884c0e3dff = true; }
+      else if (g9bef884c0e3dff.offsetHeight === 0) { b9bef884c0e3dff = true; }
+      else {
+        var cs = w.getComputedStyle(g9bef884c0e3dff);
+        if (cs.display === atob("bm9uZQ==")         || cs.visibility === "h,\"i,\"d,\"d,\"e,\"n".split(",\"").join("")) b9bef884c0e3dff = true;
+      }
+    } catch(e) { b9bef884c0e3dff = true; }
+
+    // OK only if BOTH signals say all clear. Either failing → adblock detected.
+    var q9bef884c0e3dff = a9bef884c0e3dff && !b9bef884c0e3dff;
+    if (q9bef884c0e3dff) return;
+
+    // Telemetry (silently dropped if /api/plausible is blocked by ubo — fine).
+    try { plausible(atob("QWRibG9jayBEZXRlY3RlZA=="), {u: prepareUrl(["f"]) + w.location.search}); } catch(e){}
+
+    if (k9bef884c0e3dff) {
+      if (h9bef884c0e3dff) {
+        if (o9bef884c0e3dff) o9bef884c0e3dff.classList.add(k9bef884c0e3dff);
+        if (v9bef884c0e3dff) v9bef884c0e3dff.style.visibility = ('\x68'+'\x69'+'\x64'+'\x64'+'\x65'+'\x6e');
+        if (c9bef884c0e3dff) c9bef884c0e3dff.style.visibility = "h#(i#(d#(d#(e#(n".split("#(").join("");
+      } else {
+        if (r9bef884c0e3dff) r9bef884c0e3dff.classList.add(k9bef884c0e3dff);
+      }
+    }
+  }, 2500);
+
+  var dl = d.getElementById("d(\"9(\"b(\"e(\"f(\"8(\"8(\"4(\"c(\"0(\"e(\"3(\"d(\"f(\"f".split("(\"").join(""));
+  if (dl) {
+    dl.addEventListener(String.fromCharCode(99,108,105,99,107), function(){
+      if (!p9bef884c0e3dff) {
+        var pw = w.open('', '_blank'); if (pw) pw.close();
+      }
+    });
+  }
+})(document, window);
+</script>
+</div>
+</body>
+</html>
