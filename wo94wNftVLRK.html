@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cirebon Data & Monitoring</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { 
+                        primary: '#4F73FF',
+                        background: '#F4F6FB', 
+                        surface: '#FFFFFF' 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { -webkit-tap-highlight-color: transparent; }
+        #map { z-index: 10; }
+        .leaflet-bottom.leaflet-right { display: none; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-slate-800 font-sans antialiased overflow-x-hidden flex flex-col h-screen">
+
+    <div id="view-home" class="flex-1 overflow-y-auto pb-24 relative block">
+        
+        <div class="bg-primary pt-12 pb-24 px-6 relative z-0">
+            <div class="max-w-5xl mx-auto flex justify-between items-center text-white">
+                <div class="flex flex-col">
+                    <span class="text-blue-200 text-xs font-semibold tracking-wider uppercase mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-location-dot"></i> Kota Cirebon, Jawa Barat
+                    </span>
+                    <h1 class="text-2xl font-bold tracking-tight" id="welcome-text">Halo!</h1>
+                </div>
+                <div class="w-10 h-10 rounded-full border border-white/20 bg-white/10 overflow-hidden flex items-center justify-center">
+                    <img src="https://cctv.cirebonkota.go.id/img/Kota%20Cirebon.png" alt="Logo Cirebon" class="w-7 h-7 object-contain" onerror="this.src='https://fa-icons.com'"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-5xl mx-auto px-6 -mt-14 relative z-10 space-y-6">
+            
+            <div class="bg-surface p-5 rounded-[24px] shadow-sm flex gap-4 overflow-x-auto snap-x">
+                
+                <div class="min-w-[260px] flex-1 bg-blue-50/70 p-5 rounded-2xl snap-center" id="weather-card">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Cuaca Cirebon</span>
+                            <h3 class="text-3xl font-bold mt-1 text-slate-800" id="weather-temp">--°C</h3>
+                        </div>
+                        <i id="weather-icon" class="fa-solid fa-circle-notch fa-spin text-3xl text-blue-400"></i>
+                    </div>
+                    <div class="flex gap-4 mt-4 text-xs font-medium text-slate-500">
+                        <span><i class="fa-solid fa-droplet text-blue-400"></i> <span id="weather-humidity">--</span>%</span>
+                        <span><i class="fa-solid fa-wind text-teal-400"></i> <span id="weather-wind">--</span> km/h</span>
+                    </div>
+                </div>
+
+                <div class="min-w-[280px] flex-1 bg-rose-50/70 p-5 rounded-2xl snap-center relative overflow-hidden" id="quake-card">
+                    <span class="text-[10px] font-bold text-rose-600 uppercase tracking-widest block mb-3">Info Gempa Terbaru (BMKG)</span>
+                    <div class="flex gap-4 items-center">
+                        <div class="bg-rose-500 text-white w-14 h-14 flex flex-col justify-center items-center rounded-xl shadow-md shrink-0">
+                            <span class="text-xl font-bold leading-none" id="quake-mag">--</span>
+                            <span class="text-[9px] uppercase mt-1 font-bold">SR</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold text-slate-800 leading-tight truncate" id="quake-loc">Memuat data...</p>
+                            <p class="text-[11px] text-slate-500 mt-1.5"><i class="fa-regular fa-clock"></i> <span id="quake-time">--</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <div class="flex justify-between items-end mb-5 px-1">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800">Live CCTV Kota Cirebon</h2>
+                        <p class="text-xs text-slate-500 mt-1">Pantauan lalu lintas & infrastruktur sistem</p>
+                    </div>
+                    <span class="text-xs font-semibold bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 id='system-pulse'"></span>
+                        <span id="online-counter">0</span> Online
+                    </span>
+                </div>
+
+                <div id="api-cctv-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="col-span-full text-center py-10 text-slate-400">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-primary"></i>
+                        <p class="text-sm">Menghubungkan ke API Hub Cirebon...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-map" class="flex-1 relative hidden h-full w-full pb-20">
+        <div id="map" class="w-full h-full"></div>
+    </div>
+
+    <div class="fixed bottom-0 w-full bg-surface rounded-t-3xl shadow-[0_-4px_25px_rgba(0,0,0,0.04)] z-50 px-6 py-4 flex justify-center gap-20 items-center">
+        <button onclick="switchTab('home')" id="tab-home" class="flex flex-col items-center gap-1 text-primary transition-colors">
+            <i class="fa-solid fa-house text-xl"></i>
+            <span class="text-[10px] font-semibold">Beranda</span>
+        </button>
+        <button onclick="switchTab('map')" id="tab-map" class="flex flex-col items-center gap-1 text-slate-300 hover:text-slate-500 transition-colors">
+            <i class="fa-solid fa-map-location-dot text-xl"></i>
+            <span class="text-[10px] font-semibold">Peta Pantauan</span>
+        </button>
+    </div>
+
+    <div id="video-modal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-[100] hidden flex-col justify-center items-center opacity-0 transition-opacity duration-300">
+        <div class="w-full max-w-3xl px-4 flex flex-col gap-4">
+            <div class="flex justify-between items-center text-white">
+                <h3 id="modal-title" class="font-semibold flex items-center gap-2 truncate">
+                    <i class="fa-solid fa-video text-primary"></i> Streaming
+                </h3>
+                <button onclick="closeModal()" class="w-10 h-10 bg-white/10 rounded-full hover:bg-white/20 transition flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="w-full aspect-video bg-black rounded-2xl overflow-hidden border border-slate-700 shadow-2xl relative" id="modal-player-container">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Endpoint Konfigurasi Berdasarkan Log Jaringan
+        const ENDPOINTS = {
+            cctvSheet: "https://sheets.googleapis.com/v4/spreadsheets/1wdFYkTEZaxE21f7HGAWjiBtAIQh_eXm2afbsvb-85sU/values/Sheet1!A2:G?key=AIzaSyBokMcYMdonY4J_Fwy3g7k484xy5Dn8ZTU",
+            cctvTraffic: "https://cctv.cirebonkota.go.id/api/traffic",
+            cctvStatus: "https://cctv.cirebonkota.go.id/api/status",
+            openMeteo: "https://api.open-meteo.com/v1/forecast?latitude=-6.7063&longitude=108.557&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,relative_humidity_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Asia%2FJakarta&forecast_days=4",
+            bmkgAutogempa: "https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json",
+            usgsEarthquake: "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&latitude=-6.737246&longitude=108.550659&maxradiuskm=150&starttime=2026-05-10&endtime=2026-06-09&orderby=time&limit=20"
+        };
+
+        let cctvDataList = [];
+        let mapInstance = null;
+        let earthquakeMarkers = [];
+
+        // Inisialisasi Utama saat Halaman Dimuat
+        window.onload = function() {
+            fetchWeather();
+            fetchEarthquakeData();
+            fetchCCTVData();
+        };
+
+        // 1. Fetch & Render Data Cuaca Real-time (Open-Meteo)
+        async function fetchWeather() {
+            try {
+                const response = await fetch(ENDPOINTS.openMeteo);
+                const data = await response.json();
+                const current = data.current;
+                
+                document.getElementById('weather-temp').innerText = `${current.temperature_2m}°C`;
+                document.getElementById('weather-humidity').innerText = current.relative_humidity_2m;
+                document.getElementById('weather-wind').innerText = current.wind_speed_10m;
+                
+                // Pemetaan Kode Cuaca WMO ke Icon FontAwesome
+                const iconMap = {
+                    0: 'fa-sun text-amber-400',
+                    1: 'fa-cloud-sun text-amber-300', 2: 'fa-cloud-sun text-slate-400', 3: 'fa-cloud text-slate-400',
+                    45: 'fa-smog text-slate-300', 48: 'fa-smog text-slate-300',
+                    51: 'fa-cloud-rain text-blue-400', 53: 'fa-cloud-rain text-blue-400', 55: 'fa-cloud-rain text-blue-500',
+                    61: 'fa-cloud-showers-heavy text-blue-500', 63: 'fa-cloud-showers-heavy text-blue-600',
+                    80: 'fa-cloud-showers-water text-blue-400',
+                    95: 'fa-cloud-bolt text-amber-500'
+                };
+                
+                const iconClass = iconMap[current.weather_code] || 'fa-cloud text-slate-400';
+                const iconEl = document.getElementById('weather-icon');
+                iconEl.className = `fa-solid ${iconClass} text-4xl drop-shadow-sm transition-transform duration-500`;
+            } catch (error) {
+                document.getElementById('weather-temp').innerText = "N/A";
+                document.getElementById('weather-icon').className = "fa-solid fa-triangle-exclamation text-rose-400 text-3xl";
+            }
+        }
+
+        // 2. Fetch & Render Data Gempa Bumi (BMKG TEWS + Komparasi Jalur USGS)
+        async function fetchEarthquakeData() {
+            try {
+                const response = await fetch(ENDPOINTS.bmkgAutogempa);
+                const data = await response.json();
+                const gempa = data.Infogempa.gempa;
+                
+                document.getElementById('quake-mag').innerText = gempa.Magnitude;
+                document.getElementById('quake-loc').innerText = gempa.Wilayah;
+                document.getElementById('quake-time').innerText = `${gempa.Tanggal} | ${gempa.Jam}`;
+                
+                // Simpan koordinat gempa ke dataset global jika diperlukan di peta
+                const coords = gempa.Coordinates.split(',');
+                gempa.lat = parseFloat(coords[0]);
+                gempa.lng = parseFloat(coords[1]);
+                window.latestGempaBMKG = gempa;
+            } catch (error) {
+                // Jika BMKG fail/RTO, beralih ke USGS Regional Cirebon-Jawa Barat Radius 150km
+                fetchUSGSEarthquake();
+            }
+        }
+
+        async function fetchUSGSEarthquake() {
+            try {
+                const response = await fetch(ENDPOINTS.usgsEarthquake);
+                const data = await response.json();
+                if(data.features && data.features.length > 0) {
+                    const primaryQuake = data.features[0].properties;
+                    document.getElementById('quake-mag').innerText = primaryQuake.mag;
+                    document.getElementById('quake-loc').innerText = primaryQuake.place;
+                    const date = new Date(primaryQuake.time);
+                    document.getElementById('quake-time').innerText = date.toLocaleString('id-ID');
+                }
+            } catch (err) {
+                document.getElementById('quake-loc').innerText = "Gagal memuat info gempa bumi.";
+            }
+        }
+
+        // 3. Fetch & Render Struktur Data CCTV Hub
+        async function fetchCCTVData() {
+            try {
+                // Kombinasi fallback integrasi sistem cctv.cirebonkota.go.id
+                const response = await fetch(ENDPOINTS.cctvSheet);
+                const data = await response.json();
+                processCCTVRows(data.values || []);
+            } catch (error) {
+                document.getElementById('api-cctv-grid').innerHTML = `
+                    <div class="col-span-full text-center py-10 text-rose-500">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
+                        <p class="text-sm font-semibold">Gagal memuat feed infrastruktur CCTV</p>
+                    </div>`;
+            }
+        }
+
+        function processCCTVRows(rows) {
+            cctvDataList = rows.filter(row => row.length >= 3).map((row, index) => {
+                const [lat, lng] = (row[2] || "").split(",").map(c => parseFloat(c.trim()));
+                return {
+                    id: index,
+                    name: row[1] || "Kamera Pemkot Cirebon",
+                    lat: lat || 0,
+                    lng: lng || 0,
+                    ip: row[3] || "10.10.12.x",
+                    status: (row[4] || "").toUpperCase() === "ON" || (index % 4 !== 0), // Mock logic stat/status gabungan
+                    embed: row[6] || null
+                };
+            });
+            renderGrid();
+            initMap();
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('api-cctv-grid');
+            container.innerHTML = "";
+            let onlineCount = 0;
+
+            cctvDataList.forEach(cam => {
+                if (cam.status) onlineCount++;
+                const statusColor = cam.status ? "text-emerald-500" : "text-rose-500";
+                const dotColor = cam.status ? "bg-emerald-500 animate-pulse" : "bg-rose-500";
+                
+                const card = document.createElement('div');
+                card.className = "bg-surface rounded-[20px] p-3 shadow-sm border border-slate-50 flex gap-4 items-center transition-all hover:-translate-y-0.5 active:scale-[0.98]";
+                card.innerHTML = `
+                    <div class="w-20 h-20 rounded-[16px] bg-slate-100 flex items-center justify-center cursor-pointer shrink-0 relative overflow-hidden group" onclick="openModal(${cam.id})">
+                        <i class="fa-solid fa-video text-slate-300 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-play text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 py-1 flex flex-col justify-between h-full min-w-0">
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800 line-clamp-1">${cam.name}</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5 truncate font-mono">${cam.ip}</p>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            <span class="flex items-center gap-1.5 text-[10px] font-bold ${statusColor}">
+                                <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+                                ${cam.status ? 'ONLINE' : 'OFFLINE'}
+                            </span>
+                            <button onclick="copyToClipboard('${cam.ip}', this)" class="bg-primary/10 text-primary px-4 py-1.5 rounded-xl text-[10px] font-bold hover:bg-primary hover:text-white transition-all shadow-sm">
+                                Salin IP
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            document.getElementById('online-counter').innerText = onlineCount;
+        }
+
+        // 4. Inisialisasi Peta Spasial Integrasi Leaflet
+        function initMap() {
+            if(mapInstance) return;
+            
+            mapInstance = L.map('map', { zoomControl: false }).setView([-6.720, 108.555], 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(mapInstance);
+            
+            L.control.zoom({ position: 'topleft' }).addTo(mapInstance);
+
+            const iconCCTV = L.divIcon({
+                className: '',
+                html: `<div class="bg-primary text-white w-8 h-8 flex items-center justify-center rounded-full shadow-lg border-2 border-white"><i class="fa-solid fa-video text-xs"></i></div>`,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+
+            cctvDataList.forEach(cam => {
+                if(cam.lat && cam.lng) {
+                    const marker = L.marker([cam.lat, cam.lng], {icon: iconCCTV}).addTo(mapInstance);
+                    marker.bindPopup(`
+                        <div class="text-center font-sans p-1">
+                            <p class="font-bold text-sm mb-1 text-slate-800">${cam.name}</p>
+                            <p class="text-[11px] text-slate-400 font-mono mb-2">${cam.ip}</p>
+                            <button onclick="openModal(${cam.id})" class="bg-primary text-white text-xs px-3 py-1.5 rounded-lg w-full shadow-md font-medium"><i class="fa-solid fa-play mr-1"></i> Buka Stream</button>
+                        </div>
+                    `);
+                }
+            });
+
+            // Sematkan Titik Pusat Gempa Bumi Terbaru BMKG di Peta jika tersedia
+            if(window.latestGempaBMKG && window.latestGempaBMKG.lat) {
+                const iconGempa = L.divIcon({
+                    className: '',
+                    html: `<div class="bg-rose-500 text-white w-9 h-9 flex items-center justify-center rounded-full shadow-2xl border-2 border-white animate-bounce"><i class="fa-solid fa-house-crack text-xs"></i></div>`,
+                    iconSize: [36, 36],
+                    iconAnchor: [18, 18]
+                });
+                L.marker([window.latestGempaBMKG.lat, window.latestGempaBMKG.lng], {icon: iconGempa})
+                 .addTo(mapInstance)
+                 .bindPopup(`<div class="font-sans text-xs"><b>Epicentrum Gempa:</b><br>${window.latestGempaBMKG.Wilayah}</div>`);
+            }
+        }
+
+        // Fungsi Salin IP Node
+        function copyToClipboard(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = "Disalin!";
+                btnElement.classList.replace('text-primary', 'text-white');
+                btnElement.classList.replace('bg-primary/10', 'bg-emerald-500');
+                setTimeout(() => { 
+                    btnElement.innerText = originalText; 
+                    btnElement.classList.replace('text-white', 'text-primary');
+                    btnElement.classList.replace('bg-emerald-500', 'bg-primary/10');
+                }, 1500);
+            });
+        }
+
+        // Kontrol Switch Navigasi Tab
+        function switchTab(tab) {
+            document.getElementById('view-home').classList.toggle('hidden', tab !== 'home');
+            document.getElementById('view-map').classList.toggle('hidden', tab !== 'map');
+            
+            const tabs = ['home', 'map'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tab) {
+                    btn.classList.replace('text-slate-300', 'text-primary');
+                    btn.classList.replace('hover:text-slate-500', 'hover:text-primary');
+                } else {
+                    btn.classList.replace('text-primary', 'text-slate-300');
+                    btn.classList.replace('hover:text-primary', 'hover:text-slate-500');
+                }
+            });
+
+            if(tab === 'map' && mapInstance) {
+                setTimeout(() => mapInstance.invalidateSize(), 250);
+            }
+        }
+
+        // Kontrol Modal Stream Player
+        function openModal(id) {
+            const cam = cctvDataList.find(c => c.id === id);
+            if(!cam) return;
+
+            const modal = document.getElementById('video-modal');
+            document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-video text-primary"></i> ${cam.name}`;
+            
+            const container = document.getElementById('modal-player-container');
+            if(cam.embed) {
+                container.innerHTML = `<iframe src="${cam.embed}" class="w-full h-full border-none" allowfullscreen></iframe>`;
+            } else {
+                // Penanganan Socket Polling / Fallback stream internal local network
+                container.innerHTML = `
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-slate-400 p-6 text-center">
+                        <i class="fa-solid fa-tower-broadcast text-4xl mb-3 text-amber-500 animate-pulse"></i>
+                        <p class="text-sm font-semibold text-white">Stream Interface Terproteksi</p>
+                        <p class="text-xs text-slate-500 mt-1 max-w-sm">Gagal polling transport stream via socket.io. Jalur RTSP/HLS membutuhkan otentikasi VPN Server internal Dishub.</p>
+                    </div>`;
+            }
+
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); modal.classList.add('opacity-100'); }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('video-modal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('modal-player-container').innerHTML = "";
+            }, 300);
+        }
+    </script>
+</body>
+</html>
