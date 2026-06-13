@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GoBox Uploader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0a0c10;
+    --surface: #10141c;
+    --border:  #1e2535;
+    --accent:  #4f7cff;
+    --accent2: #7c3aed;
+    --success: #10b981;
+    --danger:  #ef4444;
+    --text:    #e2e8f0;
+    --muted:   #64748b;
+    --card:    #131720;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(79,124,255,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 35% at 80% 80%, rgba(124,58,237,.10) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrapper {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 520px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+
+  .header { text-align: center; animation: fadeDown .5s ease both; }
+  .logo-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin-bottom: 6px;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff;
+    box-shadow: 0 4px 20px rgba(79,124,255,.35);
+  }
+  .logo-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 700;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { font-size: 13px; color: var(--muted); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    display: flex; flex-direction: column; gap: 16px;
+    animation: fadeUp .5s ease both;
+  }
+
+  /* ── Dropzone ── */
+  .dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .25s, background .25s, transform .2s;
+    user-select: none;
+    position: relative;
+  }
+  .dropzone.drag,
+  .dropzone:hover {
+    border-color: var(--accent);
+    background: rgba(79,124,255,.05);
+    transform: translateY(-2px);
+  }
+  .dz-icon {
+    font-size: 36px; color: var(--accent);
+    margin-bottom: 12px;
+    transition: transform .3s;
+    pointer-events: none;
+  }
+  .dropzone:hover .dz-icon { transform: translateY(-4px) scale(1.05); }
+  .dz-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 4px; pointer-events: none;
+  }
+  .dz-sub { font-size: 12px; color: var(--muted); pointer-events: none; }
+
+  /* ── File preview ── */
+  .file-preview {
+    display: none; align-items: center; gap: 12px;
+    background: rgba(79,124,255,.08);
+    border: 1px solid rgba(79,124,255,.2);
+    border-radius: 10px; padding: 12px 14px;
+    animation: fadeUp .3s ease both;
+  }
+  .file-preview.show { display: flex; }
+  .fp-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 15px;
+  }
+  .fp-info { flex: 1; min-width: 0; }
+  .fp-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fp-size { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .fp-clear {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 16px; padding: 4px;
+    transition: color .2s;
+  }
+  .fp-clear:hover { color: var(--danger); }
+
+  /* ── Progress ── */
+  .progress-wrap {
+    display: none; flex-direction: column; gap: 8px;
+    animation: fadeUp .3s ease both;
+  }
+  .progress-wrap.show { display: flex; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+  .progress-bg { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px; width: 0%;
+    transition: width .3s ease;
+  }
+
+  /* ── Result ── */
+  .result-card { display: none; flex-direction: column; gap: 12px; animation: fadeUp .4s ease both; }
+  .result-card.show { display: flex; }
+  .result-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 10px; }
+  .result-header.success { background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.25); }
+  .result-header.error   { background: rgba(239,68,68,.1);  border: 1px solid rgba(239,68,68,.25); }
+  .result-header i { font-size: 18px; }
+  .result-header.success i { color: var(--success); }
+  .result-header.error   i { color: var(--danger); }
+  .result-header-text { font-size: 13px; font-weight: 500; }
+
+  .url-row { display: flex; gap: 8px; align-items: center; }
+  .url-input {
+    flex: 1;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px;
+    font-size: 12px; color: var(--text);
+    font-family: monospace; outline: none;
+    transition: border-color .2s;
+  }
+  .url-input:focus { border-color: var(--accent); }
+
+  .btn-copy {
+    padding: 10px 14px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-size: 13px; cursor: pointer; white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .btn-copy:hover { background: rgba(79,124,255,.12); border-color: var(--accent); color: var(--accent); }
+  .btn-copy.copied { color: var(--success); border-color: var(--success); }
+
+  .btn-open {
+    width: 100%; padding: 11px;
+    background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3);
+    border-radius: 9px; color: var(--success);
+    font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background .2s, transform .2s;
+  }
+  .btn-open:hover { background: rgba(16,185,129,.2); transform: translateY(-1px); }
+
+  .btn-reset {
+    width: 100%; padding: 10px;
+    background: none; border: 1px solid var(--border);
+    border-radius: 9px; color: var(--muted);
+    font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: background .2s, color .2s;
+  }
+  .btn-reset:hover { background: rgba(255,255,255,.04); color: var(--text); }
+
+  /* ── Upload btn ── */
+  .btn-upload {
+    width: 100%; padding: 13px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; border-radius: 10px;
+    color: #fff; font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 600; letter-spacing: .4px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(79,124,255,.3);
+    position: relative; overflow: hidden;
+  }
+  .btn-upload:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(79,124,255,.4); }
+  .btn-upload:disabled { opacity: .45; cursor: not-allowed; }
+
+  /* ── Spinner ── */
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    display: none;
+  }
+  .spinner.show { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: #1e2535; border: 1px solid var(--danger);
+    color: var(--danger); padding: 10px 18px;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    transition: transform .3s ease, opacity .3s ease;
+    opacity: 0; z-index: 999; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* ── Watermark ── */
+  .watermark {
+    text-align: center; font-size: 11px;
+    color: var(--muted); letter-spacing: .5px;
+    animation: fadeUp .6s ease both;
+  }
+  .watermark span {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 600;
+  }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeUp   { from { opacity: 0; transform: translateY(14px);  } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 480px) {
+    .card { padding: 18px; }
+    .dropzone { padding: 28px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FILE INPUT — hidden, di luar dropzone agar tidak makan pointer event -->
+<input type="file" id="fileInput" style="display:none;" />
+
+<div class="wrapper">
+
+  <div class="header">
+    <div class="logo-row">
+      <div class="logo-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <div class="logo-text">GoBox Uploader</div>
+    </div>
+    <p class="subtitle">Upload file ke GoBox CDN dengan mudah &amp; cepat</p>
+  </div>
+
+  <div class="card">
+
+    <!-- Dropzone — TANPA input di dalamnya -->
+    <div class="dropzone" id="dropzone">
+      <div class="dz-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <div class="dz-title">Klik atau drag &amp; drop file</div>
+      <div class="dz-sub">Semua format didukung (kecuali gambar)</div>
+    </div>
+
+    <!-- File Preview -->
+    <div class="file-preview" id="filePreview">
+      <div class="fp-icon" id="fpIcon"><i class="fa-solid fa-file"></i></div>
+      <div class="fp-info">
+        <div class="fp-name" id="fpName">—</div>
+        <div class="fp-size" id="fpSize">—</div>
+      </div>
+      <button class="fp-clear" id="fpClear"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-label">
+        <span>Mengupload...</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-card" id="resultCard">
+      <div class="result-header" id="resultHeader">
+        <i id="resultIcon"></i>
+        <span class="result-header-text" id="resultMsg"></span>
+      </div>
+      <div class="url-row" id="urlRow" style="display:none;">
+        <input class="url-input" id="urlInput" readonly />
+        <button class="btn-copy" id="btnCopy">
+          <i class="fa-regular fa-copy"></i> Salin
+        </button>
+      </div>
+      <a class="btn-open" id="btnOpen" href="#" target="_blank" style="display:none;">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka File
+      </a>
+      <button class="btn-reset" id="btnReset">
+        <i class="fa-solid fa-rotate-left"></i> Upload lagi
+      </button>
+    </div>
+
+    <!-- Upload Button -->
+    <button class="btn-upload" id="btnUpload" disabled>
+      <div class="spinner" id="spinner"></div>
+      <i class="fa-solid fa-cloud-arrow-up" id="btnIcon"></i>
+      <span id="btnLabel">Pilih file dulu</span>
+    </button>
+
+  </div>
+
+  <div class="watermark">Powered by <span>Vinzx • Us5-⟡</span></div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-ban"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  const API_URL = 'https://api-nanzz.my.id/docs/api/uploader/gobox.php';
+
+  const dropzone    = document.getElementById('dropzone');
+  const fileInput   = document.getElementById('fileInput');
+  const filePreview = document.getElementById('filePreview');
+  const fpIcon      = document.getElementById('fpIcon');
+  const fpName      = document.getElementById('fpName');
+  const fpSize      = document.getElementById('fpSize');
+  const fpClear     = document.getElementById('fpClear');
+  const progressWrap= document.getElementById('progressWrap');
+  const progressFill= document.getElementById('progressFill');
+  const progressPct = document.getElementById('progressPct');
+  const resultCard  = document.getElementById('resultCard');
+  const resultHeader= document.getElementById('resultHeader');
+  const resultIcon  = document.getElementById('resultIcon');
+  const resultMsg   = document.getElementById('resultMsg');
+  const urlRow      = document.getElementById('urlRow');
+  const urlInput    = document.getElementById('urlInput');
+  const btnCopy     = document.getElementById('btnCopy');
+  const btnOpen     = document.getElementById('btnOpen');
+  const btnReset    = document.getElementById('btnReset');
+  const btnUpload   = document.getElementById('btnUpload');
+  const btnIcon     = document.getElementById('btnIcon');
+  const btnLabel    = document.getElementById('btnLabel');
+  const spinner     = document.getElementById('spinner');
+  const toast       = document.getElementById('toast');
+  const toastMsg    = document.getElementById('toastMsg');
+
+  let selectedFile = null;
+  let toastTimer;
+
+  // ── Toast ──
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // ── File icon ──
+  function getIcon(file) {
+    const t = file.type;
+    if (t.startsWith('video/'))  return 'fa-file-video';
+    if (t.startsWith('audio/'))  return 'fa-file-audio';
+    if (t === 'application/pdf') return 'fa-file-pdf';
+    if (t.includes('zip') || t.includes('rar') || t.includes('tar')) return 'fa-file-zipper';
+    if (t.startsWith('text/'))   return 'fa-file-lines';
+    return 'fa-file';
+  }
+
+  function fmtSize(b) {
+    if (b < 1024)     return b + ' B';
+    if (b < 1048576)  return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(2) + ' MB';
+  }
+
+  // ── Set file ──
+  function setFile(file) {
+    if (file.type.startsWith('image/')) {
+      showToast('File gambar tidak diizinkan');
+      return;
+    }
+    selectedFile = file;
+    fpIcon.innerHTML = `<i class="fa-solid ${getIcon(file)}"></i>`;
+    fpName.textContent = file.name;
+    fpSize.textContent = fmtSize(file.size);
+    filePreview.classList.add('show');
+    resultCard.classList.remove('show');
+    progressWrap.classList.remove('show');
+    btnUpload.disabled = false;
+    btnLabel.textContent = 'Upload Sekarang';
+  }
+
+  // ── Klik dropzone → buka file picker ──
+  dropzone.addEventListener('click', () => fileInput.click());
+
+  // ── File input change ──
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) setFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  // ── Drag & Drop ──
+  dropzone.addEventListener('dragenter', e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragover',  e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragleave', e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag'); });
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropzone.classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file) setFile(file);
+  });
+
+  // ── Clear file ──
+  fpClear.addEventListener('click', resetAll);
+
+  // ── Upload ──
+  btnUpload.addEventListener('click', uploadFile);
+
+  async function uploadFile() {
+    if (!selectedFile) return;
+
+    btnUpload.disabled = true;
+    spinner.classList.add('show');
+    btnIcon.style.display = 'none';
+    btnLabel.textContent = 'Mengupload...';
+    progressWrap.classList.add('show');
+    resultCard.classList.remove('show');
+    setProgress(0);
+
+    let pct = 0;
+    const fake = setInterval(() => {
+      pct = Math.min(pct + Math.random() * 10, 85);
+      setProgress(pct);
+    }, 200);
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      let response;
+      // Coba direct dulu
+      try {
+        response = await fetch(API_URL, { method: 'POST', body: formData });
+      } catch (e) {
+        // Fallback corsproxy.io
+        response = await fetch('https://corsproxy.io/?' + encodeURIComponent(API_URL), {
+          method: 'POST', body: formData
+        });
+      }
+
+      clearInterval(fake);
+      setProgress(100);
+      const data = await response.json();
+
+      setTimeout(() => {
+        progressWrap.classList.remove('show');
+        showResult(data);
+        doneBtn();
+      }, 400);
+
+    } catch (err) {
+      clearInterval(fake);
+      setProgress(100);
+      setTimeout(() => {
+        progressWrap.classList.remove('show');
+        showError('Gagal terhubung ke server. Coba lagi.');
+        doneBtn('Coba Lagi');
+      }, 400);
+    }
+  }
+
+  function doneBtn(label = 'Upload Lagi') {
+    btnUpload.disabled = false;
+    spinner.classList.remove('show');
+    btnIcon.style.display = '';
+    btnLabel.textContent = label;
+  }
+
+  function setProgress(val) {
+    progressFill.style.width = val + '%';
+    progressPct.textContent  = Math.round(val) + '%';
+  }
+
+  function showResult(data) {
+    resultCard.classList.add('show');
+    const ok = data.Status === true || data.Code === 200 || !!data.Result_url;
+    if (ok && data.Result_url) {
+      resultHeader.className = 'result-header success';
+      resultIcon.className   = 'fa-solid fa-circle-check';
+      resultMsg.textContent  = 'File berhasil diupload!';
+      urlInput.value         = data.Result_url;
+      urlRow.style.display   = 'flex';
+      btnOpen.href           = data.Result_url;
+      btnOpen.style.display  = 'flex';
+    } else {
+      showError(data.Message || 'Upload gagal.');
+    }
+  }
+
+  function showError(msg) {
+    resultCard.classList.add('show');
+    resultHeader.className = 'result-header error';
+    resultIcon.className   = 'fa-solid fa-circle-xmark';
+    resultMsg.textContent  = msg;
+    urlRow.style.display   = 'none';
+    btnOpen.style.display  = 'none';
+  }
+
+  // ── Copy URL ──
+  btnCopy.addEventListener('click', () => {
+    const text = urlInput.value;
+    if (!text) return;
+
+    const onSuccess = () => {
+      btnCopy.classList.add('copied');
+      btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin';
+      setTimeout(() => {
+        btnCopy.classList.remove('copied');
+        btnCopy.innerHTML = '<i class="fa-regular fa-copy"></i> Salin';
+      }, 2000);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(onSuccess).catch(() => fallbackCopy(onSuccess));
+    } else {
+      fallbackCopy(onSuccess);
+    }
+  });
+
+  function fallbackCopy(onSuccess) {
+    // Lepas readonly sementara, select, execCommand
+    urlInput.removeAttribute('readonly');
+    urlInput.focus();
+    urlInput.select();
+    urlInput.setSelectionRange(0, 99999);
+    try {
+      if (document.execCommand('copy')) onSuccess();
+    } catch(e) {}
+    urlInput.setAttribute('readonly', '');
+    window.getSelection()?.removeAllRanges();
+  }
+
+  // ── Reset ──
+  btnReset.addEventListener('click', resetAll);
+  function resetAll() {
+    selectedFile = null;
+    fileInput.value = '';
+    filePreview.classList.remove('show');
+    progressWrap.classList.remove('show');
+    resultCard.classList.remove('show');
+    urlRow.style.display  = 'none';
+    btnOpen.style.display = 'none';
+    setProgress(0);
+    btnUpload.disabled = true;
+    btnLabel.textContent = 'Pilih file dulu';
+    spinner.classList.remove('show');
+    btnIcon.style.display = '';
+  }
+</script>
+</body>
+</html>
