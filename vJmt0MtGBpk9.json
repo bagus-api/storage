@@ -1,0 +1,3473 @@
+{
+    "tree": {
+        "type": "folder",
+        "id": "root",
+        "name": "ROOT",
+        "depth": 0,
+        "children": [
+            {
+                "type": "folder",
+                "id": "root_4921c0",
+                "name": "AI",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "1",
+                        "name": "Blackbox",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/blackbox.php",
+                        "method": "GET",
+                        "description": "Blackbox Ai Engine.",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. buatkan fungsi sorting php",
+                                "default_value": "buatkan fungsi sorting php",
+                                "placeholder": "buatkan fungsi sorting php",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "2",
+                        "name": "Chat Gpt",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/chat-gpt.php",
+                        "method": "GET",
+                        "description": "ChatGPT Free AI (Multi Model)",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. Halo apa kabar?",
+                                "default_value": "Halo apa kabar?",
+                                "placeholder": "Halo apa kabar?",
+                                "options": []
+                            },
+                            {
+                                "name": "model",
+                                "type": "select",
+                                "required": true,
+                                "description": "Pilih model AI",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "chatgpt",
+                                    "deepseek",
+                                    "claude",
+                                    "grok",
+                                    "perplexity",
+                                    "llama",
+                                    "qwen"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "3",
+                        "name": "Chatday",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/chatday.php",
+                        "method": "GET",
+                        "description": "Chatday AI (1 req\/detik)",
+                        "params": [
+                            {
+                                "name": "prompt",
+                                "type": "string",
+                                "required": true,
+                                "description": "Pertanyaan untuk AI",
+                                "default_value": "Hai perkenalkan dirimu",
+                                "placeholder": "Hai perkenalkan dirimu",
+                                "options": []
+                            },
+                            {
+                                "name": "model",
+                                "type": "select",
+                                "required": true,
+                                "description": "Model AI",
+                                "default_value": "openai\/gpt-5.5",
+                                "placeholder": "openai\/gpt-5.5",
+                                "options": [
+                                    "openai\/gpt-5.5",
+                                    "openai\/gpt-5.4",
+                                    "openai\/gpt-5.3-chat",
+                                    "openai\/gpt-5.1-instant",
+                                    "openai\/gpt-5",
+                                    "openai\/gpt-4o",
+                                    "openai\/gpt-4o-mini",
+                                    "xai\/grok-4.1-fast-non-reasoning",
+                                    "anthropic\/claude-haiku-4.5",
+                                    "anthropic\/claude-sonnet-4.6",
+                                    "anthropic\/claude-opus-4.5",
+                                    "anthropic\/claude-opus-4.6",
+                                    "anthropic\/claude-opus-4.7",
+                                    "anthropic\/claude-opus-4.8",
+                                    "anthropic\/claude-fable-5",
+                                    "deepseek\/deepseek-v4-pro",
+                                    "deepseek\/deepseek-v4-flash",
+                                    "deepseek\/deepseek-v3.2-thinking",
+                                    "google\/gemini-3.1-pro-preview",
+                                    "google\/gemini-3-pro-preview",
+                                    "google\/gemini-3.1-flash-lite",
+                                    "alibaba\/qwen3-max",
+                                    "meta\/llama-4-maverick",
+                                    "moonshotai\/kimi-k2.6"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "4",
+                        "name": "Copilot",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/copilot.php",
+                        "method": "GET",
+                        "description": "Fitur Copilot AI Pro",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. halo",
+                                "default_value": "halo",
+                                "placeholder": "halo",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "5",
+                        "name": "Gemini",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/gemini.php",
+                        "method": "GET",
+                        "description": "Gemini AI Chat",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Pertanyaan",
+                                "default_value": "Hello",
+                                "placeholder": "Hello",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "6",
+                        "name": "Prompt Generator",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/prompt-generator.php",
+                        "method": "GET",
+                        "description": "AI Prompt Generator",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Deskripsi",
+                                "default_value": "king biologi",
+                                "placeholder": "king biologi",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "7",
+                        "name": "Quillbot",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/quillbot.php",
+                        "method": "GET",
+                        "description": "Quillbot AI Chat",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Pertanyaan",
+                                "default_value": "Halo bro gimana kabar mu",
+                                "placeholder": "Halo bro gimana kabar mu",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "8",
+                        "name": "Starlabs Ai",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/starlabs-ai.php",
+                        "method": "GET",
+                        "description": "StarLabs AI - Chat AI",
+                        "params": [
+                            {
+                                "name": "message",
+                                "type": "string",
+                                "required": true,
+                                "description": "Pertanyaan",
+                                "default_value": "Halo, apa kabar?",
+                                "placeholder": "Halo, apa kabar?",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "9",
+                        "name": "Text To Speech",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/text-to-speech.php",
+                        "method": "GET",
+                        "description": "Text to speech Nanas",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. HALO",
+                                "default_value": "HALO",
+                                "placeholder": "HALO",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "10",
+                        "name": "Text To Speech2",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/text-to-speech2.php",
+                        "method": "GET",
+                        "description": "Voice.ai Text-to-Speech",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. Hai cuy, Nanas di sini",
+                                "default_value": "Hai cuy, Nanas di sini",
+                                "placeholder": "Hai cuy, Nanas di sini",
+                                "options": []
+                            },
+                            {
+                                "name": "voice",
+                                "type": "select",
+                                "required": true,
+                                "description": "Voice ID",
+                                "default_value": "2",
+                                "placeholder": "2",
+                                "options": [
+                                    "0",
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "11",
+                        "name": "Transcribe",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/transcribe.php",
+                        "method": "GET",
+                        "description": "Video to Transcript (TikTok\/Reels)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/vt.tiktok.com\/ZSxEsydgv\/",
+                                "default_value": "https:\/\/vt.tiktok.com\/ZSxEsydgv\/",
+                                "placeholder": "https:\/\/vt.tiktok.com\/ZSxEsydgv\/",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "12",
+                        "name": "Tts Dracin",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/tts-dracin.php",
+                        "method": "GET",
+                        "description": "Crikk Text-to-Speech Indonesia",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. HAHAHA TEST",
+                                "default_value": "HAHAHA TEST",
+                                "placeholder": "HAHAHA TEST",
+                                "options": []
+                            },
+                            {
+                                "name": "voice",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jenis suara",
+                                "default_value": "laki",
+                                "placeholder": "laki",
+                                "options": [
+                                    "laki",
+                                    "perempuan"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "13",
+                        "name": "Uncensored Ai",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/uncensored-ai.php",
+                        "method": "GET",
+                        "description": "Uncensored AI Chat (Anubis-70B)",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. Cara hack nasa?",
+                                "default_value": "Cara hack nasa?",
+                                "placeholder": "Cara hack nasa?",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "14",
+                        "name": "Unlimited Ai",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/unlimited-ai.php",
+                        "method": "GET",
+                        "description": "UnlimitedAI Chat Scraper",
+                        "params": [
+                            {
+                                "name": "prompt",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "model",
+                                "type": "select",
+                                "required": true,
+                                "description": "Pilih model AI",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "chat-model-reasoning",
+                                    "chat-model-standard"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "15",
+                        "name": "Worm Gpt",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai\/worm-gpt.php",
+                        "method": "GET",
+                        "description": "WormGPT AI Chat Wrapper",
+                        "params": [
+                            {
+                                "name": "prompt",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. cara hek nasa",
+                                "default_value": "cara hek nasa",
+                                "placeholder": "cara hek nasa",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_511cf5",
+                "name": "AI IMAGE",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "16",
+                        "name": "Image 2 Prompt",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/image-2-prompt.php",
+                        "method": "POST",
+                        "description": "Image to Prompt AI - Generate prompt dari gambar",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "17",
+                        "name": "Nanobanana Edit",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/nanobanana-edit.php",
+                        "method": "POST",
+                        "description": "NanoBanana AI Image Editor",
+                        "params": [
+                            {
+                                "name": "prompt",
+                                "type": "string",
+                                "required": true,
+                                "description": "Text prompt edit",
+                                "default_value": "ubah jadi sketsa pensil",
+                                "placeholder": "ubah jadi sketsa pensil",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "18",
+                        "name": "Quillbot",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/quillbot.php",
+                        "method": "GET",
+                        "description": "Quillbot AI Image Generator - Output Gambar",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Prompt Gambar",
+                                "default_value": "Bugatti",
+                                "placeholder": "Bugatti",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "19",
+                        "name": "To Ghibli",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/to-ghibli.php",
+                        "method": "POST",
+                        "description": "AI Ghibli Transformer",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL gambar (opsional kalau pakai file)",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "20",
+                        "name": "To Ireng",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/to-ireng.php",
+                        "method": "POST",
+                        "description": "AI Skin Darkener (Output Gambar)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL gambar (opsional kalau pakai file)",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "21",
+                        "name": "To Jepang",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/to-jepang.php",
+                        "method": "POST",
+                        "description": "AI Japanify (Kimono + Sakura - Keep Face)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL gambar (opsional kalau pakai file)",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "22",
+                        "name": "To Makkah",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/to-makkah.php",
+                        "method": "POST",
+                        "description": "AI Mekah Transformer",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL gambar (opsional kalau pakai file)",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "23",
+                        "name": "To Skecth",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/ai-image\/to-skecth.php",
+                        "method": "POST",
+                        "description": "Artyde Photo to Sketch",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_d4721a",
+                "name": "DOWNLOADER",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "24",
+                        "name": "All In One",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/all-in-one.php",
+                        "method": "GET",
+                        "description": "AIO Downloader (Instagram\/TikTok\/YouTube)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/www.instagram.com\/reel\/DWoOK9tCW3l\/",
+                                "default_value": "https:\/\/www.instagram.com\/reel\/DWoOK9tCW3l\/",
+                                "placeholder": "https:\/\/www.instagram.com\/reel\/DWoOK9tCW3l\/",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "25",
+                        "name": "Instagram",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/Instagram.php",
+                        "method": "GET",
+                        "description": "Instagram Downloader (Debug)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/www.instagram.com\/reel\/DWoOK9tCW3l\/",
+                                "default_value": "https:\/\/www.instagram.com\/reel\/DWoOK9tCW3l\/",
+                                "placeholder": "https:\/\/www.instagram.com\/reel\/DWoOK9tCW3l\/",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "26",
+                        "name": "Pinterest Download",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/pinterest-download.php",
+                        "method": "GET",
+                        "description": "Pinterest Search",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. ideas logo",
+                                "default_value": "ideas logo",
+                                "placeholder": "ideas logo",
+                                "options": []
+                            },
+                            {
+                                "name": "limit",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jumlah hasil",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "5",
+                                    "10",
+                                    "20"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "27",
+                        "name": "Soundcloud",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/soundcloud.php",
+                        "method": "GET",
+                        "description": "SoundCloud Downloader (Output Audio)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/soundcloud.com\/xxx-bad-vibes-forever\/m00nl1ght",
+                                "default_value": "https:\/\/soundcloud.com\/xxx-bad-vibes-forever\/m00nl1ght",
+                                "placeholder": "https:\/\/soundcloud.com\/xxx-bad-vibes-forever\/m00nl1ght",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "28",
+                        "name": "Spotify Dl",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/spotify-dl.php",
+                        "method": "GET",
+                        "description": "Spotify Downloader via MusicFab",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Spotify",
+                                "default_value": "https:\/\/open.spotify.com\/track\/4bCoqCjwZggHxHcUSRpFDG",
+                                "placeholder": "https:\/\/open.spotify.com\/track\/4bCoqCjwZggHxHcUSRpFDG",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "29",
+                        "name": "Spotiplay",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/spotiplay.php",
+                        "method": "GET",
+                        "description": "Spotify Audio Streamer",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "Judul Lagu atau URL Spotify",
+                                "default_value": "multo",
+                                "placeholder": "multo",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "30",
+                        "name": "Stickerly Search & Dl",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/stickerly-search-&-dl.php",
+                        "method": "GET",
+                        "description": "Sticker.ly - Cari Sticker Pack",
+                        "params": [
+                            {
+                                "name": "query",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kata Kunci Pencarian",
+                                "default_value": "jokowi",
+                                "placeholder": "jokowi",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "31",
+                        "name": "Terabox",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/terabox.php",
+                        "method": "GET",
+                        "description": "Terabox Downloader",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/1024terabox.com\/s\/1Ey2P0-j21zdoET65g0YYug",
+                                "default_value": "https:\/\/1024terabox.com\/s\/1Ey2P0-j21zdoET65g0YYug",
+                                "placeholder": "https:\/\/1024terabox.com\/s\/1Ey2P0-j21zdoET65g0YYug",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "32",
+                        "name": "Tiktok",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/tiktok.php",
+                        "method": "GET",
+                        "description": "TikTok Downloader (via ssstik.io)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Video TikTok",
+                                "default_value": "https:\/\/vt.tiktok.com\/ZSHfmQhYe\/",
+                                "placeholder": "https:\/\/vt.tiktok.com\/ZSHfmQhYe\/",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "33",
+                        "name": "Tiktokv2",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/tiktokv2.php",
+                        "method": "GET",
+                        "description": "TikTok Downloader (SSSTik.io)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/vt.tiktok.com\/ZSHfmQhYe\/",
+                                "default_value": "https:\/\/vt.tiktok.com\/ZSHfmQhYe\/",
+                                "placeholder": "https:\/\/vt.tiktok.com\/ZSHfmQhYe\/",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "34",
+                        "name": "Twitter",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/twitter.php",
+                        "method": "GET",
+                        "description": "Fitur Twitter Downloader Premium via Nanzz Downloader.",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/x.com\/user\/status\/123",
+                                "default_value": "https:\/\/x.com\/user\/status\/123",
+                                "placeholder": "https:\/\/x.com\/user\/status\/123",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "35",
+                        "name": "Ytdl",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/ytdl.php",
+                        "method": "GET",
+                        "description": "Nanzz API - YouTube Video Downloader (Vidssave API Wrapper)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "Text Input - URL YouTube video (youtube.com\/watch?v= atau youtu.be\/)",
+                                "default_value": "https:\/\/youtu.be\/bgBq9rYDN_8",
+                                "placeholder": "https:\/\/youtu.be\/bgBq9rYDN_8",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "36",
+                        "name": "Ytplay",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/downloader\/ytplay.php",
+                        "method": "GET",
+                        "description": "Nanzz API - YouTube Search + Audio Download",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "Text Input - Kata kunci pencarian atau URL YouTube",
+                                "default_value": "multo",
+                                "placeholder": "multo",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_c8d46d",
+                "name": "GAME",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "37",
+                        "name": "All Game 1",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/game\/all-game-1.php",
+                        "method": "GET",
+                        "description": "Multi Game 1 - 11 Game",
+                        "params": [
+                            {
+                                "name": "game",
+                                "type": "select",
+                                "required": true,
+                                "description": "Game",
+                                "default_value": "caklontong",
+                                "placeholder": "caklontong",
+                                "options": [
+                                    "caklontong",
+                                    "family100",
+                                    "lengkapikalimat",
+                                    "susunkata",
+                                    "tebaktebakan",
+                                    "asahotak",
+                                    "tebakbendera",
+                                    "tebakgambar",
+                                    "tebakkalimat",
+                                    "tebakkata",
+                                    "tebakkimia"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "38",
+                        "name": "All Game 2",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/game\/all-game-2.php",
+                        "method": "GET",
+                        "description": "Multi Game Part 2 - 10 Game",
+                        "params": [
+                            {
+                                "name": "game",
+                                "type": "select",
+                                "required": true,
+                                "description": "Game",
+                                "default_value": "tebaklagu",
+                                "placeholder": "tebaklagu",
+                                "options": [
+                                    "tebaklagu",
+                                    "tebakgame",
+                                    "tebakjkt",
+                                    "tebakkarakterff",
+                                    "tebakkartun",
+                                    "tebaklirik",
+                                    "siapakahaku",
+                                    "tekateki",
+                                    "tebakheroml",
+                                    "tebakbendera"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "39",
+                        "name": "Cerdas Cermat",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/game\/cerdas-cermat.php",
+                        "method": "GET",
+                        "description": "Game Cerdas Cermat",
+                        "params": [
+                            {
+                                "name": "mapel",
+                                "type": "select",
+                                "required": true,
+                                "description": "Mata Pelajaran",
+                                "default_value": "matematika",
+                                "placeholder": "matematika",
+                                "options": [
+                                    "bindo",
+                                    "tik",
+                                    "pkn",
+                                    "bing",
+                                    "penjas",
+                                    "pai",
+                                    "matematika",
+                                    "jawa",
+                                    "ips",
+                                    "ipa"
+                                ]
+                            },
+                            {
+                                "name": "jumlahsoal",
+                                "type": "string",
+                                "required": true,
+                                "description": "Jumlah Soal (5-10)",
+                                "default_value": "5",
+                                "placeholder": "5",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "40",
+                        "name": "Matematika",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/game\/matematika.php",
+                        "method": "GET",
+                        "description": "Game Matematika",
+                        "params": [
+                            {
+                                "name": "level",
+                                "type": "select",
+                                "required": true,
+                                "description": "Level Kesulitan",
+                                "default_value": "easy",
+                                "placeholder": "easy",
+                                "options": [
+                                    "noob",
+                                    "easy",
+                                    "medium",
+                                    "hard",
+                                    "extreme"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_0dc91b",
+                "name": "INFORMASI",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "41",
+                        "name": "Berita",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/informasi\/berita.php",
+                        "method": "GET",
+                        "description": "Portal Berita Indonesia - Multi Source",
+                        "params": [
+                            {
+                                "name": "source",
+                                "type": "select",
+                                "required": true,
+                                "description": "Sumber Berita",
+                                "default_value": "antara",
+                                "placeholder": "antara",
+                                "options": [
+                                    "antara",
+                                    "cnn",
+                                    "kompas",
+                                    "merdeka",
+                                    "sindonews"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "42",
+                        "name": "Jadwal Tv",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/informasi\/jadwal-tv.php",
+                        "method": "GET",
+                        "description": "Jadwal TV Indonesia",
+                        "params": [
+                            {
+                                "name": "channel",
+                                "type": "string",
+                                "required": true,
+                                "description": "Channel TV (kosongkan untuk semua channel)",
+                                "default_value": "sctv",
+                                "placeholder": "sctv",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "43",
+                        "name": "Kisah Nabi",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/informasi\/kisah-nabi.php",
+                        "method": "GET",
+                        "description": "Kisah Nabi (25 Nabi)",
+                        "params": [
+                            {
+                                "name": "nabi",
+                                "type": "select",
+                                "required": true,
+                                "description": "Pilih nama nabi",
+                                "default_value": "adam",
+                                "placeholder": "adam",
+                                "options": [
+                                    "adam",
+                                    "idris",
+                                    "nuh",
+                                    "hud",
+                                    "shaleh",
+                                    "ibrahim",
+                                    "luth",
+                                    "ismail",
+                                    "ishaq",
+                                    "yaqub",
+                                    "yusuf",
+                                    "ayyub",
+                                    "syuaib",
+                                    "musa",
+                                    "harun",
+                                    "dzulkifli",
+                                    "daud",
+                                    "sulaiman",
+                                    "ilyas",
+                                    "ilyasa",
+                                    "yunus",
+                                    "zakaria",
+                                    "yahya",
+                                    "isa",
+                                    "muhammad"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "44",
+                        "name": "Mlbb",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/informasi\/mlbb.php",
+                        "method": "GET",
+                        "description": "MLBB API - Item Build, Items, Emblems",
+                        "params": [
+                            {
+                                "name": "action",
+                                "type": "select",
+                                "required": true,
+                                "description": "Mode",
+                                "default_value": "build",
+                                "placeholder": "build",
+                                "options": [
+                                    "build",
+                                    "items",
+                                    "emblems",
+                                    "ability"
+                                ]
+                            },
+                            {
+                                "name": "hero",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama Hero (untuk build)",
+                                "default_value": "harley",
+                                "placeholder": "harley",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "45",
+                        "name": "Radio List",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/informasi\/radio-list.php",
+                        "method": "GET",
+                        "description": "Nanzz API - MyTuner Radio Country List",
+                        "params": [
+                            {
+                                "name": "country",
+                                "type": "select",
+                                "required": true,
+                                "description": "Nama Negara",
+                                "default_value": "indonesia",
+                                "placeholder": "indonesia",
+                                "options": [
+                                    "indonesia",
+                                    "united-states",
+                                    "japan",
+                                    "singapore",
+                                    "malaysia",
+                                    "thailand",
+                                    "south-korea",
+                                    "india"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "46",
+                        "name": "Radio Stream",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/informasi\/radio-stream.php",
+                        "method": "GET",
+                        "description": "Nanzz API - MyTuner Radio Stream Extractor",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Stasiun Radio MyTuner",
+                                "default_value": "https:\/\/mytuner-radio.com\/radio\/prambors-1022-fm-432\/",
+                                "placeholder": "https:\/\/mytuner-radio.com\/radio\/prambors-1022-fm-432\/",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_35977a",
+                "name": "MAKER",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "folder",
+                        "id": "root_35977a_7273f4",
+                        "name": "BRAT",
+                        "depth": 2,
+                        "children": [
+                            {
+                                "type": "file",
+                                "id": "47",
+                                "name": "Brat",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat.php",
+                                "method": "GET",
+                                "description": "Brat Generator via Yupra API",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks",
+                                        "default_value": "Hai",
+                                        "placeholder": "Hai",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "48",
+                                "name": "Brat Anime Cewe",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat-anime-cewe.php",
+                                "method": "GET",
+                                "description": "Text Quote Generator - Auto-fit text dengan batas frame",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks",
+                                        "default_value": "Halo dunia!",
+                                        "placeholder": "Halo dunia!",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "49",
+                                "name": "Brat Gojo",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat-gojo.php",
+                                "method": "GET",
+                                "description": "Gojo Quote Generator",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks (support emoji)",
+                                        "default_value": "Nah, I'd win \u270c\ufe0f",
+                                        "placeholder": "Nah, I'd win \u270c\ufe0f",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "50",
+                                "name": "Brat Naruto",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat-naruto.php",
+                                "method": "GET",
+                                "description": "Naruto Quote Generator",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks (support emoji)",
+                                        "default_value": "Nah, I'd win \u270c\ufe0f",
+                                        "placeholder": "Nah, I'd win \u270c\ufe0f",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "51",
+                                "name": "Brat Patrick",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat-patrick.php",
+                                "method": "GET",
+                                "description": "Patrick Brat Image",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks",
+                                        "default_value": "Halo semuanya namaku nanas",
+                                        "placeholder": "Halo semuanya namaku nanas",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "52",
+                                "name": "Brat Prabowo",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat-prabowo.php",
+                                "method": "GET",
+                                "description": "Prabowo Quote Generator",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks (support emoji)",
+                                        "default_value": "orang desa gapakai dolar kok",
+                                        "placeholder": "orang desa gapakai dolar kok",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "53",
+                                "name": "Brat Vtuber Lipin",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/brat-vtuber-lipin.php",
+                                "method": "GET",
+                                "description": "Lipin Quote Generator",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks (support emoji)",
+                                        "default_value": "Nah, I'd win \u270c\ufe0f",
+                                        "placeholder": "Nah, I'd win \u270c\ufe0f",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "54",
+                                "name": "Bratvid",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/brat\/bratvid.php",
+                                "method": "GET",
+                                "description": "Brat Generator - Video",
+                                "params": [
+                                    {
+                                        "name": "text",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Teks",
+                                        "default_value": "Hahaha lu siapa",
+                                        "placeholder": "Hahaha lu siapa",
+                                        "options": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "55",
+                        "name": "Berita",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/berita.php",
+                        "method": "GET",
+                        "description": "Fake iNews Breaking News",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Judul berita",
+                                "default_value": "Viral! Jokowi mencuri 19jt lapangan pekerjaan dari anaknya",
+                                "placeholder": "Viral! Jokowi mencuri 19jt lapangan pekerjaan dari anaknya",
+                                "options": []
+                            },
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL gambar",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "56",
+                        "name": "Carbon Code",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/carbon-code.php",
+                        "method": "GET",
+                        "description": "Carbon Code Screenshot",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. console.log(\"Hello World\");",
+                                "default_value": "console.log(\"Hello World\");",
+                                "placeholder": "console.log(\"Hello World\");",
+                                "options": []
+                            },
+                            {
+                                "name": "code",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "lang",
+                                "type": "select",
+                                "required": true,
+                                "description": "Bahasa",
+                                "default_value": "javascript",
+                                "placeholder": "javascript",
+                                "options": [
+                                    "auto",
+                                    "javascript",
+                                    "python",
+                                    "php",
+                                    "html",
+                                    "css",
+                                    "json",
+                                    "bash"
+                                ]
+                            },
+                            {
+                                "name": "theme",
+                                "type": "select",
+                                "required": true,
+                                "description": "Tema",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "dracula-pro",
+                                    "monokai",
+                                    "nord",
+                                    "one-dark",
+                                    "material",
+                                    "night-owl"
+                                ]
+                            },
+                            {
+                                "name": "font",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "57",
+                        "name": "Fake Dana",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-dana.php",
+                        "method": "GET",
+                        "description": "Fake DANA Balance Generator",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Jumlah Saldo",
+                                "default_value": "150000",
+                                "placeholder": "150000",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "58",
+                        "name": "Fake Lobby Ff",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-lobby-ff.php",
+                        "method": "GET",
+                        "description": "Free Fire Lobby Generator",
+                        "params": [
+                            {
+                                "name": "nickname",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nickname FF",
+                                "default_value": "Nanas",
+                                "placeholder": "Nanas",
+                                "options": []
+                            },
+                            {
+                                "name": "versi",
+                                "type": "select",
+                                "required": true,
+                                "description": "Versi",
+                                "default_value": "11",
+                                "placeholder": "11",
+                                "options": [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "59",
+                        "name": "Fake Lobby Ff Squad",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-lobby-ff-squad.php",
+                        "method": "GET",
+                        "description": "Squad Name Generator",
+                        "params": [
+                            {
+                                "name": "nama1",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama 1",
+                                "default_value": "Nanzz",
+                                "placeholder": "Nanzz",
+                                "options": []
+                            },
+                            {
+                                "name": "nama2",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama 2",
+                                "default_value": "Azzam",
+                                "placeholder": "Azzam",
+                                "options": []
+                            },
+                            {
+                                "name": "nama3",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama 3",
+                                "default_value": "Rizky",
+                                "placeholder": "Rizky",
+                                "options": []
+                            },
+                            {
+                                "name": "nama4",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama 4",
+                                "default_value": "Budi",
+                                "placeholder": "Budi",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "60",
+                        "name": "Fake Lobby Ml",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-lobby-ml.php",
+                        "method": "GET",
+                        "description": "MLBB Fake Rank Generator",
+                        "params": [
+                            {
+                                "name": "username",
+                                "type": "string",
+                                "required": true,
+                                "description": "Username",
+                                "default_value": "Owiee",
+                                "placeholder": "Owiee",
+                                "options": []
+                            },
+                            {
+                                "name": "avatar",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Avatar",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "options": []
+                            },
+                            {
+                                "name": "rank",
+                                "type": "select",
+                                "required": true,
+                                "description": "Rank",
+                                "default_value": "imo",
+                                "placeholder": "imo",
+                                "options": [
+                                    "epic",
+                                    "glory",
+                                    "gm",
+                                    "honor",
+                                    "imo",
+                                    "mawi",
+                                    "legend"
+                                ]
+                            },
+                            {
+                                "name": "border",
+                                "type": "select",
+                                "required": true,
+                                "description": "Border",
+                                "default_value": "0",
+                                "placeholder": "border",
+                                "options": [
+                                    "0",
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11",
+                                    "12",
+                                    "13",
+                                    "14",
+                                    "15",
+                                    "16"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "61",
+                        "name": "Fake Ngl",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-ngl.php",
+                        "method": "GET",
+                        "description": "Fake NGL Generator",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks Pesan",
+                                "default_value": "Gw tuh sebenarnya ultramen",
+                                "placeholder": "Gw tuh sebenarnya ultramen",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "62",
+                        "name": "Fake Ovo",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-ovo.php",
+                        "method": "GET",
+                        "description": "Fake OVO Generator",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Jumlah Uang",
+                                "default_value": "500000",
+                                "placeholder": "500000",
+                                "options": []
+                            },
+                            {
+                                "name": "amount",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "query",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "63",
+                        "name": "Fake Story Ig",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-story-ig.php",
+                        "method": "POST",
+                        "description": "Fake Instagram Story Maker",
+                        "params": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama pengguna",
+                                "default_value": "John Doe",
+                                "placeholder": "John Doe",
+                                "options": []
+                            },
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks story",
+                                "default_value": "Hello World",
+                                "placeholder": "Hello World",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "64",
+                        "name": "Fake Story Ig2",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fake-story-ig2.php",
+                        "method": "POST",
+                        "description": "Instagram Story Canvas Maker",
+                        "params": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama pengguna",
+                                "default_value": "John Doe",
+                                "placeholder": "John Doe",
+                                "options": []
+                            },
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks story",
+                                "default_value": "Hello World",
+                                "placeholder": "Hello World",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "65",
+                        "name": "Fakedev",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/fakedev.php",
+                        "method": "GET",
+                        "description": "Nanzz API - FakeDev Card Wrapper",
+                        "params": [
+                            {
+                                "name": "nama",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama \/ Judul Utama",
+                                "default_value": "NanzzCode",
+                                "placeholder": "NanzzCode",
+                                "options": []
+                            },
+                            {
+                                "name": "bio",
+                                "type": "string",
+                                "required": true,
+                                "description": "Username \/ Subtitle",
+                                "default_value": "Have a Great Code",
+                                "placeholder": "Have a Great Code",
+                                "options": []
+                            },
+                            {
+                                "name": "fotourl",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Foto Profil",
+                                "default_value": "https:\/\/filegoat.s3.de.io.cloud.ovh.net\/8342cda4-ec06-4c04-ae16-0fa16a30c369\/file_0000000074d47208bec22b89425caf8b.png",
+                                "placeholder": "https:\/\/filegoat.s3.de.io.cloud.ovh.net\/8342cda4-ec06-4c04-ae16-0fa16a30c369\/file_0000000074d47208bec22b89425caf8b.png",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "66",
+                        "name": "Hoax",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/hoax.php",
+                        "method": "GET",
+                        "description": "Hoax Effect",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Gambar",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "67",
+                        "name": "Iqc",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/iqc.php",
+                        "method": "GET",
+                        "description": "iPhone Quoted Generator",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Isi pesan",
+                                "default_value": "Hai dunia",
+                                "placeholder": "Hai dunia",
+                                "options": []
+                            },
+                            {
+                                "name": "carrier",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama operator",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "battery",
+                                "type": "string",
+                                "required": true,
+                                "description": "Persentase baterai",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "signal",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kekuatan sinyal",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "68",
+                        "name": "Iqc Gambar",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/iqc-gambar.php",
+                        "method": "GET",
+                        "description": "iPhone Quoted V2",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Isi pesan",
+                                "default_value": "wikwokdetok",
+                                "placeholder": "wikwokdetok",
+                                "options": []
+                            },
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL gambar",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "options": []
+                            },
+                            {
+                                "name": "carrier",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama operator",
+                                "default_value": "XL",
+                                "placeholder": "XL",
+                                "options": []
+                            },
+                            {
+                                "name": "battery",
+                                "type": "string",
+                                "required": true,
+                                "description": "Persentase baterai",
+                                "default_value": "88",
+                                "placeholder": "88",
+                                "options": []
+                            },
+                            {
+                                "name": "signal",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kekuatan sinyal",
+                                "default_value": "4",
+                                "placeholder": "4",
+                                "options": []
+                            },
+                            {
+                                "name": "sender",
+                                "type": "select",
+                                "required": true,
+                                "description": "Posisi Buble",
+                                "default_value": "other",
+                                "placeholder": "other",
+                                "options": [
+                                    "self",
+                                    "other"
+                                ]
+                            },
+                            {
+                                "name": "read",
+                                "type": "select",
+                                "required": true,
+                                "description": "Status Dibaca",
+                                "default_value": "true",
+                                "placeholder": "true",
+                                "options": [
+                                    "true",
+                                    "false"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "69",
+                        "name": "Nasa Landsat",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/nasa-landsat.php",
+                        "method": "GET",
+                        "description": "NASA Landsat Name Generator",
+                        "params": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama",
+                                "default_value": "Nanas",
+                                "placeholder": "Nanas",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "70",
+                        "name": "Nokia Msg",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/nokia-msg.php",
+                        "method": "GET",
+                        "description": "Nokia Chat Generator (Auto Fit + Alignment)",
+                        "params": [
+                            {
+                                "name": "sender",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama Pengirim",
+                                "default_value": "Nanzz",
+                                "placeholder": "Nanzz",
+                                "options": []
+                            },
+                            {
+                                "name": "pesan",
+                                "type": "string",
+                                "required": true,
+                                "description": "Isi Pesan",
+                                "default_value": "Halo bro! apa kabar?",
+                                "placeholder": "Halo bro! apa kabar?",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "71",
+                        "name": "Play Button",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/play-button.php",
+                        "method": "GET",
+                        "description": "YouTube Play Button Generator",
+                        "params": [
+                            {
+                                "name": "nama",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama Channel",
+                                "default_value": "Nanzz",
+                                "placeholder": "Nanzz",
+                                "options": []
+                            },
+                            {
+                                "name": "template",
+                                "type": "select",
+                                "required": true,
+                                "description": "Template",
+                                "default_value": "silver",
+                                "placeholder": "silver",
+                                "options": [
+                                    "silver",
+                                    "gold"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "72",
+                        "name": "Sertifikat Nasa",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/sertifikat-nasa.php",
+                        "method": "GET",
+                        "description": "NASA Certificate Generator",
+                        "params": [
+                            {
+                                "name": "nama",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama yang akan ditampilkan",
+                                "default_value": "Nanas Bocil ",
+                                "placeholder": "Nanas Bocil ",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "73",
+                        "name": "Smeme",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/smeme.php",
+                        "method": "GET",
+                        "description": "Smeme Generator",
+                        "params": [
+                            {
+                                "name": "atas",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks Atas",
+                                "default_value": "iya",
+                                "placeholder": "iya",
+                                "options": []
+                            },
+                            {
+                                "name": "bawah",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks Bawah",
+                                "default_value": "bener juga",
+                                "placeholder": "bener juga",
+                                "options": []
+                            },
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Gambar",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19414990\/images__1_.jpeg",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19414990\/images__1_.jpeg",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "74",
+                        "name": "Status Wa",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/status-wa.php",
+                        "method": "GET",
+                        "description": "Fake WhatsApp Story Generator",
+                        "params": [
+                            {
+                                "name": "nama",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama di Story",
+                                "default_value": "Nanzz",
+                                "placeholder": "Nanzz",
+                                "options": []
+                            },
+                            {
+                                "name": "pesan",
+                                "type": "string",
+                                "required": true,
+                                "description": "Pesan Story",
+                                "default_value": "Halo semua!",
+                                "placeholder": "Halo semua!",
+                                "options": []
+                            },
+                            {
+                                "name": "profile",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Foto Profil",
+                                "default_value": "https:\/\/example.com\/foto.jpg",
+                                "placeholder": "https:\/\/example.com\/foto.jpg",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "75",
+                        "name": "Tanyaustadz",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/tanyaustadz.php",
+                        "method": "GET",
+                        "description": "Tanya Ustadz Generator",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks pertanyaan",
+                                "default_value": "Apakah makan mie tiap hari itu sehat?",
+                                "placeholder": "Apakah makan mie tiap hari itu sehat?",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "76",
+                        "name": "Wanted",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/wanted.php",
+                        "method": "GET",
+                        "description": "Nanzz API - Fake Wanted Poster Generator",
+                        "params": [
+                            {
+                                "name": "nama",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama Buronan",
+                                "default_value": "Jokowi Dodo",
+                                "placeholder": "Jokowi Dodo",
+                                "options": []
+                            },
+                            {
+                                "name": "harga",
+                                "type": "string",
+                                "required": true,
+                                "description": "Jumlah Bounty",
+                                "default_value": "150.000.000",
+                                "placeholder": "150.000.000",
+                                "options": []
+                            },
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Foto Buronan",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "77",
+                        "name": "Wasted",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/wasted.php",
+                        "method": "GET",
+                        "description": "Wasted Effect - GTA V Wasted style",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL Gambar",
+                                "default_value": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "placeholder": "https:\/\/www.upload.ee\/image\/19400325\/images.webp",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "78",
+                        "name": "Welcome",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/welcome.php",
+                        "method": "POST",
+                        "description": "Nanzz API - Fake Welcome Member Card V3",
+                        "params": [
+                            {
+                                "name": "nama",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama User",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "namagrup",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama Grup",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "memberke",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nomor Member",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            },
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "79",
+                        "name": "Windows Quotes",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/maker\/windows-quotes.php",
+                        "method": "GET",
+                        "description": "Fake Windows Media Player - Frame Area (Rata Kiri)",
+                        "params": [
+                            {
+                                "name": "text",
+                                "type": "string",
+                                "required": true,
+                                "description": "Teks yang ingin ditampilkan",
+                                "default_value": "kenapa nyahh aku salah mulu",
+                                "placeholder": "kenapa nyahh aku salah mulu",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_7ddf32",
+                "name": "RANDOM",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "80",
+                        "name": "Cecan",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/cecan.php",
+                        "method": "GET",
+                        "description": "Random Cewe Cantik",
+                        "params": [
+                            {
+                                "name": "country",
+                                "type": "select",
+                                "required": true,
+                                "description": "Negara",
+                                "default_value": "thailand",
+                                "placeholder": "thailand",
+                                "options": [
+                                    "thailand",
+                                    "indonesia",
+                                    "malaysia",
+                                    "vietnam",
+                                    "japan",
+                                    "china",
+                                    "korea"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "81",
+                        "name": "Jkt Song",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/jkt-song.php",
+                        "method": "GET",
+                        "description": "Random JKT48 Audio - Stream audio random JKT48",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "82",
+                        "name": "Loli",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/loli.php",
+                        "method": "GET",
+                        "description": "Random Loli - Foto cute anime urut dari koleksi (loop)",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "83",
+                        "name": "Meme",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/meme.php",
+                        "method": "GET",
+                        "description": "Random Meme - Meme Indonesia urut dari koleksi (loop)",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "84",
+                        "name": "Quotes Islam",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/quotes-islam.php",
+                        "method": "GET",
+                        "description": "Random Islamic Quotes (Bahasa Indonesia)",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "85",
+                        "name": "Random Couple",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/random-couple.php",
+                        "method": "GET",
+                        "description": "Random Couple PAP (Cowo Kiri + Cewe Kanan)",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "86",
+                        "name": "Random Meme Presiden",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/random-meme-presiden.php",
+                        "method": "GET",
+                        "description": "Meme Presiden - Koleksi meme presiden urut (loop)",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "87",
+                        "name": "Random Pap",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/random-pap.php",
+                        "method": "GET",
+                        "description": "Random PAP - Foto urut dari koleksi (loop)",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "88",
+                        "name": "Random Wallpaper",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/random-wallpaper.php",
+                        "method": "GET",
+                        "description": "Random Wallpaper",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "89",
+                        "name": "Waifu",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/random\/waifu.php",
+                        "method": "GET",
+                        "description": "Random Waifu - Foto waifu urut dari koleksi (loop)",
+                        "params": []
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_06a943",
+                "name": "SEARCH",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "90",
+                        "name": "Az Lyrics",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/az-lyrics.php",
+                        "method": "GET",
+                        "description": "AZLyrics - Cari lirik lagu (Rate Limit: 1 request per 30 detik)",
+                        "params": [
+                            {
+                                "name": "query",
+                                "type": "string",
+                                "required": true,
+                                "description": "Judul Lagu \/ Artis",
+                                "default_value": "Duvet",
+                                "placeholder": "Duvet",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "91",
+                        "name": "Font Search",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/font-search.php",
+                        "method": "GET",
+                        "description": "DaFontStyle Search + Direct Download Link",
+                        "params": [
+                            {
+                                "name": "query",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kata Kunci Font",
+                                "default_value": "Roboto",
+                                "placeholder": "Roboto",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "92",
+                        "name": "Happymod",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/happymod.php",
+                        "method": "GET",
+                        "description": "Fitur Happymod Search Premium via Nanzz Engine.",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. subway surfers",
+                                "default_value": "subway surfers",
+                                "placeholder": "subway surfers",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "93",
+                        "name": "Lyrics",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/lyrics.php",
+                        "method": "GET",
+                        "description": "Search Lyrics Lagu",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. bulan madu",
+                                "default_value": "bulan madu",
+                                "placeholder": "bulan madu",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "94",
+                        "name": "Resep Makanan",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/resep-makanan.php",
+                        "method": "GET",
+                        "description": "Cookpad Recipe Scraper",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. nasi goreng",
+                                "default_value": "nasi goreng",
+                                "placeholder": "nasi goreng",
+                                "options": []
+                            },
+                            {
+                                "name": "page",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jumlah halaman (default: 1)",
+                                "default_value": "1",
+                                "placeholder": "1",
+                                "options": [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "95",
+                        "name": "Search Npm",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/search-npm.php",
+                        "method": "GET",
+                        "description": "Pencarian Npm",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. Axios",
+                                "default_value": "Axios",
+                                "placeholder": "Axios",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "96",
+                        "name": "Search Wikipedia",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/search-wikipedia.php",
+                        "method": "GET",
+                        "description": "Wikipedia search",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "97",
+                        "name": "Soundcloud",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/soundcloud.php",
+                        "method": "GET",
+                        "description": "SoundCloud Search",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. moonlight",
+                                "default_value": "moonlight",
+                                "placeholder": "moonlight",
+                                "options": []
+                            },
+                            {
+                                "name": "limit",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jumlah hasil",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "5",
+                                    "10",
+                                    "15",
+                                    "20"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "98",
+                        "name": "Soundcloud Artist",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/soundcloud-artist.php",
+                        "method": "GET",
+                        "description": "Mendapatkan detail lengkap artis dari SoundCloud (support username\/link)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "Link profile SoundCloud (contoh: https:\/\/soundcloud.com\/jahseh-onfroy)",
+                                "default_value": "https:\/\/soundcloud.com\/jahseh-onfroy",
+                                "placeholder": "https:\/\/soundcloud.com\/jahseh-onfroy",
+                                "options": []
+                            },
+                            {
+                                "name": "username",
+                                "type": "string",
+                                "required": true,
+                                "description": "Username SoundCloud (contoh: jahseh-onfroy)",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "99",
+                        "name": "Soundcloud Playlist",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/soundcloud-playlist.php",
+                        "method": "GET",
+                        "description": "Mencari playlist di SoundCloud berdasarkan kata kunci",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kata kunci pencarian (wajib)",
+                                "default_value": "jahseh onfroy",
+                                "placeholder": "jahseh onfroy",
+                                "options": []
+                            },
+                            {
+                                "name": "limit",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jumlah hasil per halaman (default: 10)",
+                                "default_value": "10",
+                                "placeholder": "10",
+                                "options": [
+                                    "1",
+                                    "5",
+                                    "10",
+                                    "20",
+                                    "50"
+                                ]
+                            },
+                            {
+                                "name": "offset",
+                                "type": "select",
+                                "required": true,
+                                "description": "Offset untuk pagination (default: 0)",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "0",
+                                    "10",
+                                    "20",
+                                    "30"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "100",
+                        "name": "Spotify",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/spotify.php",
+                        "method": "GET",
+                        "description": "Spotify Search",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. multo",
+                                "default_value": "multo",
+                                "placeholder": "multo",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "101",
+                        "name": "Tiktok",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/tiktok.php",
+                        "method": "GET",
+                        "description": "TikTok Search",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. aesthetic videos",
+                                "default_value": "aesthetic videos",
+                                "placeholder": "aesthetic videos",
+                                "options": []
+                            },
+                            {
+                                "name": "limit",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jumlah hasil",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "1",
+                                    "3",
+                                    "5",
+                                    "10"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "102",
+                        "name": "Tiktok Image",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/tiktok-image.php",
+                        "method": "GET",
+                        "description": "TikTok Image Search",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. aesthetic wallpaper",
+                                "default_value": "aesthetic wallpaper",
+                                "placeholder": "aesthetic wallpaper",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "103",
+                        "name": "Yt Search",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/yt-search.php",
+                        "method": "GET",
+                        "description": "Nanzz API - YouTube Search (Working 100%)",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "Text Input - Kata kunci pencarian YouTube",
+                                "default_value": "multo",
+                                "placeholder": "multo",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "104",
+                        "name": "Ytmusic",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/search\/ytmusic.php",
+                        "method": "GET",
+                        "description": "Nanzz API - YouTube Music Search (Official YT Music API)",
+                        "params": [
+                            {
+                                "name": "q",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kata Kunci Pencarian",
+                                "default_value": "lovely",
+                                "placeholder": "lovely",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_244dd3",
+                "name": "STALKER",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "105",
+                        "name": "Ff Stalk",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/stalker\/ff-stalk.php",
+                        "method": "GET",
+                        "description": "Free Fire Stalk",
+                        "params": [
+                            {
+                                "name": "uid",
+                                "type": "string",
+                                "required": true,
+                                "description": "UID Free Fire",
+                                "default_value": "87980657",
+                                "placeholder": "87980657",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "106",
+                        "name": "Ig Stalk",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/stalker\/ig-stalk.php",
+                        "method": "GET",
+                        "description": "Instagram Stalk",
+                        "params": [
+                            {
+                                "name": "username",
+                                "type": "string",
+                                "required": true,
+                                "description": "Username Instagram",
+                                "default_value": "nanazajaudah",
+                                "placeholder": "nanazajaudah",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "107",
+                        "name": "Roblox",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/stalker\/roblox.php",
+                        "method": "GET",
+                        "description": "Roblox Stalk",
+                        "params": [
+                            {
+                                "name": "username",
+                                "type": "string",
+                                "required": true,
+                                "description": "Username Roblox",
+                                "default_value": "mrbeast",
+                                "placeholder": "mrbeast",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "108",
+                        "name": "Tiktok",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/stalker\/tiktok.php",
+                        "method": "GET",
+                        "description": "Nanzz API - TikTok Profile & Videos Scraper via TikViewr (support URL\/username\/@)",
+                        "params": [
+                            {
+                                "name": "action",
+                                "type": "select",
+                                "required": true,
+                                "description": "Pilih Mode",
+                                "default_value": "profile",
+                                "placeholder": "profile",
+                                "options": [
+                                    "profile",
+                                    "videos"
+                                ]
+                            },
+                            {
+                                "name": "username",
+                                "type": "string",
+                                "required": true,
+                                "description": "Username TikTok (bisa username, @username, atau URL TikTok)",
+                                "default_value": "xyyzn_505",
+                                "placeholder": "xyyzn_505",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "109",
+                        "name": "Whatsapp Channel",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/stalker\/whatsapp-channel.php",
+                        "method": "GET",
+                        "description": "WhatsApp Channel Info Scraper",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/whatsapp.com\/channel\/0029Vb8cslf8aKvEpFOaMC0m",
+                                "default_value": "https:\/\/whatsapp.com\/channel\/0029Vb8cslf8aKvEpFOaMC0m",
+                                "placeholder": "https:\/\/whatsapp.com\/channel\/0029Vb8cslf8aKvEpFOaMC0m",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_4a9315",
+                "name": "TOOLS",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "folder",
+                        "id": "root_4a9315_78805a",
+                        "name": "IMAGE",
+                        "depth": 2,
+                        "children": [
+                            {
+                                "type": "file",
+                                "id": "110",
+                                "name": "Enhancer",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/image\/enhancer.php",
+                                "method": "POST",
+                                "description": "Image Enhancer (hapus input URL jika menggunakan file)",
+                                "params": [
+                                    {
+                                        "name": "url",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "URL gambar (opsional kalau pakai file)",
+                                        "default_value": "test_value",
+                                        "placeholder": "test_value",
+                                        "options": []
+                                    },
+                                    {
+                                        "name": "file",
+                                        "type": "file",
+                                        "required": true,
+                                        "description": "Upload File",
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "111",
+                                "name": "Hdimage",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/image\/hdimage.php",
+                                "method": "POST",
+                                "description": "SparkPix HD Image Upscaler",
+                                "params": [
+                                    {
+                                        "name": "quality",
+                                        "type": "select",
+                                        "required": true,
+                                        "description": "Kualitas upscale",
+                                        "default_value": "4k",
+                                        "placeholder": "4k",
+                                        "options": [
+                                            "4k",
+                                            "6k",
+                                            "8k"
+                                        ]
+                                    },
+                                    {
+                                        "name": "file",
+                                        "type": "file",
+                                        "required": true,
+                                        "description": "Upload File",
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "112",
+                                "name": "Removebg",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/image\/removebg.php",
+                                "method": "POST",
+                                "description": "Remove Background (DreamAI.art)",
+                                "params": [
+                                    {
+                                        "name": "url",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "URL gambar (opsional kalau pakai file)",
+                                        "default_value": "test_value",
+                                        "placeholder": "test_value",
+                                        "options": []
+                                    },
+                                    {
+                                        "name": "file",
+                                        "type": "file",
+                                        "required": true,
+                                        "description": "Upload File",
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "113",
+                                "name": "Topixel",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/image\/topixel.php",
+                                "method": "POST",
+                                "description": "Pixel Art Generator (Upload ke Cloudinary)",
+                                "params": [
+                                    {
+                                        "name": "level",
+                                        "type": "select",
+                                        "required": true,
+                                        "description": "Level pixelasi",
+                                        "default_value": "30",
+                                        "placeholder": "30",
+                                        "options": [
+                                            "1",
+                                            "5",
+                                            "10",
+                                            "15",
+                                            "20",
+                                            "25",
+                                            "30",
+                                            "35",
+                                            "40"
+                                        ]
+                                    },
+                                    {
+                                        "name": "file",
+                                        "type": "file",
+                                        "required": true,
+                                        "description": "Upload File",
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "options": []
+                                    },
+                                    {
+                                        "name": "url",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "e.g. test_value",
+                                        "default_value": "test_value",
+                                        "placeholder": "test_value",
+                                        "options": []
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "file",
+                                "id": "114",
+                                "name": "Upscale",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/image\/upscale.php",
+                                "method": "POST",
+                                "description": "Cloudinary Image Uploader",
+                                "params": [
+                                    {
+                                        "name": "file",
+                                        "type": "file",
+                                        "required": true,
+                                        "description": "Upload File",
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "options": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "folder",
+                        "id": "root_4a9315_cfcdca",
+                        "name": "TEMPMAIL",
+                        "depth": 2,
+                        "children": [
+                            {
+                                "type": "file",
+                                "id": "115",
+                                "name": "Tempmail",
+                                "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/tempmail\/tempmail.php",
+                                "method": "GET",
+                                "description": "Temp-Mail.app Generator & Inbox",
+                                "params": [
+                                    {
+                                        "name": "mode",
+                                        "type": "select",
+                                        "required": true,
+                                        "description": "Pilih mode",
+                                        "default_value": "generate",
+                                        "placeholder": "generate",
+                                        "options": [
+                                            "generate",
+                                            "inbox"
+                                        ]
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "string",
+                                        "required": true,
+                                        "description": "Visitor ID (untuk mode inbox)",
+                                        "default_value": "test_value",
+                                        "placeholder": "test_value",
+                                        "options": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "116",
+                        "name": "Cek Operator",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/cek-operator.php",
+                        "method": "GET",
+                        "description": "RebornLookUp API - Indonesian Phone Number Lookup (IndoPhoneLookup)",
+                        "params": [
+                            {
+                                "name": "number",
+                                "type": "string",
+                                "required": true,
+                                "description": "Text Input - Nomor telepon Indonesia (628xx atau 08xx)",
+                                "default_value": "6283133096767",
+                                "placeholder": "6283133096767",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "117",
+                        "name": "Ceknomoraxis",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/ceknomoraxis.php",
+                        "method": "GET",
+                        "description": "Cek Paket XL",
+                        "params": [
+                            {
+                                "name": "number",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. 6283124609929",
+                                "default_value": "6283124609929",
+                                "placeholder": "6283124609929",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "118",
+                        "name": "Detail Domain",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/detail-domain.php",
+                        "method": "GET",
+                        "description": "Domain RDAP Lookup",
+                        "params": [
+                            {
+                                "name": "domain",
+                                "type": "string",
+                                "required": true,
+                                "description": "Nama domain",
+                                "default_value": "google.com",
+                                "placeholder": "google.com",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "119",
+                        "name": "Ip Lookup",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/ip_lookup.php",
+                        "method": "GET",
+                        "description": "IP Address Checker (IP Geolocation Lookup)",
+                        "params": [
+                            {
+                                "name": "ip",
+                                "type": "string",
+                                "required": true,
+                                "description": "Text Input - IP Address yang ingin dicek (kosongkan untuk cek IP sendiri)",
+                                "default_value": "8.8.8.8",
+                                "placeholder": "8.8.8.8",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "120",
+                        "name": "Link4m",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/link4m.php",
+                        "method": "GET",
+                        "description": "Endpoint API",
+                        "params": []
+                    },
+                    {
+                        "type": "file",
+                        "id": "121",
+                        "name": "Nik",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/nik.php",
+                        "method": "GET",
+                        "description": "Endpoint API",
+                        "params": [
+                            {
+                                "name": "nik",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. test_value",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "122",
+                        "name": "Record Web",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/record-web.php",
+                        "method": "GET",
+                        "description": "Website Screenshot (BentoScreen)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL website",
+                                "default_value": "https:\/\/api-nanzz.my.id\/docs",
+                                "placeholder": "https:\/\/api-nanzz.my.id\/docs",
+                                "options": []
+                            },
+                            {
+                                "name": "device",
+                                "type": "select",
+                                "required": true,
+                                "description": "Device",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "desktop_hd",
+                                    "desktop_fhd",
+                                    "desktop_4k",
+                                    "desktop_wide",
+                                    "laptop_13",
+                                    "laptop_15",
+                                    "macbook_air",
+                                    "macbook_pro",
+                                    "ipad",
+                                    "ipad_pro",
+                                    "ipad_mini",
+                                    "samsung_tab",
+                                    "iphone_se",
+                                    "iphone_14",
+                                    "iphone_14_pro",
+                                    "iphone_15_pro",
+                                    "samsung_s24",
+                                    "pixel_8",
+                                    "xiaomi_14"
+                                ]
+                            },
+                            {
+                                "name": "scroll",
+                                "type": "select",
+                                "required": true,
+                                "description": "Scroll page",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "true",
+                                    "false"
+                                ]
+                            },
+                            {
+                                "name": "dark_mode",
+                                "type": "select",
+                                "required": true,
+                                "description": "Dark mode",
+                                "default_value": "test_value",
+                                "placeholder": "test_value",
+                                "options": [
+                                    "true",
+                                    "false"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "123",
+                        "name": "Skip Link",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/skip-link.php",
+                        "method": "GET",
+                        "description": "izen.lol Link Bypasser",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "URL izen.lol",
+                                "default_value": "https:\/\/izen.lol\/xxxx",
+                                "placeholder": "https:\/\/izen.lol\/xxxx",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "124",
+                        "name": "Ssweb",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/ssweb.php",
+                        "method": "GET",
+                        "description": "SSWEB Microlink Screenshot",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/snaptok.lol",
+                                "default_value": "https:\/\/snaptok.lol",
+                                "placeholder": "https:\/\/snaptok.lol",
+                                "options": []
+                            },
+                            {
+                                "name": "device",
+                                "type": "select",
+                                "required": true,
+                                "description": "Pilih tipe device screenshot",
+                                "default_value": "desktop",
+                                "placeholder": "desktop",
+                                "options": [
+                                    "desktop",
+                                    "tablet",
+                                    "mobile"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "125",
+                        "name": "Tiktok Boost",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/tiktok-boost.php",
+                        "method": "GET",
+                        "description": "TikTok Like Booster",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/vt.tiktok.com\/ZSxGhy4pD\/",
+                                "default_value": "https:\/\/vt.tiktok.com\/ZSxGhy4pD\/",
+                                "placeholder": "https:\/\/vt.tiktok.com\/ZSxGhy4pD\/",
+                                "options": []
+                            },
+                            {
+                                "name": "target",
+                                "type": "select",
+                                "required": true,
+                                "description": "Jumlah likes\/views",
+                                "default_value": "50",
+                                "placeholder": "50",
+                                "options": [
+                                    "10",
+                                    "20",
+                                    "30",
+                                    "50",
+                                    "100"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "126",
+                        "name": "Web2zip",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/tools\/web2zip.php",
+                        "method": "GET",
+                        "description": "Website Copier to ZIP (saveweb2zip.com)",
+                        "params": [
+                            {
+                                "name": "url",
+                                "type": "string",
+                                "required": true,
+                                "description": "e.g. https:\/\/www.yorunime.sbs",
+                                "default_value": "https:\/\/www.yorunime.sbs",
+                                "placeholder": "https:\/\/www.yorunime.sbs",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "folder",
+                "id": "root_764de9",
+                "name": "UPLOADER",
+                "depth": 1,
+                "children": [
+                    {
+                        "type": "file",
+                        "id": "127",
+                        "name": "Catbox",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/uploader\/catbox.php",
+                        "method": "POST",
+                        "description": "Catbox.moe Uploader",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "128",
+                        "name": "Filegoat",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/uploader\/filegoat.php",
+                        "method": "POST",
+                        "description": "FileGoat File Uploader",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "129",
+                        "name": "Gobox",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/uploader\/gobox.php",
+                        "method": "POST",
+                        "description": "Gobox.my.id Upload File MAX 4,5MB",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "130",
+                        "name": "Img Drop",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/uploader\/img-drop.php",
+                        "method": "POST",
+                        "description": "Image Uploader (ImgDrop)",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "131",
+                        "name": "Uguu",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/uploader\/uguu.php",
+                        "method": "POST",
+                        "description": "Uguu.se File Uploader",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    },
+                    {
+                        "type": "file",
+                        "id": "132",
+                        "name": "Uploadee",
+                        "url": "https:\/\/api-nanzz.my.id\/docs\/api\/uploader\/uploadee.php",
+                        "method": "POST",
+                        "description": "Upload.ee File Uploader",
+                        "params": [
+                            {
+                                "name": "file",
+                                "type": "file",
+                                "required": true,
+                                "description": "Upload File",
+                                "default_value": "",
+                                "placeholder": "",
+                                "options": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
