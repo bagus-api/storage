@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Basic</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 flex flex-col items-center justify-center min-h-screen text-white font-sans antialiased p-4">
+
+    <div class="bg-slate-800 p-6 rounded-3xl shadow-2xl w-full max-w-xs border border-slate-700 relative overflow-hidden">
+        <div class="flex justify-between items-center mb-4 px-2">
+            <span class="text-xs font-semibold tracking-widest text-slate-400 uppercase">Calc Basic</span>
+        </div>
+        <div class="bg-slate-950 p-4 rounded-2xl mb-5 text-right border border-slate-800">
+            <div id="proses" class="text-slate-500 text-sm h-6 overflow-hidden tracking-wide"></div>
+            <div id="layar" class="text-3xl font-bold tracking-tight text-emerald-300 truncate mt-1">0</div>
+        </div>
+        <div class="grid grid-cols-4 gap-3">
+            <button onclick="hapusSemua()" class="bg-slate-700 hover:bg-slate-600 font-bold p-4 rounded-2xl text-red-400 transition-all active:scale-95">C</button>
+            <button onclick="inputTombol('/')" class="bg-slate-700/50 hover:bg-slate-700 font-bold p-4 rounded-2xl text-emerald-400 transition-all active:scale-95">/</button>
+            <button onclick="inputTombol('*')" class="bg-slate-700/50 hover:bg-slate-700 font-bold p-4 rounded-2xl text-emerald-400 transition-all active:scale-95">x</button>
+            <button onclick="hapusSatu()" class="bg-slate-700/50 hover:bg-slate-700 p-4 rounded-2xl text-slate-300 transition-all active:scale-95"><i class="fa-solid fa-backspace"></i></button>
+            <button onclick="inputTombol('7')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">7</button>
+            <button onclick="inputTombol('8')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">8</button>
+            <button onclick="inputTombol('9')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">9</button>
+            <button onclick="inputTombol('-')" class="bg-slate-700/50 hover:bg-slate-700 font-bold p-4 rounded-2xl text-emerald-400 transition-all active:scale-95">-</button>
+            <div class="grid grid-cols-3 col-span-3 gap-3">
+                <button onclick="inputTombol('1')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">1</button>
+                <button onclick="inputTombol('2')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">2</button>
+                <button onclick="inputTombol('3')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">3</button>
+                <button onclick="inputTombol('0')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl col-span-2 transition-all active:scale-95 text-left pl-6">0</button>
+                <button onclick="inputTombol('.')" class="bg-slate-700 hover:bg-slate-600 font-medium p-4 rounded-2xl transition-all active:scale-95">.</button>
+            </div>
+            <button onclick="hitungJawaban()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold p-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center text-xl">=</button>
+        </div>
+    </div>
+
+    <!-- MODAL Jebakan -->
+    <div id="modalJawaban" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-slate-800 border border-red-500/50 rounded-3xl p-6 w-full max-w-sm text-center shadow-2xl">
+            <div class="w-16 h-16 bg-red-500/10 text-red-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl border border-red-500/20">
+                <i class="fa-solid fa-skull"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-white">INIKAN HP DAFZZ ANJING</h3>
+            <p class="text-amber-400 text-sm font-semibold mb-6">GUA BODOH BANGET MALAH NGEPRANK 😹😹😹</p>
+            <button onclick="mulaiHukuman()" class="w-full bg-red-500 hover:bg-red-400 text-white font-bold py-3 rounded-xl transition-all text-sm mb-2">PUKUL GUA PAKE GUA</button>
+            <button onclick="tutupModal('modalJawaban')" class="w-full bg-transparent hover:bg-slate-700/50 text-slate-400 font-semibold py-2 rounded-xl transition-all text-xs">GUA BODOH</button>
+        </div>
+    </div>
+
+    <!-- MODAL Hukuman 150 CROT -->
+    <div id="modalHukuman" class="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50 transition-all duration-500">
+        <div class="bg-slate-800 border border-amber-500/50 rounded-3xl p-6 w-full max-w-sm text-center shadow-2xl max-h-[95vh] overflow-y-auto relative">
+            <div class="w-16 h-16 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl border border-amber-500/20 animate-pulse">
+                <i class="fa-solid fa-hand-fist"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-1 text-white">EKSEKUSI DIMULAI</h3>
+            <p class="text-slate-400 text-sm mb-2">Crot ke-<span id="counterCrot">0</span> / 150</p>
+            <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl mb-4 min-h-[200px] flex flex-col items-center justify-center relative overflow-hidden">
+                <div id="crotShake" class="w-full">
+                    <span id="statusHukum" class="text-red-400 font-bold text-sm block leading-relaxed"></span>
+                    <pre id="asciiArt" class="text-emerald-400 text-[10px] leading-3 mt-3 font-mono whitespace-pre-wrap text-left w-full overflow-x-auto"></pre>
+                </div>
+                <div id="flashOverlay" class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-100 bg-white"></div>
+            </div>
+            <div class="w-full bg-slate-700 rounded-full h-2 mb-4">
+                <div id="progressBar" class="bg-gradient-to-r from-red-500 to-amber-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div id="tombolContainer">
+                <button onclick="toggleAutoPlay()" id="btnAuto" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl transition-all text-sm mb-2">
+                    <i class="fa-solid fa-play mr-2"></i> AUTO CROT (LAMBAT)
+                </button>
+                <button onclick="tambahCrot()" id="btnCrot" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-3 rounded-xl transition-all text-sm mb-2">
+                    <i class="fa-solid fa-plus mr-2"></i> TAMBAH 1 CROT
+                </button>
+            </div>
+            <button onclick="resetHukuman()" class="w-full bg-transparent hover:bg-red-500/10 text-red-400 font-semibold py-2 rounded-xl transition-all text-xs">GUA MATI EWEIN</button>
+        </div>
+    </div>
+
+    <!-- MODAL Keluar GRATIS -->
+    <div id="modalKeluar" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-slate-800 border border-emerald-500/30 rounded-3xl p-6 w-full max-w-sm text-center shadow-2xl">
+            <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl border border-emerald-500/20">
+                <i class="fa-solid fa-door-open"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-1 text-white">KELUAR GRATIS</h3>
+            <p class="text-slate-400 text-sm mb-6">Gak ada biaya administrasi. Gak ada denda. GUA BODOH, GUA NGAPAIN BAYAR?</p>
+            <button onclick="tutupModal('modalKeluar')" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 rounded-xl transition-all text-sm">KELUAR AJA</button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes shake { 0%,100%{transform:translateX(0)}10%{transform:translateX(-8px)rotate(-2deg)}20%{transform:translateX(8px)rotate(2deg)}30%{transform:translateX(-6px)}40%{transform:translateX(6px)}50%{transform:translateX(-4px)}60%{transform:translateX(4px)}70%{transform:translateX(-2px)}80%{transform:translateX(2px)}90%{transform:translateX(-1px)}}
+        .shake-active { animation: shake 0.4s ease-in-out; }
+        @keyframes pulseGlow { 0%,100%{box-shadow:0 0 10px rgba(255,0,0,0.2)}50%{box-shadow:0 0 30px rgba(255,0,0,0.6)} }
+        .glow-active { animation: pulseGlow 0.3s ease-in-out 3; }
+        pre { font-family: 'Courier New', monospace; white-space: pre-wrap; word-break: break-word; }
+    </style>
+
+    <script>
+        let layar = document.getElementById('layar');
+        let proses = document.getElementById('proses');
+        let infoProses = '';
+        let counterCrot = 0;
+        let crotSelesai = false;
+        let isAutoPlay = false;
+        let autoInterval = null;
+        let isTyping = false;
+
+        // ===== 150 DIALOG — PENIPU DISIKSA OLEH DAFFZ =====
+        const dialogData = [];
+
+        // 1-20: Penipu masih sombong, mulai digebukin
+        const awal = [
+            "Crot pertama... Hah! Kau pikir aku takut padamu, Daffz? Aku penipu ulung!",
+            "Crot kedua... Ini tidak ada apa-apanya! Aku sudah terbiasa dengan hukuman!",
+            "Crot ketiga... Kau hanya membuang waktumu! Aku tidak akan mengaku!",
+            "Crot keempat... Sakit? Ini hanya seperti gigitan nyamuk!",
+            "Crot kelima... Aku tidak menyesal! Aku bangga menjadi penipu!",
+            "Crot keenam... Aku tidak akan meminta ampun! Kau siapa?",
+            "Crot ketujuh... Masih segini? Aku bisa bertahan lebih lama!",
+            "Crot kedelapan... Ini tidak cukup untuk menghentikanku!",
+            "Crot kesembilan... Kau pikir ini akan membuatku jera? Salah besar!",
+            "Crot kesepuluh... Aku tidak takut mati!",
+            "Crot kesebelas... Kau bisa melakukan yang lebih baik daripada ini!",
+            "Crot keduabelas... Aku masih bisa tertawa! Hahaha!",
+            "Crot ketigabelas... Ini menghibur! Aku suka!",
+            "Crot keempatbelas... Kau sangat membosankan!",
+            "Crot kelimabelas... Aku tidak akan menyerah!",
+            "Crot keenambelas... Aku masih memiliki harga diri!",
+            "Crot ketujuhbelas... Kau pikir ini akan meluluhkan hatiku?",
+            "Crot kedelapanbelas... Aku tidak butuh ampunanmu!",
+            "Crot kesembilanbelas... Aku penipu terbaik sepanjang masa!",
+            "Crot kedua puluh... Lanjutkan! Aku tidak peduli!"
+        ];
+
+        // 21-50: Mulai goyah, mulai minta ampun
+        const goyah = [
+            "Crot kedua puluh satu... Tunggu... ini mulai terasa...",
+            "Crot kedua puluh dua... Aku... aku mulai kepanasan...",
+            "Crot kedua puluh tiga... Apa... apa yang kau lakukan padaku?",
+            "Crot kedua puluh empat... Aku tidak bisa bernapas!",
+            "Crot kedua puluh lima... Sperma... di mana-mana!",
+            "Crot kedua puluh enam... Aku muntah! Aku minta ampun!",
+            "Crot kedua puluh tujuh... Daffz... tolong... jangan dilanjutkan!",
+            "Crot kedua puluh delapan... Aku salah! Aku menipu orang!",
+            "Crot kedua puluh sembilan... Aku minta ampun!",
+            "Crot ketiga puluh... Aku tidak kuat!",
+            "Crot ketiga puluh satu... Sperma di mataku! Aku buta!",
+            "Crot ketiga puluh dua... Di hidungku! Aku tidak bisa mencium!",
+            "Crot ketiga puluh tiga... Di mulutku! Aku muntah!",
+            "Crot ketiga puluh empat... Aku penuh sperma!",
+            "Crot ketiga puluh lima... Rahimku meluber!",
+            "Crot ketiga puluh enam... Aku minta ampun, Daffz!",
+            "Crot ketiga puluh tujuh... Aku takut!",
+            "Crot ketiga puluh delapan... Jangan siksa aku lagi!",
+            "Crot ketiga puluh sembilan... Aku akan mengaku semuanya!",
+            "Crot keempat puluh... Aku penipu! Aku salah!",
+            "Crot keempat puluh satu... Aku minta ampun!",
+            "Crot keempat puluh dua... Sperma di telingaku!",
+            "Crot keempat puluh tiga... Aku tidak bisa mendengar!",
+            "Crot keempat puluh empat... Aku hanya mendengar suara sperma!",
+            "Crot keempat puluh lima... Aku muntah sperma terus!",
+            "Crot keempat puluh enam... Daffz, ampun!",
+            "Crot keempat puluh tujuh... Aku menyesal!",
+            "Crot keempat puluh delapan... Aku tidak akan menipu lagi!",
+            "Crot keempat puluh sembilan... Aku berjanji!",
+            "Crot kelima puluh... Aku minta ampun!"
+        ];
+
+        // 51-80: Semakin putus asa, minta ampun terus
+        const putusAsa = [
+            "Crot kelima puluh satu... Sperma di otakku!",
+            "Crot kelima puluh dua... Aku tidak bisa berpikir!",
+            "Crot kelima puluh tiga... Hanya ada sperma!",
+            "Crot kelima puluh empat... Aku minta ampun!",
+            "Crot kelima puluh lima... Tubuhku penuh!",
+            "Crot kelima puluh enam... Aku hancur!",
+            "Crot kelima puluh tujuh... Aku tidak kuat!",
+            "Crot kelima puluh delapan... Daffz, ampun!",
+            "Crot kelima puluh sembilan... Aku tidak akan melawan!",
+            "Crot keenam puluh... Aku menyerah!",
+            "Crot keenam puluh satu... Aku minta ampun!",
+            "Crot keenam puluh dua... Sperma di jantungku!",
+            "Crot keenam puluh tiga... Aku takut mati!",
+            "Crot keenam puluh empat... Aku masih punya keluarga!",
+            "Crot keenam puluh lima... Aku minta ampun!",
+            "Crot keenam puluh enam... Daffz, kasihan aku!",
+            "Crot keenam puluh tujuh... Aku hanya penipu kecil!",
+            "Crot keenam puluh delapan... Aku tidak pantas dihukum seberat ini!",
+            "Crot keenam puluh sembilan... Aku minta ampun!",
+            "Crot ketujuh puluh... Aku akan menebus semuanya!",
+            "Crot ketujuh puluh satu... Aku janji akan berubah!",
+            "Crot ketujuh puluh dua... Daffz, tolong!",
+            "Crot ketujuh puluh tiga... Aku tidak tahan!",
+            "Crot ketujuh puluh empat... Sperma di paru-paruku!",
+            "Crot ketujuh puluh lima... Aku tidak bisa bernapas!",
+            "Crot ketujuh puluh enam... Aku minta ampun!",
+            "Crot ketujuh puluh tujuh... Aku menyesal!",
+            "Crot ketujuh puluh delapan... Aku tidak akan mengulangi!",
+            "Crot ketujuh puluh sembilan... Aku minta ampun!",
+            "Crot kedelapan puluh... Daffz, ampunilah aku!"
+        ];
+
+        // 81-110: Menjelang kematian, minta ampun dengan tangis
+        const menjelangMati = [
+            "Crot kedelapan puluh satu... Aku minta ampun!",
+            "Crot kedelapan puluh dua... Sperma di ginjalku!",
+            "Crot kedelapan puluh tiga... Aku tidak bisa buang air!",
+            "Crot kedelapan puluh empat... Aku minta ampun!",
+            "Crot kedelapan puluh lima... Daffz, aku takut!",
+            "Crot kedelapan puluh enam... Aku menipu banyak orang!",
+            "Crot kedelapan puluh tujuh... Tapi aku minta ampun!",
+            "Crot kedelapan puluh delapan... Aku tidak layak!",
+            "Crot kedelapan puluh sembilan... Tapi aku minta ampun!",
+            "Crot kesembilan puluh... Daffz, dengarkan aku!",
+            "Crot kesembilan puluh satu... Aku minta ampun!",
+            "Crot kesembilan puluh dua... Sperma di tulangku!",
+            "Crot kesembilan puluh tiga... Aku remuk!",
+            "Crot kesembilan puluh empat... Aku minta ampun!",
+            "Crot kesembilan puluh lima... Daffz, aku menyesal!",
+            "Crot kesembilan puluh enam... Aku tidak akan menipu lagi!",
+            "Crot kesembilan puluh tujuh... Aku minta ampun!",
+            "Crot kesembilan puluh delapan... Sperma di sumsum tulangku!",
+            "Crot kesembilan puluh sembilan... Aku minta ampun!",
+            "Crot keseratus... Daffz, ampun aku!",
+            "Crot keseratus satu... Aku hampir mati!",
+            "Crot keseratus dua... Sperma di semua organku!",
+            "Crot keseratus tiga... Aku minta ampun!",
+            "Crot keseratus empat... Daffz, aku mohon!",
+            "Crot keseratus lima... Aku tidak bisa bangun!",
+            "Crot keseratus enam... Aku minta ampun!",
+            "Crot keseratus tujuh... Sperma menggenang di perutku!",
+            "Crot keseratus delapan... Aku minta ampun!",
+            "Crot keseratus sembilan... Daffz, terakhir kali!",
+            "Crot keseratus sepuluh... Aku minta ampun!"
+        ];
+
+        // 111-149: Hampir mati, minta ampun terakhir
+        const hampirMati = [
+            "Crot keseratus sebelas... Aku minta ampun!",
+            "Crot keseratus dua belas... Sperma di mataku!",
+            "Crot keseratus tiga belas... Aku buta!",
+            "Crot keseratus empat belas... Aku minta ampun!",
+            "Crot keseratus lima belas... Daffz, aku mohon!",
+            "Crot keseratus enam belas... Aku tidak akan melawan!",
+            "Crot keseratus tujuh belas... Aku minta ampun!",
+            "Crot keseratus delapan belas... Sperma di kepalaku!",
+            "Crot keseratus sembilan belas... Aku minta ampun!",
+            "Crot keseratus dua puluh... Daffz, ampun!",
+            "Crot keseratus dua puluh satu... Aku minta ampun!",
+            "Crot keseratus dua puluh dua... Sperma di leherku!",
+            "Crot keseratus dua puluh tiga... Aku tidak bisa menelan!",
+            "Crot keseratus dua puluh empat... Aku minta ampun!",
+            "Crot keseratus dua puluh lima... Daffz, aku menyesal!",
+            "Crot keseratus dua puluh enam... Aku minta ampun!",
+            "Crot keseratus dua puluh tujuh... Sperma di dadaku!",
+            "Crot keseratus dua puluh delapan... Aku minta ampun!",
+            "Crot keseratus dua puluh sembilan... Daffz, aku mohon!",
+            "Crot keseratus tiga puluh... Aku minta ampun!",
+            "Crot keseratus tiga puluh satu... Sperma di perutku!",
+            "Crot keseratus tiga puluh dua... Aku minta ampun!",
+            "Crot keseratus tiga puluh tiga... Daffz, aku takut!",
+            "Crot keseratus tiga puluh empat... Aku minta ampun!",
+            "Crot keseratus tiga puluh lima... Sperma di punggungku!",
+            "Crot keseratus tiga puluh enam... Aku minta ampun!",
+            "Crot keseratus tiga puluh tujuh... Daffz, aku mohon!",
+            "Crot keseratus tiga puluh delapan... Aku minta ampun!",
+            "Crot keseratus tiga puluh sembilan... Sperma di kakiku!",
+            "Crot keseratus empat puluh... Aku minta ampun!",
+            "Crot keseratus empat puluh satu... Daffz, aku menyesal!",
+            "Crot keseratus empat puluh dua... Aku minta ampun!",
+            "Crot keseratus empat puluh tiga... Sperma di tanganku!",
+            "Crot keseratus empat puluh empat... Aku minta ampun!",
+            "Crot keseratus empat puluh lima... Daffz, aku mohon!",
+            "Crot keseratus empat puluh enam... Aku minta ampun!",
+            "Crot keseratus empat puluh tujuh... Sperma di mana-mana!",
+            "Crot keseratus empat puluh delapan... Aku minta ampun!",
+            "Crot keseratus empat puluh sembilan... Daffz, ampunilah aku!"
+        ];
+
+        // 150: FINAL
+        const final = [{
+            text: "Crot keseratus lima puluh... Aku mati... penuh sperma... Aku minta ampun... Daffz... aku menyesal... aku penipu... ampunilah aku...",
+            art: `
+    ╔══════════════════════════════════════════╗
+    ║   💀  PENIPU MATI DALAM SPERMA  💀     ║
+    ║    ████████████████████████████        ║
+    ║    💦💦💦💦💦💦💦💦💦💦💦💦💦💦        ║
+    ║    ☠️  AKU MENYESAL  ☠️                 ║
+    ║    ☠️  AKU MEMINTA AMPUN  ☠️           ║
+    ║    💀  TAPI TERLAMBAT  💀              ║
+    ║    👑  DAFFZ TELAH MENGHUKUM  👑       ║
+    ║    💦💦💦💦💦💦💦💦💦💦💦💦💦💦        ║
+    ║    ✨  KAU TELAH MENJADI  ✨           ║
+    ║    ✨  RAJA HUKUMAN  ✨                ║
+    ╚══════════════════════════════════════════╝
+            `
+        }];
+
+        // Gabungkan semua dialog
+        const semuaDialog = [...awal, ...goyah, ...putusAsa, ...menjelangMati, ...hampirMati, ...final];
+
+        // Masukkan ke dialogData
+        for (let i = 0; i < semuaDialog.length && i < 150; i++) {
+            if (typeof semuaDialog[i] === 'string') {
+                dialogData.push({ text: semuaDialog[i], art: "💦🙏" });
+            } else {
+                dialogData.push(semuaDialog[i]);
+            }
+        }
+
+        // Pastikan 150 data
+        while (dialogData.length < 150) {
+            dialogData.push({ text: `Crot ke-${dialogData.length+1}... Aku minta ampun, Daffz!`, art: "💦🙏" });
+        }
+
+        // ===== FUNGSI =====
+        function inputTombol(nilai) {
+            if (layar.innerText === '0' && !isNaN(nilai)) { layar.innerText = nilai; }
+            else { layar.innerText += nilai; }
+            infoProses += nilai;
+            proses.innerText = infoProses;
+        }
+
+        function hapusSemua() { layar.innerText = '0'; proses.innerText = ''; infoProses = ''; }
+
+        function hapusSatu() {
+            if (layar.innerText.length > 1) {
+                layar.innerText = layar.innerText.slice(0, -1);
+                infoProses = infoProses.slice(0, -1);
+                proses.innerText = infoProses;
+            } else { layar.innerText = '0'; proses.innerText = ''; infoProses = ''; }
+        }
+
+        function hitungJawaban() { if (infoProses !== '') { document.getElementById('modalJawaban').classList.remove('hidden'); } }
+
+        function mulaiHukuman() {
+            tutupModal('modalJawaban');
+            counterCrot = 0;
+            crotSelesai = false;
+            isAutoPlay = false;
+            if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+            document.getElementById('counterCrot').innerText = '0';
+            document.getElementById('statusHukum').innerHTML = '';
+            document.getElementById('asciiArt').innerHTML = '';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('btnCrot').disabled = false;
+            document.getElementById('btnCrot').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('btnAuto').disabled = false;
+            document.getElementById('btnAuto').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('btnAuto').innerHTML = '<i class="fa-solid fa-play mr-2"></i> AUTO CROT (LAMBAT)';
+            document.getElementById('modalHukuman').classList.remove('hidden');
+            document.getElementById('statusHukum').innerHTML = '<span class="text-slate-400">Tekan tombol di bawah untuk memulai...</span>';
+            document.getElementById('asciiArt').innerHTML = '';
+        }
+
+        function typeText(element, text, speed = 30) {
+            return new Promise((resolve) => {
+                element.innerHTML = '';
+                let i = 0;
+                isTyping = true;
+                const interval = setInterval(() => {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(interval);
+                        isTyping = false;
+                        resolve();
+                    }
+                }, speed);
+            });
+        }
+
+        async function tambahCrot() {
+            if (crotSelesai || isTyping) return;
+            if (counterCrot < 150) {
+                counterCrot++;
+                document.getElementById('counterCrot').innerText = counterCrot;
+
+                const shakeEl = document.getElementById('crotShake');
+                shakeEl.classList.remove('shake-active');
+                void shakeEl.offsetWidth;
+                shakeEl.classList.add('shake-active');
+
+                const flash = document.getElementById('flashOverlay');
+                flash.classList.remove('opacity-0');
+                flash.classList.add('opacity-30');
+                setTimeout(() => { flash.classList.remove('opacity-30'); flash.classList.add('opacity-0'); }, 150);
+
+                const modal = document.querySelector('#modalHukuman > div');
+                modal.classList.remove('glow-active');
+                void modal.offsetWidth;
+                modal.classList.add('glow-active');
+
+                const statusEl = document.getElementById('statusHukum');
+                await typeText(statusEl, dialogData[counterCrot - 1].text, 20 + (counterCrot * 0.15));
+
+                const artEl = document.getElementById('asciiArt');
+                artEl.innerHTML = dialogData[counterCrot - 1].art;
+
+                document.getElementById('progressBar').style.width = (counterCrot / 150 * 100) + '%';
+
+                if (counterCrot === 150) {
+                    crotSelesai = true;
+                    document.getElementById('btnCrot').disabled = true;
+                    document.getElementById('btnCrot').classList.add('opacity-50', 'cursor-not-allowed');
+                    document.getElementById('btnAuto').disabled = true;
+                    document.getElementById('btnAuto').classList.add('opacity-50', 'cursor-not-allowed');
+                    if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+                    document.getElementById('statusHukum').innerHTML = '<span class="text-amber-400 text-base font-extrabold animate-pulse">☠️ PENIPU MATI DALAM SPERMA — MENYESAL, MEMINTA AMPUN, TAPI TERLAMBAT. DAFFZ TELAH MENJADI RAJA HUKUMAN. ☠️</span>';
+                    document.getElementById('asciiArt').innerHTML = dialogData[149].art;
+                    document.getElementById('progressBar').style.width = '100%';
+                }
+            }
+        }
+
+        function toggleAutoPlay() {
+            if (crotSelesai) return;
+            isAutoPlay = !isAutoPlay;
+            const btn = document.getElementById('btnAuto');
+            if (isAutoPlay) {
+                btn.innerHTML = '<i class="fa-solid fa-pause mr-2"></i> BERHENTI';
+                autoInterval = setInterval(() => {
+                    if (!crotSelesai && !isTyping) {
+                        tambahCrot();
+                    }
+                    if (crotSelesai) {
+                        clearInterval(autoInterval);
+                        autoInterval = null;
+                        isAutoPlay = false;
+                        btn.innerHTML = '<i class="fa-solid fa-play mr-2"></i> AUTO CROT (LAMBAT)';
+                    }
+                }, 2000);
+            } else {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                btn.innerHTML = '<i class="fa-solid fa-play mr-2"></i> AUTO CROT (LAMBAT)';
+            }
+        }
+
+        function resetHukuman() {
+            if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+            isAutoPlay = false;
+            tutupModal('modalHukuman');
+            counterCrot = 0;
+            crotSelesai = false;
+            document.getElementById('counterCrot').innerText = '0';
+            document.getElementById('statusHukum').innerHTML = '';
+            document.getElementById('asciiArt').innerHTML = '';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('btnCrot').disabled = false;
+            document.getElementById('btnCrot').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('btnAuto').disabled = false;
+            document.getElementById('btnAuto').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('btnAuto').innerHTML = '<i class="fa-solid fa-play mr-2"></i> AUTO CROT (LAMBAT)';
+            document.getElementById('modalKeluar').classList.remove('hidden');
+        }
+
+        function tutupModal(idModal) { document.getElementById(idModal).classList.add('hidden'); }
+
+        function bayarKeTikTok() { document.getElementById('modalJawaban').classList.remove('hidden'); }
+        function bukaModalKonfirmasi() { document.getElementById('modalJawaban').classList.remove('hidden'); }
+        function bukaModalMiskin() { document.getElementById('modalJawaban').classList.remove('hidden'); }
+        function bukaModalKeluar() { document.getElementById('modalKeluar').classList.remove('hidden'); }
+        function pilihPaket(elemen) { document.getElementById('modalJawaban').classList.remove('hidden'); }
+    </script>
+</body>
+</html>
