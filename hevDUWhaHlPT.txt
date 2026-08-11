@@ -1,0 +1,92 @@
+
+PROPOSAL USAHA NETCONNECT SOLUTIONS
+Jasa Pemasangan, Konfigurasi, dan Perawatan Jaringan Wi-Fi Terpadu 
+Disusun Oleh Tim Penulis:
+ Adnan Ferdiansyah
+ Dea Ajeng Syahfitri
+Bobi Satria
+
+
+TUGAS PROJEK KEWIRAUSAHAAN SMKN 1 BUMI AGUNG
+TAHUN 2026
+ 
+1.	Latar Belakang Masalah
+
+Perkembangan teknologi informasi saat ini membuat internet menjadi kebutuhan primer yang setara dengan kebutuhan utilitas dasar seperti listrik dan air bersih. Hal ini didorong oleh masifnya digitalisasi di berbagai sektor, mulai dari administrasi pemerintahan, pendidikan, hingga bisnis e-commerce. Di wilayah Bumi Agung dan sekitarnya, penetrasi pengguna internet berlangganan mengalami peningkatan yang signifikan, baik di tingkat rumah tangga maupun pada pelaku UMKM (seperti kedai kopi dan rumah makan).
+Namun, tingginya angka pemasangan ini seringkali tidak diimbangi dengan pemahaman teknis masyarakat. Sering muncul keluhan operasional, seperti adanya blank spot (titik mati sinyal) di dalam ruangan, instalasi kabel yang berantakan dan rawan mengalami kerusakan, serta tingkat keamanan jaringan yang rendah yang mengakibatkan koneksi menjadi lambat akibat pembobolan password.
+Merespons permasalahan tersebut, kami siswa-siswi SMKN 1 Bumi Agung menginisiasi unit usaha NetConnect Solutions yang berfokus pada jasa instalasi, perluasan jangkauan, serta pemeliharaan jaringan Wi-Fi lokal secara profesional.
+
+2.	Rumusan Masalah
+•	Bagaimana merancang arsitektur jaringan lokal (LAN/WLAN) yang efektif, rapi, dan efisien untuk perumahan dan UMKM di Bumi Agung?
+•	Bagaimana strategi memberikan layanan purnajual (maintenance) yang responsif untuk membangun loyalitas pelanggan?
+•	Bagaimana merencanakan alokasi keuangan dan strategi pemasaran agar usaha rintisan ini dapat segera mencapai Break Even Point (BEP) dan menghasilkan keuntungan?
+
+3.	Tujuan & Manfaat Usaha
+
+Tujuan Pendirian: Menciptakan pendapatan berkelanjutan, menjadi wadah implementasi Project Based Learning, serta membantu masyarakat lokal mengatasi masalah konektivitas internet secara transparan. Adapun manfaat usaha bagi tim penyusun adalah melatih mental wirausaha dan membangun portofolio profesional sejak dini, sementara bagi konsumen mendapatkan layanan ahli yang terjangkau.
+ 
+1.	Identitas Perusahaan & Filosofi
+
+
+
+2.	Visi dan Misi
+
+Visi: Menjadi penyedia jasa instalasi jaringan lokal terdepan, terpercaya, dan bersahabat bagi masyarakat Bumi Agung pada tahun 2028.
+Misi: Memberikan instalasi yang mengedepankan estetika dan keamanan standar industri, menghadirkan solusi nirkabel tepat guna, mengedepankan respons CS maksimal 1x24 jam, serta menerapkan harga transparan.
+
+3.	Struktur Organisasi & Rincian Layanan
+•	Adnan Ferdiansyah (Project Manager & Teknisi Ahli): Mengatur desain topologi dan konfigurasi lanjutan.
+•	Dea Ajeng Syahfitri (Admin, Keuangan & CS): Mengelola arus kas, jadwal, dan pemasaran digital.
+•	Bobi Satria (Teknisi Lapangan & Pengadaan): Bertanggung jawab atas eksekusi fisik dan material.
+
+Produk Jasa: Instalasi LAN kabel, Perluasan Sinyal Wi-Fi (Access Point), Manajemen Jaringan (Voucher/ Mikrotik), serta Perawatan & Konsultasi rutin.
+ 
+1.	Segmentasi Pasar & Analisis SWOT
+
+Target utama kami adalah rumah tangga, pelaku UMKM, dan institusi desa dalam radius 15-20 km di wilayah Bumi Agung yang menginginkan kepraktisan dan layanan responsif.
+•	Strengths: Kompeten, tanpa biaya sewa ruko, tarif sangat kompetitif.
+•	Weaknesses: Terbatas waktu karena status pelajar, modal awal minim.
+•	Opportunities: Tren work from cafe, kebutuhan CCTV online, digitalisasi desa.
+•	Threats: Persaingan teknisi ISP pribadi dan fluktuasi harga material.
+
+
+BAB IV: RENCANA OPERASIONAL
+
+1. Alat, Bahan, & SOP
+
+Menggunakan alat kerja tetap (bor, tangga, toolkit) dan bahan habis pakai (kabel UTP, konektor RJ-45, klem).
+1.	Inisiasi & Survei: Klien menghubungi via WhatsApp, tim meninjau lokasi dan menerbitkan RAB.
+2.	Eksekusi & QC: Penarikan kabel, konfigurasi, dilanjutkan uji kecepatan (Speedtest) dan kestabilan (Ping).
+3.	Serah Terima: Penyerahan kredensial, berita acara, dan pelunasan pembayaran.
+
+Waktu Operasional: Senin–Jumat pukul 15.30–18.00 WIB (proyek kecil) serta akhir pekan untuk proyek besar.
+ 
+1.	Strategi Promosi & Penetapan Harga
+
+Pemasaran dilakukan melalui Instagram Edukasi, pemasaran mulut ke mulut (Word of Mouth), dan penyebaran brosur di titik strategis.
+
+Jenis Layanan	Estimasi Tarif
+Survei & Konsultasi Awal	GRATIS
+Jasa Troubleshooting / Perbaikan	Rp 50.000 – Rp 100.000
+Jasa Tarik Kabel & Setting Access Point	Rp 150.000 / titik
+Paket Setting Manajemen Kos (Mikrotik)	Mulai Rp 350.000
+
+BAB VI: RENCANA KEUANGAN
+
+1.	Modal Awal & Kebutuhan Belanja
+
+Modal awal dikumpulkan melalui sistem iuran (bootstrapping) sebesar Rp 2.100.000 (3 orang x Rp 700.000). Alokasi belanja alat tetap dan bahan habis pakai total Rp 1.900.000, sisa Rp 200.000 sebagai kas operasional.
+ 
+2.	Estimasi Pendapatan & Analisis BEP
+
+Jenis Layanan Terjual	Volume	Total Omzet
+Instalasi Titik AP Baru	5 Proyek	Rp 750.000
+Penjualan Kabel UTP	150 Meter	Rp 375.000
+Jasa Perbaikan / Troubleshoot	5 Proyek	Rp 375.000
+Total Pendapatan Kotor:	Rp 1.500.000
+
+
+3.	Kesimpulan & Penutup
+
+NetConnect Solutions sangat potensial untuk dikembangkan. Saran ke depan meliputi peningkatan keterampilan (Up-Skilling) ke teknologi Fiber Optik. Kami berharap dukungan penuh dari Bapak/Ibu Guru agar usaha rintisan siswa ini sukses dan mandiri secara finansial.
+•	
