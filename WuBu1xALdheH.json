@@ -1,0 +1,52 @@
+[
+  {
+    "soal": "Apa warna bendera negara Indonesia?",
+    "opsi": ["Merah dan Putih", "Merah dan Kuning", "Biru dan Putih", "Hijau dan Putih"],
+    "jawaban": "Merah dan Putih"
+  },
+  {
+    "soal": "Berapakah hasil dari 7 + 8?",
+    "opsi": ["13", "14", "15", "16"],
+    "jawaban": "15"
+  },
+  {
+    "soal": "Hewan yang berkembang biak dengan cara bertelur disebut...",
+    "opsi": ["Vivipar", "Ovipar", "Ovovivipar", "Mamalia"],
+    "jawaban": "Ovipar"
+  },
+  {
+    "soal": "Siapakah pencipta lagu lagu nasional 'Indonesia Raya'?",
+    "opsi": ["Ibu Sud", "W.R. Soepratman", "C. Simanjuntak", "Kusbini"],
+    "jawaban": "W.R. Soepratman"
+  },
+  {
+    "soal": "Berapakah jumlah sisi pada bangun datar segitiga?",
+    "opsi": ["2", "3", "4", "5"],
+    "jawaban": "3"
+  },
+  {
+    "soal": "Candi Borobudur terletak di provinsi...",
+    "opsi": ["Jawa Barat", "Jawa Timur", "Jawa Tengah", "Bali"],
+    "jawaban": "Jawa Tengah"
+  },
+  {
+    "soal": "Benda yang digunakan untuk mengukur suhu tubuh adalah...",
+    "opsi": ["Penggaris", "Timbangan", "Termometer", "Stopwatch"],
+    "jawaban": "Termometer"
+  },
+  {
+    "soal": "Hasil dari 5 x 6 adalah...",
+    "opsi": ["25", "30", "35", "40"],
+    "jawaban": "30"
+  },
+  {
+    "soal": "Matahari terbit dari arah...",
+    "opsi": ["Barat", "Utara", "Timur", "Selatan"],
+    "jawaban": "Timur"
+  },
+  {
+    "soal": "Alat pernapasan pada ikan adalah...",
+    "opsi": ["Paru-paru", "Insang", "Kulit", "Trakea"],
+    "jawaban": "Insang"
+  }
+]
