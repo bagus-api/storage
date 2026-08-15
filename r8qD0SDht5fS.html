@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Soal & Jawaban</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dce1e8;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            min-height: 200px;
+            transition: border 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+        }
+        .btn-success {
+            background: #27ae60;
+        }
+        .btn-success:hover {
+            background: #229954;
+            box-shadow: 0 5px 15px rgba(39,174,96,0.3);
+        }
+        .btn-danger {
+            background: #e74c3c;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+            box-shadow: 0 5px 15px rgba(231,76,60,0.3);
+        }
+        .preview {
+            margin-top: 30px;
+            border-top: 2px solid #ecf0f1;
+            padding-top: 20px;
+        }
+        .preview h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .preview-frame {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            min-height: 100px;
+        }
+        .format-hint {
+            background: #ebf5fb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        .format-hint code {
+            background: #d4e6f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .question-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question-item .q {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .question-item .a {
+            color: #27ae60;
+            margin-top: 5px;
+            padding: 8px;
+            background: #f0faf0;
+            border-radius: 5px;
+        }
+        .question-item .a::before {
+            content: "✓ Jawaban: ";
+            font-weight: 600;
+            color: #27ae60;
+        }
+        .hidden-answer .a {
+            display: none;
+        }
+        .toggle-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .toggle-btn:hover {
+            background: #7f8c8d;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Generator Soal & Jawaban</h1>
+        
+        <div class="format-hint">
+            <strong>📌 Format Input:</strong><br>
+            Tulis soal dan jawaban dengan format:<br>
+            <code>Soal: [pertanyaan]</code><br>
+            <code>Jawaban: [jawaban]</code><br>
+            <br>
+            <strong>Contoh:</strong><br>
+            <code>Soal: Apa ibukota Indonesia?</code><br>
+            <code>Jawaban: Jakarta</code><br>
+            <code>Soal: 2 + 2 = ?</code><br>
+            <code>Jawaban: 4</code>
+        </div>
+
+        <div class="input-group">
+            <label for="soalInput">📋 Masukkan Soal & Jawaban:</label>
+            <textarea id="soalInput" placeholder="Soal: ...&#10;Jawaban: ...&#10;&#10;Soal: ...&#10;Jawaban: ...">Soal: Apa ibukota Indonesia?
+Jawaban: Jakarta
+
+Soal: 2 + 2 = ?
+Jawaban: 4
+
+Soal: Siapa presiden pertama Indonesia?
+Jawaban: Ir. Soekarno</textarea>
+        </div>
+
+        <div class="actions">
+            <button class="btn" onclick="generateHTML()">🚀 Generate HTML</button>
+            <button class="btn btn-success" onclick="downloadHTML()">⬇️ Download HTML</button>
+            <button class="btn btn-danger" onclick="clearAll()">🗑️ Clear</button>
+        </div>
+
+        <div class="preview">
+            <h2>👁️ Preview Hasil</h2>
+            <div id="previewContainer" class="preview-frame">
+                <p style="color: #95a5a6; text-align: center;">Klik "Generate HTML" untuk melihat preview</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let generatedHTML = '';
+
+        function parseSoal(text) {
+            const lines = text.split('\n');
+            const questions = [];
+            let current = { soal: '', jawaban: '' };
+            let isSoal = false;
+            let isJawaban = false;
+
+            for (let line of lines) {
+                line = line.trim();
+                if (!line) continue;
+
+                if (line.toLowerCase().startsWith('soal:')) {
+                    if (current.soal && current.jawaban) {
+                        questions.push({ ...current });
+                    }
+                    current = { soal: line.substring(5).trim(), jawaban: '' };
+                    isSoal = true;
+                    isJawaban = false;
+                } else if (line.toLowerCase().startsWith('jawaban:')) {
+                    current.jawaban = line.substring(8).trim();
+                    isSoal = false;
+                    isJawaban = true;
+                } else if (isSoal) {
+                    current.soal += ' ' + line;
+                } else if (isJawaban) {
+                    current.jawaban += ' ' + line;
+                }
+            }
+
+            if (current.soal && current.jawaban) {
+                questions.push({ ...current });
+            }
+
+            return questions;
+        }
+
+        function generateHTML() {
+            const input = document.getElementById('soalInput').value;
+            const questions = parseSoal(input);
+
+            if (questions.length === 0) {
+                alert('⚠️ Tidak ada soal yang ditemukan! Pastikan formatnya benar.');
+                return;
+            }
+
+            let htmlContent = `<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal & Jawaban</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        .question {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        .question .q {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .question .a {
+            color: #27ae60;
+            margin-top: 8px;
+            padding: 10px;
+            background: #f0faf0;
+            border-radius: 5px;
+            display: none;
+        }
+        .question .a.show {
+            display: block;
+        }
+        .question .a::before {
+            content: "✓ Jawaban: ";
+            font-weight: 600;
+        }
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+        }
+        .btn-success {
+            background: #27ae60;
+        }
+        .btn-success:hover {
+            background: #229954;
+        }
+        .btn-danger {
+            background: #e74c3c;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        .btn-warning {
+            background: #f39c12;
+        }
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+        .stats {
+            margin: 15px 0;
+            padding: 10px;
+            background: #ebf5fb;
+            border-radius: 8px;
+            color: #2c3e50;
+        }
+        .hidden .a {
+            display: none !important;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            .controls { flex-direction: column; }
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Soal & Jawaban</h1>
+        
+        <div class="stats" id="stats">
+            Total: <span id="totalSoal">${questions.length}</span> soal
+        </div>
+
+        <div class="controls">
+            <button onclick="toggleAll()" class="btn-success">👁️ Tampilkan Semua Jawaban</button>
+            <button onclick="hideAll()" class="btn-danger">🙈 Sembunyikan Semua</button>
+            <button onclick="showRandom()" class="btn-warning">🎲 Tampilkan Random</button>
+        </div>
+
+        <div id="questionsContainer">`;
+
+            questions.forEach((q, index) => {
+                htmlContent += `
+            <div class="question" id="q${index}">
+                <div class="q">${index + 1}. ${q.soal}</div>
+                <div class="a">${q.jawaban}</div>
+            </div>`;
+            });
+
+            htmlContent += `
+        </div>
+    </div>
+
+    <script>
+        function toggleAll() {
+            const answers = document.querySelectorAll('.a');
+            const allVisible = Array.from(answers).every(a => a.classList.contains('show'));
+            answers.forEach(a => {
+                if (allVisible) {
+                    a.classList.remove('show');
+                } else {
+                    a.classList.add('show');
+                }
+            });
+        }
+
+        function hideAll() {
+            document.querySelectorAll('.a').forEach(a => a.classList.remove('show'));
+        }
+
+        function showRandom() {
+            const answers = document.querySelectorAll('.a');
+            hideAll();
+            if (answers.length > 0) {
+                const randomIndex = Math.floor(Math.random() * answers.length);
+                answers[randomIndex].classList.add('show');
+            }
+        }
+
+        // Tambah event click per soal
+        document.querySelectorAll('.question').forEach((q, index) => {
+            q.addEventListener('click', function() {
+                const answer = this.querySelector('.a');
+                answer.classList.toggle('show');
+            });
+        });
+
+        // Update total soal
+        document.getElementById('totalSoal').textContent = document.querySelectorAll('.question').length;
+    <\/script>
+</body>
+</html>`;
+
+            generatedHTML = htmlContent;
+            document.getElementById('previewContainer').innerHTML = `<iframe srcdoc="${escapeHTML(htmlContent)}" style="width:100%; height:500px; border:none; border-radius:8px;"></iframe>`;
+            
+            // Tampilkan notifikasi
+            const stats = document.createElement('div');
+            stats.style.cssText = 'margin-top:10px; padding:10px; background:#d4edda; border-radius:5px; color:#155724;';
+            stats.innerHTML = `✅ Berhasil generate ${questions.length} soal! Klik "Download HTML" untuk menyimpan.`;
+            const preview = document.getElementById('previewContainer');
+            preview.appendChild(stats);
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function downloadHTML() {
+            if (!generatedHTML) {
+                alert('⚠️ Generate HTML dulu ya!');
+                return;
+            }
+
+            const blob = new Blob([generatedHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `soal-jawaban-${new Date().getTime()}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            document.getElementById('soalInput').value = '';
+            document.getElementById('previewContainer').innerHTML = '<p style="color: #95a5a6; text-align: center;">Klik "Generate HTML" untuk melihat preview</p>';
+            generatedHTML = '';
+        }
+
+        // Auto generate saat load
+        window.onload = function() {
+            generateHTML();
+        };
+    </script>
+</body>
+</html>
