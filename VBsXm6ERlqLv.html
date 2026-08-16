@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ML Profile Name Generator</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;padding:20px;background:#111827;color:white;
+  font-family:Arial,sans-serif;text-align:center
+}
+.box{max-width:520px;margin:auto}
+h2{margin:4px 0 8px}
+p{color:#aaa;margin-top:0}
+input,button{
+  width:100%;padding:13px;margin:7px 0;border-radius:10px;
+  border:1px solid #374151;background:#1f2937;color:white;
+  font-size:16px
+}
+button{background:#2563eb;border:0;font-weight:bold;cursor:pointer}
+.preview{
+  margin-top:15px;background:#000;padding:8px;border-radius:12px;
+  overflow:hidden
+}
+canvas{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>🔥 ML Profile Name Generator</h2>
+  <p>Masukkan nama → otomatis ditempel ke template.</p>
+
+  <input id="name" value="Nama Lu" placeholder="Masukkan nama...">
+  <button id="download">⬇ Download Gambar</button>
+
+  <div class="preview">
+    <canvas id="canvas"></canvas>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const nameInput = document.getElementById("name");
+
+const img = new Image();
+img.src = "template.jpg";
+
+function draw(){
+  if(!img.complete || !img.naturalWidth) return;
+
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+
+  ctx.drawImage(img,0,0);
+
+  /*
+    Posisi nama.
+    Ubah X/Y kalau mau geser posisi.
+    X = makin besar → makin ke kanan
+    Y = makin besar → makin ke bawah
+  */
+  const x = 333;
+  const y = 230;
+
+  // Font dibuat mirip teks UI/profile game:
+  const fontSize = Math.round(canvas.width * 0.038);
+  ctx.font = `600 ${fontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillStyle = "#f4f7ff";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+
+  // Shadow tipis supaya menyatu dengan UI.
+  ctx.shadowColor = "rgba(0,0,0,.65)";
+  ctx.shadowBlur = 5;
+  ctx.shadowOffsetX = 1;
+  ctx.shadowOffsetY = 2;
+
+  ctx.fillText(nameInput.value, x, y);
+
+  ctx.shadowColor = "transparent";
+  ctx.shadowBlur = 0;
+}
+
+img.onload = draw;
+nameInput.addEventListener("input", draw);
+
+document.getElementById("download").onclick = () => {
+  const a = document.createElement("a");
+  a.download = "ml-profile-" + (nameInput.value.trim() || "profile") + ".png";
+  a.href = canvas.toDataURL("image/png");
+  a.click();
+};
+</script>
+</body>
+</html>
