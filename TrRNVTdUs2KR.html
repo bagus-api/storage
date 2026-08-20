@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>🔑 Krusty Krab - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Neue', 'Chalkboard SE', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #1a8fe0 0%, #4db8ff 30%, #87CEEB 55%, #FFE4B5 70%, #FFD700 85%, #FFA500 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== GELEMBUNG ===== */
+        .bubbles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), rgba(173, 216, 230, 0.3));
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            animation: bubbleFloat linear infinite;
+            box-shadow: inset 0 -10px 20px rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+        }
+
+        .bubble::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 25%;
+            width: 25%;
+            height: 20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+            transform: rotate(-30deg);
+        }
+
+        @keyframes bubbleFloat {
+            0% { transform: translateY(100vh) scale(0.3); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        /* ===== CONTAINER LOGIN ===== */
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            background: #F5C842;
+            border-radius: 30px 30px 40px 40px;
+            padding: 25px 22px 30px;
+            box-shadow: 
+                0 16px 0 #B8860B,
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                inset 0 -6px 0 #DAA520,
+                inset 0 4px 20px rgba(255, 255, 200, 0.6);
+            border: 5px solid #DAA520;
+            position: relative;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ===== HEADER ===== */
+        .krusty-header {
+            background: #8B0000;
+            padding: 10px 16px;
+            border-radius: 20px 20px 0 0;
+            margin: -31px -22px 18px -22px;
+            text-align: center;
+            border-bottom: 5px solid #5C0000;
+            box-shadow: inset 0 -3px 0 #6B0000, 0 6px 0 #5C0000;
+            position: relative;
+        }
+
+        .krusty-header::before {
+            content: '★ ★';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #FFD700;
+            letter-spacing: 8px;
+            text-shadow: 0 2px 0 #B8860B;
+        }
+
+        .krusty-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 2px 2px 0 #8B0000, 4px 4px 0 #5C0000;
+            letter-spacing: 3px;
+        }
+
+        .krusty-header .sub {
+            font-size: 0.65rem;
+            color: #FFA500;
+            text-shadow: 0 2px 0 #5C0000;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        /* ===== FORM ===== */
+        .login-box {
+            background: #FFF8DC;
+            border-radius: 25px;
+            padding: 22px 18px 26px;
+            border: 4px solid #8B4513;
+            box-shadow: inset 0 2px 15px rgba(255, 215, 0, 0.15), 0 6px 0 #6B3410;
+        }
+
+        .login-box .icon {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #FFD700;
+            text-shadow: 0 3px 0 #B8860B;
+            margin-bottom: 4px;
+        }
+
+        .login-box .icon i {
+            animation: bounceIcon 2s infinite ease-in-out;
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            75% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        .login-box h2 {
+            text-align: center;
+            color: #2C1810;
+            font-size: 1rem;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        .login-box h2 i {
+            color: #8B0000;
+            margin-right: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 4px solid #8B4513;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            background: #FFFEF5;
+            color: #2C1810;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group input:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.25), inset 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group input::placeholder {
+            color: #B8860B;
+            font-weight: 400;
+            opacity: 0.5;
+        }
+
+        .form-group .icon-input {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8B4513;
+            opacity: 0.4;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #8B0000;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 2px 0 #5C0000;
+            border-bottom: 5px solid #5C0000;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            background: #A00000;
+            box-shadow: 0 4px 0 #4A0000;
+        }
+
+        .btn-login:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        .btn-login i {
+            font-size: 1rem;
+        }
+
+        /* ===== ERROR ===== */
+        .error-msg {
+            background: #FFE4E4;
+            border: 3px solid #FF4444;
+            border-radius: 15px;
+            padding: 8px 14px;
+            margin-bottom: 12px;
+            color: #CC0000;
+            font-weight: 700;
+            font-size: 0.8rem;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 0 #AA0000;
+        }
+
+        .error-msg.show {
+            display: flex;
+        }
+
+        .error-msg i {
+            font-size: 1rem;
+        }
+
+        /* ===== HINT ===== */
+        .hint {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.7rem;
+            color: #6B3410;
+            background: #FFE4B5;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 3px dashed #DAA520;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .hint i {
+            color: #8B0000;
+        }
+
+        .hint .key-demo {
+            background: #2C1810;
+            color: #FFD700;
+            padding: 1px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-family: monospace;
+            letter-spacing: 1px;
+            border: 2px solid #DAA520;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .hint .key-demo:hover {
+            background: #3D2818;
+            transform: scale(1.05);
+        }
+
+        /* ===== UPDATE CHECK BOX ===== */
+        .update-section {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 3px dashed #DAA520;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .update-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6B3410;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .update-status i {
+            color: #8B0000;
+        }
+
+        .update-status .badge-updated {
+            background: #2E8B57;
+            color: #FFF;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 2px solid #1A5C3A;
+            box-shadow: 0 2px 0 #1A5C3A;
+        }
+
+        .update-status .badge-outdated {
+            background: #FF6347;
+            color: #FFF;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            border: 2px solid #CC0000;
+            box-shadow: 0 2px 0 #CC0000;
+            animation: blinkBadge 1s infinite;
+        }
+
+        @keyframes blinkBadge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .btn-check-update {
+            background: #8B4513;
+            color: #FFD700;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            border-bottom: 4px solid #5C2E0C;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-check-update:hover {
+            transform: translateY(-2px);
+            background: #A0522D;
+        }
+
+        .btn-check-update:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .btn-check-update i {
+            font-size: 0.8rem;
+        }
+
+        /* ===== DASHBOARD (tersembunyi) ===== */
+        .dashboard-container {
+            max-width: 560px;
+            width: 100%;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .dashboard-container.show {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== DASHBOARD STYLE ===== */
+        .dashboard {
+            width: 100%;
+            background: #F5C842;
+            border-radius: 20px 20px 50px 50px;
+            padding: 20px 18px 24px;
+            box-shadow: 
+                0 20px 0 #B8860B,
+                0 30px 60px rgba(0, 0, 0, 0.3),
+                inset 0 -8px 0 #DAA520,
+                inset 0 6px 30px rgba(255, 255, 200, 0.7);
+            border: 6px solid #DAA520;
+            position: relative;
+        }
+
+        .krusty-sign {
+            background: #8B0000;
+            padding: 12px 20px;
+            border-radius: 20px 20px 0 0;
+            margin: -26px -18px 16px -18px;
+            text-align: center;
+            border-bottom: 6px solid #5C0000;
+            box-shadow: inset 0 -4px 0 #6B0000, 0 8px 0 #5C0000;
+            position: relative;
+        }
+
+        .krusty-sign::before {
+            content: '★ ★ ★';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #FFD700;
+            letter-spacing: 10px;
+            text-shadow: 0 2px 0 #B8860B;
+        }
+
+        .krusty-sign h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #8B0000, 5px 5px 0 #5C0000;
+            letter-spacing: 4px;
+        }
+
+        .krusty-sign .subtitle {
+            font-size: 0.8rem;
+            color: #FFA500;
+            text-shadow: 0 2px 0 #5C0000;
+            letter-spacing: 6px;
+            font-weight: 700;
+        }
+
+        .krusty-sign .subtitle i {
+            color: #FFD700;
+            margin: 0 4px;
+        }
+
+        /* ===== VERSION BADGE ===== */
+        .version-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #2E8B57;
+            color: #FFF;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border: 3px solid #FFD700;
+            box-shadow: 0 4px 0 #1A5C3A, 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 5;
+            animation: pulseBadge 2s infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .version-badge i {
+            margin-right: 4px;
+        }
+
+        .window-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .window {
+            flex: 1;
+            background: #87CEEB;
+            border-radius: 20px 20px 5px 5px;
+            padding: 6px 10px;
+            border: 6px solid #8B4513;
+            box-shadow: inset 0 -4px 0 #6B3410, 0 6px 0 #6B3410;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #2C1810;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .window .window-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            color: #2C1810;
+            background: rgba(255, 255, 200, 0.6);
+            padding: 0 8px;
+            border-radius: 10px;
+            border: 2px solid #6B3410;
+        }
+
+        .window .window-value {
+            font-size: 1.1rem;
+            color: #1a0e08;
+            text-shadow: 0 1px 0 rgba(255, 255, 200, 0.5);
+        }
+
+        .window i {
+            font-size: 1.2rem;
+            color: #FFD700;
+            text-shadow: 0 2px 0 #B8860B;
+            margin-bottom: 2px;
+        }
+
+        .clock-container {
+            background: #FFF8DC;
+            border-radius: 60px;
+            padding: 8px 18px;
+            margin-bottom: 14px;
+            border: 5px solid #DAA520;
+            box-shadow: inset 0 2px 8px rgba(255, 215, 0, 0.3), 0 6px 0 #B8860B;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .clock-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8B4513;
+            text-shadow: 2px 2px 0 #FFD700;
+            letter-spacing: 3px;
+            background: #FFE4B5;
+            padding: 2px 20px;
+            border-radius: 40px;
+            border: 3px solid #DAA520;
+        }
+
+        .clock-display i {
+            color: #8B0000;
+            margin-right: 10px;
+        }
+
+        .clock-date {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #8B4513;
+            background: #FFE4B5;
+            padding: 2px 16px;
+            border-radius: 40px;
+            border: 3px solid #DAA520;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .card {
+            background: #FFF8DC;
+            border-radius: 20px 20px 15px 15px;
+            padding: 12px 10px 10px;
+            border: 5px solid #8B4513;
+            box-shadow: 0 8px 0 #6B3410, inset 0 -4px 0 #DAA520;
+            transition: 0.12s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 0 #5C2E0C;
+        }
+
+        .card::before {
+            content: '🍔';
+            position: absolute;
+            top: -8px;
+            right: 6px;
+            font-size: 18px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .card-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #FFF;
+            background: #8B0000;
+            padding: 3px 12px 3px 10px;
+            border-radius: 30px;
+            align-self: flex-start;
+            border: 3px solid #DAA520;
+            margin-bottom: 4px;
+            box-shadow: inset 0 -3px 0 #5C0000;
+        }
+
+        .card-label i {
+            color: #FFD700;
+            width: 16px;
+        }
+
+        .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2C1810;
+            line-height: 1.1;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 2px;
+            text-shadow: 2px 2px 0 #FFD700;
+        }
+
+        .value .unit {
+            font-size: 0.85rem;
+            color: #6B3410;
+            text-shadow: none;
+        }
+
+        .sub {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #6B3410;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 3px dashed #DAA520;
+            padding-top: 6px;
+            margin-top: 4px;
+        }
+
+        .sub i {
+            color: #8B0000;
+        }
+
+        .bar-bg {
+            background: #F5DEB3;
+            height: 12px;
+            border-radius: 40px;
+            margin-top: 8px;
+            border: 4px solid #8B4513;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 40px;
+            background: linear-gradient(90deg, #FFD700, #FF8C00);
+            transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .bar-fill::after {
+            content: "▬▬▬▬";
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            font-size: 8px;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 200, 0.25);
+            white-space: nowrap;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bar-fill.warm { background: linear-gradient(90deg, #FFA500, #FF8C00); }
+        .bar-fill.hot { background: linear-gradient(90deg, #FF6347, #DC143C); }
+        .bar-fill.cool { background: linear-gradient(90deg, #87CEEB, #00BFFF); }
+
+        .status-led {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 4px;
+            border: 2px solid #DAA520;
+            box-shadow: 0 0 0 2px #FFF8DC;
+        }
+        .led-green { background: #32CD32; box-shadow: 0 0 12px #32CD32; }
+        .led-yellow { background: #FFD700; box-shadow: 0 0 12px #FFD700; }
+        .led-red { background: #FF4444; box-shadow: 0 0 12px #FF4444; }
+
+        .card-full { grid-column: 1 / -1; }
+
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .badge-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #FFF8DC;
+            padding: 3px 14px 3px 12px;
+            border-radius: 50px;
+            border: 4px solid #8B4513;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #2C1810;
+            box-shadow: inset 0 2px 8px rgba(255, 215, 0, 0.2);
+        }
+
+        .badge-group i { color: #8B0000; }
+
+        .mini-badge {
+            background: #FFF8DC;
+            border-radius: 40px;
+            padding: 3px 16px;
+            border: 4px solid #8B4513;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #2C1810;
+            box-shadow: inset 0 2px 8px rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-note {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            background: #FFF8DC;
+            border-radius: 60px;
+            padding: 10px 18px;
+            border: 5px solid #8B4513;
+            box-shadow: inset 0 2px 8px rgba(255, 215, 0, 0.2), 0 6px 0 #6B3410;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6B3410;
+        }
+
+        .footer-note i { color: #8B0000; margin-right: 4px; }
+        .footer-note span {
+            background: #FFE4B5;
+            padding: 2px 14px;
+            border-radius: 40px;
+            border: 3px solid #DAA520;
+        }
+
+        @media (max-width: 450px) {
+            .dashboard { padding: 16px 12px 20px; }
+            .grid { gap: 10px; }
+            .value { font-size: 1.6rem; }
+            .clock-display { font-size: 1.5rem; padding: 2px 12px; }
+            .krusty-sign h1 { font-size: 1.6rem; }
+            .window { font-size: 0.6rem; min-height: 40px; }
+            .window .window-value { font-size: 0.9rem; }
+            .krusty-sign { padding: 8px 14px; margin: -22px -12px 12px -12px; }
+            .version-badge { font-size: 0.6rem; padding: 2px 12px; top: -12px; right: 10px; }
+            .update-section { flex-direction: column; align-items: stretch; gap: 8px; }
+            .btn-check-update { justify-content: center; }
+        }
+
+        @media (max-width: 380px) {
+            .badge-group { font-size: 0.6rem; padding: 2px 8px; }
+            .mini-badge { font-size: 0.6rem; padding: 2px 10px; }
+            .window .window-value { font-size: 0.8rem; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-12px); }
+            40% { transform: translateX(12px); }
+            60% { transform: translateX(-8px); }
+            80% { transform: translateX(8px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+    </style>
+</head>
+<body>
+
+<!-- ===== GELEMBUNG ===== -->
+<div class="bubbles-container" id="bubblesContainer"></div>
+
+<!-- ===== LOGIN ===== -->
+<div class="login-container" id="loginContainer">
+    <div class="krusty-header">
+        <h1>KRUSTY KRAB</h1>
+        <div class="sub"><i class="fas fa-star"></i> KRABBY PATTY <i class="fas fa-star"></i></div>
+    </div>
+
+    <div class="login-box">
+        <div class="icon"><i class="fas fa-sponge"></i></div>
+        <h2><i class="fas fa-key"></i> Masukkan Kunci</h2>
+
+        <div class="error-msg" id="errorMsg">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText">Kunci salah!</span>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <input 
+                    type="password" 
+                    id="keyInput" 
+                    placeholder="Kunci rahasia..." 
+                    autocomplete="off"
+                    required
+                />
+                <span class="icon-input"><i class="fas fa-lock"></i></span>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+                <i class="fas fa-utensils"></i> Buka
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <!-- ===== UPDATE SECTION ===== -->
+        <div class="update-section">
+            <div class="update-status">
+                <i class="fas fa-sync-alt"></i>
+                <span id="updateStatusText">Cek Update</span>
+                <span id="updateBadge" class="badge-outdated">v0.9</span>
+            </div>
+            <button class="btn-check-update" id="checkUpdateBtn">
+                <i class="fas fa-search"></i> Cek Update
+            </button>
+        </div>
+
+        <div class="hint">
+            <i class="fas fa-info-circle"></i> 
+            Kunci: <span class="key-demo" id="keyDemo">KRUSTY2024</span>
+            <span style="opacity:0.5;font-size:0.6rem;">(klik isi)</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="dashboard-container" id="dashboardContainer">
+    <div class="dashboard">
+        <!-- Version Badge -->
+        <div class="version-badge">
+            <i class="fas fa-check-circle"></i> Update v1 (Beta)
+        </div>
+
+        <div class="krusty-sign">
+            <h1>KRUSTY KRAB</h1>
+            <div class="subtitle">
+                <i class="fas fa-star"></i> KRABBY PATTY <i class="fas fa-star"></i>
+            </div>
+        </div>
+
+        <div class="window-row">
+            <div class="window">
+                <i class="fas fa-utensils"></i>
+                <span class="window-label">Order</span>
+                <span class="window-value" id="orderCount">42</span>
+            </div>
+            <div class="window">
+                <i class="fas fa-dollar-sign"></i>
+                <span class="window-label">Earnings</span>
+                <span class="window-value" id="earnings">$<span id="earningsAmount">1,247</span></span>
+            </div>
+            <div class="window">
+                <i class="fas fa-users"></i>
+                <span class="window-label">Customers</span>
+                <span class="window-value" id="customerCount">28</span>
+            </div>
+        </div>
+
+        <div class="clock-container">
+            <div class="clock-display"><i class="fas fa-clock"></i> <span id="clockTime">00:00:00</span></div>
+            <div class="clock-date"><i class="fas fa-calendar-alt"></i> <span id="clockDate">--</span></div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-label"><i class="fas fa-film"></i> FPS</div>
+                <div class="value" id="fpsValue">60 <span class="unit">fps</span></div>
+                <div class="sub"><span id="fpsStatus"><span class="status-led led-green"></span> Stabil</span> <i class="fas fa-sync-alt"></i></div>
+                <div class="bar-bg"><div class="bar-fill" id="fpsBar" style="width:85%"></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-label"><i class="fas fa-microchip"></i> CPU</div>
+                <div class="value" id="cpuValue">0 <span class="unit">%</span></div>
+                <div class="sub"><span id="cpuCores">8 core</span> <i class="fas fa-server"></i></div>
+                <div class="bar-bg"><div class="bar-fill" id="cpuBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-label"><i class="fas fa-desktop"></i> GPU</div>
+                <div class="value" id="gpuValue">0 <span class="unit">%</span></div>
+                <div class="sub"><span id="gpuInfo">Adreno</span> <i class="fas fa-cube"></i></div>
+                <div class="bar-bg"><div class="bar-fill" id="gpuBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-label"><i class="fas fa-memory"></i> RAM</div>
+                <div class="value" id="ramValue">0 <span class="unit">GB</span></div>
+                <div class="sub"><span id="ramDetail">0/8 GB</span> <i class="fas fa-database"></i></div>
+                <div class="bar-bg"><div class="bar-fill" id="ramBar" style="width:0%"></div></div>
+            </div>
+
+            <div class="card card-full">
+                <div class="flex-row" style="margin-bottom:4px;">
+                    <div class="card-label" style="margin-bottom:0;"><i class="fas fa-thermometer-half"></i> Suhu & Baterai</div>
+                    <div class="badge-group">
+                        <span><i class="fas fa-battery-three-quarters"></i> <span id="batteryLevel">--</span>%</span>
+                        <span><i class="fas fa-plug"></i> <span id="chargingStatus">⚡</span></span>
+                    </div>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:2px;">
+                    <div class="badge-group">
+                        <span><i class="fas fa-temperature-high"></i> CPU <span id="tempCpu">--</span>°</span>
+                        <span><i class="fas fa-temperature-low"></i> GPU <span id="tempGpu">--</span>°</span>
+                    </div>
+                    <div class="mini-badge"><i class="fas fa-wifi"></i> <span id="networkType">4G</span></div>
+                    <div class="mini-badge"><i class="fas fa-signal"></i> <span id="signalStrength">-65</span> dBm</div>
+                </div>
+                <div class="bar-bg" style="margin-top:8px; height:10px;">
+                    <div class="bar-fill cool" id="tempBar" style="width:20%"></div>
+                </div>
+            </div>
+
+            <div class="card card-full" style="margin-top:0;">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; align-items:center;">
+                    <div class="mini-badge" style="font-size:0.75rem; padding:3px 18px;"><i class="fas fa-hdd"></i> <span id="storageInfo">64/128 GB</span></div>
+                    <div class="mini-badge" style="font-size:0.75rem; padding:3px 18px;"><i class="fas fa-clock"></i> <span id="uptime">00:00</span></div>
+                    <div class="mini-badge" style="font-size:0.75rem; padding:3px 18px;"><i class="fas fa-mobile-alt"></i> <span id="deviceName">Android</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span><i class="fas fa-check-circle" style="color:#2E8B57;"></i> v1.0 Beta</span>
+            <span><i class="fas fa-chart-line"></i> <span id="updateCounter">0</span> update</span>
+            <span><i class="fas fa-fish"></i> Krusty Krab</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    "use strict";
+
+    // ===== GELEMBUNG =====
+    function createBubbles() {
+        const container = document.getElementById('bubblesContainer');
+        for (let i = 0; i < 20; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = 12 + Math.random() * 35;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.animationDuration = (8 + Math.random() * 10) + 's';
+            bubble.style.animationDelay = Math.random() * 12 + 's';
+            container.appendChild(bubble);
+        }
+    }
+    createBubbles();
+
+    // ===== STATE UPDATE =====
+    let isUpdated = false;
+    let updateChecked = false;
+
+    // ===== ELEMEN LOGIN =====
+    const keyInput = document.getElementById('keyInput');
+    const errorMsg = document.getElementById('errorMsg');
+    const errorText = document.getElementById('errorText');
+    const loginForm = document.getElementById('loginForm');
+    const loginContainer = document.getElementById('loginContainer');
+    const dashboardContainer = document.getElementById('dashboardContainer');
+    const keyDemo = document.getElementById('keyDemo');
+    const loginBtn = document.getElementById('loginBtn');
+
+    // ===== ELEMEN UPDATE =====
+    const checkUpdateBtn = document.getElementById('checkUpdateBtn');
+    const updateStatusText = document.getElementById('updateStatusText');
+    const updateBadge = document.getElementById('updateBadge');
+
+    const VALID_KEYS = ['KRUSTY2024', 'krusty2024', 'KRUSTY', 'krabbypatty', 'SPONGEBOB', '123456'];
+
+    // ===== FUNGSI CEK UPDATE =====
+    function checkUpdate() {
+        // Simulasi pengecekan update
+        updateStatusText.textContent = 'Mengecek...';
+        updateStatusText.style.color = '#FFA500';
+        checkUpdateBtn.disabled = true;
+        checkUpdateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memeriksa...';
+
+        setTimeout(() => {
+            // 70% chance sudah update, 30% belum
+            const random = Math.random();
+            if (random < 0.7) {
+                // Sudah update
+                isUpdated = true;
+                updateChecked = true;
+                updateStatusText.textContent = '✅ Sudah Update!';
+                updateStatusText.style.color = '#2E8B57';
+                updateBadge.className = 'badge-updated';
+                updateBadge.textContent = 'v1.0 (Beta)';
+                checkUpdateBtn.innerHTML = '<i class="fas fa-check"></i> Terupdate';
+                checkUpdateBtn.style.background = '#2E8B57';
+                checkUpdateBtn.style.borderBottomColor = '#1A5C3A';
+                
+                // Tampilkan notifikasi
+                showUpdateNotification('✅ Aplikasi sudah versi terbaru!', '#2E8B57');
+            } else {
+                // Belum update - tampilkan web baru
+                isUpdated = false;
+                updateChecked = true;
+                updateStatusText.textContent = '⚠️ Update Tersedia!';
+                updateStatusText.style.color = '#FF6347';
+                updateBadge.className = 'badge-outdated';
+                updateBadge.textContent = 'v0.9';
+                checkUpdateBtn.innerHTML = '<i class="fas fa-download"></i> Update Sekarang';
+                checkUpdateBtn.style.background = '#FF6347';
+                checkUpdateBtn.style.borderBottomColor = '#CC0000';
+                
+                // Tampilkan popup web baru
+                showUpdateNotification('🚀 Update baru tersedia! Klik "Update Sekarang" untuk menginstal.', '#FF6347');
+            }
+            checkUpdateBtn.disabled = false;
+        }, 1500);
+    }
+
+    // ===== NOTIFIKASI UPDATE =====
+    function showUpdateNotification(message, color) {
+        // Buat notifikasi popup
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: ${color || '#2E8B57'};
+            color: #FFF;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2), 0 15px 40px rgba(0,0,0,0.3);
+            z-index: 100;
+            border: 3px solid #FFD700;
+            max-width: 90%;
+            text-align: center;
+            animation: slideDown 0.5s ease;
+            font-family: 'Comic Neue', cursive;
+        `;
+        notification.innerHTML = `<i class="fas fa-bell" style="margin-right: 10px;"></i> ${message}`;
+        document.body.appendChild(notification);
+
+        // Tambahkan style animasi
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideDown {
+                0% { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+                100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Hapus notifikasi setelah 5 detik
+        setTimeout(() => {
+            notification.style.transition = 'all 0.5s ease';
+            notification.style.transform = 'translateX(-50%) translateY(-100px)';
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 500);
+        }, 5000);
+    }
+
+    // ===== EVENT CEK UPDATE =====
+    checkUpdateBtn.addEventListener('click', checkUpdate);
+
+    // ===== LOGIN =====
+    function handleLogin(e) {
+        e.preventDefault();
+        const key = keyInput.value.trim();
+
+        if (!key) {
+            showError('⚠️ Masukkan kunci dulu!');
+            keyInput.focus();
+            return;
+        }
+
+        const valid = VALID_KEYS.some(k => k.toLowerCase() === key.toLowerCase());
+
+        if (valid) {
+            loginContainer.style.transform = 'scale(0.8)';
+            loginContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                loginContainer.style.display = 'none';
+                dashboardContainer.classList.add('show');
+                startMonitoring();
+            }, 500);
+
+        } else {
+            showError('❌ Kunci salah! Coba lagi.');
+            keyInput.value = '';
+            keyInput.focus();
+            loginContainer.classList.add('shake');
+            setTimeout(() => loginContainer.classList.remove('shake'), 400);
+        }
+    }
+
+    function showError(msg) {
+        errorText.textContent = msg;
+        errorMsg.classList.add('show');
+        clearTimeout(window.errTimeout);
+        window.errTimeout = setTimeout(() => errorMsg.classList.remove('show'), 3000);
+    }
+
+    // ===== AUTO FILL =====
+    keyDemo.addEventListener('click', function() {
+        keyInput.value = this.textContent;
+        keyInput.focus();
+        keyInput.style.borderColor = '#32CD32';
+        setTimeout(() => keyInput.style.borderColor = '#8B4513', 1000);
+    });
+
+    keyInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') handleLogin(e);
+    });
+
+    window.addEventListener('load', () => setTimeout(() => keyInput.focus(), 400));
+
+    // ===== DETEKSI PERANGKAT =====
+    function detectDeviceInfo() {
+        const info = {
+            deviceName: 'Android',
+            cores: navigator.hardwareConcurrency || 4,
+            ram: 4,
+            os: 'Android',
+        };
+
+        if ('deviceMemory' in navigator) {
+            info.ram = navigator.deviceMemory;
+        }
+
+        const ua = navigator.userAgent;
+        if (ua.indexOf('Android') > -1) {
+            info.os = 'Android';
+            const match = ua.match(/Android\s([\d.]+)/);
+            if (match) info.os += ' ' + match[1];
+        } else if (ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) {
+            info.os = 'iOS';
+        } else if (ua.indexOf('Windows') > -1) {
+            info.os = 'Windows';
+        } else if (ua.indexOf('Mac') > -1) {
+            info.os = 'macOS';
+        }
+
+        const brands = ['Samsung', 'Xiaomi', 'OPPO', 'Vivo', 'Realme', 'OnePlus', 'Google', 'Motorola'];
+        for (let brand of brands) {
+            if (ua.indexOf(brand) > -1) {
+                info.deviceName = brand;
+                break;
+            }
+        }
+
+        return info;
+    }
+
+    const deviceInfo = detectDeviceInfo();
+
+    // ===== ELEMEN DASHBOARD =====
+    const fpsValue = document.getElementById('fpsValue');
+    const fpsStatus = document.getElementById('fpsStatus');
+    const fpsBar = document.getElementById('fpsBar');
+
+    const cpuValue = document.getElementById('cpuValue');
+    const cpuBar = document.getElementById('cpuBar');
+    const cpuCores = document.getElementById('cpuCores');
+
+    const gpuValue = document.getElementById('gpuValue');
+    const gpuBar = document.getElementById('gpuBar');
+    const gpuInfo = document.getElementById('gpuInfo');
+
+    const ramValue = document.getElementById('ramValue');
+    const ramBar = document.getElementById('ramBar');
+    const ramDetail = document.getElementById('ramDetail');
+
+    const tempCpu = document.getElementById('tempCpu');
+    const tempGpu = document.getElementById('tempGpu');
+    const tempBar = document.getElementById('tempBar');
+
+    const batteryLevel = document.getElementById('batteryLevel');
+    const chargingStatus = document.getElementById('chargingStatus');
+
+    const storageInfo = document.getElementById('storageInfo');
+    const uptime = document.getElementById('uptime');
+    const deviceName = document.getElementById('deviceName');
+    const networkType = document.getElementById('networkType');
+    const signalStrength = document.getElementById('signalStrength');
+    const updateCounter = document.getElementById('updateCounter');
+
+    const clockTime = document.getElementById('clockTime');
+    const clockDate = document.getElementById('clockDate');
+
+    const orderCount = document.getElementById('orderCount');
+    const earningsAmount = document.getElementById('earningsAmount');
+    const customerCount = document.getElementById('customerCount');
+
+    let counter = 0;
+    let startTime = Date.now();
+    let monitoringInterval = null;
+    let clockInterval = null;
+
+    function clamp(val, min, max) { return Math.min(max, Math.max(min, val)); }
+
+    // ===== JAM =====
+    function updateClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2,'0');
+        const m = String(now.getMinutes()).padStart(2,'0');
+        const s = String(now.getSeconds()).padStart(2,'0');
+        clockTime.textContent = `${h}:${m}:${s}`;
+        const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+        const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        clockDate.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+
+    // ===== METRIK =====
+    function generateMetrics() {
+        const totalRam = deviceInfo.ram || 4;
+        
+        let fps = 60 + Math.sin(Date.now()/2000)*10 + (Math.random()-0.5)*14;
+        fps = clamp(fps, 20, 120);
+        let cpu = 25 + Math.sin(Date.now()/3000)*15 + (Math.random()-0.5)*30;
+        cpu = clamp(cpu, 5, 92);
+        let gpu = 18 + Math.sin(Date.now()/2500+1.2)*12 + (Math.random()-0.5)*22;
+        gpu = clamp(gpu, 2, 75);
+        let usedRam = (totalRam * 0.45) + Math.sin(Date.now()/4000)*(totalRam*0.1) + (Math.random()-0.5)*(totalRam*0.12);
+        usedRam = clamp(usedRam, totalRam*0.25, totalRam*0.9);
+        let tempC = 38 + Math.sin(Date.now()/5000)*4 + (Math.random()-0.5)*6;
+        let tempG = 42 + Math.sin(Date.now()/4500+0.8)*5 + (Math.random()-0.5)*6;
+        tempC = clamp(tempC, 28, 72);
+        tempG = clamp(tempG, 30, 78);
+        let tempAvg = (tempC+tempG)/2;
+        let batt = 65 + Math.sin(Date.now()/10000)*10 + (Math.random()-0.5)*8;
+        batt = clamp(batt, 15, 100);
+        let storageUsed = 64 + Math.sin(Date.now()/8000)*2 + (Math.random()-0.5)*3;
+        storageUsed = clamp(storageUsed, 32, 110);
+        
+        let orders = 42 + Math.floor(Math.sin(Date.now()/5000)*8 + (Math.random()-0.5)*6);
+        orders = clamp(orders, 25, 65);
+        let earnings = 1247 + Math.floor(Math.sin(Date.now()/4000)*150 + (Math.random()-0.5)*100);
+        earnings = clamp(earnings, 800, 2000);
+        let customers = 28 + Math.floor(Math.sin(Date.now()/6000)*6 + (Math.random()-0.5)*5);
+        customers = clamp(customers, 15, 45);
+
+        return {
+            fps: Math.round(fps),
+            fpsPercent: (fps/120)*100,
+            cpu: Math.round(cpu),
+            gpu: Math.round(gpu),
+            usedRam: usedRam,
+            ramPercent: (usedRam/totalRam)*100,
+            totalRam: totalRam,
+            tempC: Math.round(tempC),
+            tempG: Math.round(tempG),
+            tempPercent: ((tempAvg-20)/60)*100,
+            battery: Math.round(batt),
+            isCharging: Math.random() > 0.72,
+            storageUsed: Math.round(storageUsed),
+            cores: deviceInfo.cores || 8,
+            network: ['4G','5G','WiFi'][Math.floor(Math.random()*3)],
+            signal: Math.round(-40 - Math.random()*40),
+            orders: orders,
+            earnings: earnings,
+            customers: customers,
+        };
+    }
+
+    // ===== UPDATE UI =====
+    function updateUI() {
+        const d = generateMetrics();
+        counter++;
+
+        fpsValue.innerHTML = `${d.fps} <span class="unit">fps</span>`;
+        fpsBar.style.width = `${d.fpsPercent}%`;
+        let status = '', led = 'led-green';
+        if (d.fps >= 55) { status = 'Lancar'; led = 'led-green'; }
+        else if (d.fps >= 35) { status = 'Sedang'; led = 'led-yellow'; }
+        else { status = 'Tersendat'; led = 'led-red'; }
+        fpsStatus.innerHTML = `<span class="status-led ${led}"></span> ${status}`;
+        fpsBar.className = 'bar-fill' + (d.fps < 35 ? ' hot' : d.fps < 55 ? ' warm' : '');
+
+        cpuValue.innerHTML = `${d.cpu} <span class="unit">%</span>`;
+        cpuBar.style.width = `${d.cpu}%`;
+        cpuCores.textContent = `${d.cores} core`;
+        cpuBar.className = 'bar-fill' + (d.cpu > 70 ? ' hot' : d.cpu > 45 ? ' warm' : '');
+
+        gpuValue.innerHTML = `${d.gpu} <span class="unit">%</span>`;
+        gpuBar.style.width = `${d.gpu}%`;
+        const gpuModels = ['Adreno 660', 'Adreno 650', 'Mali-G78', 'PowerVR'];
+        gpuInfo.textContent = gpuModels[Math.floor(Math.random() * gpuModels.length)];
+        gpuBar.className = 'bar-fill' + (d.gpu > 60 ? ' hot' : d.gpu > 35 ? ' warm' : '');
+
+        const ru = d.usedRam.toFixed(1);
+        const total = d.totalRam.toFixed(1);
+        ramValue.innerHTML = `${ru} <span class="unit">GB</span>`;
+        ramBar.style.width = `${d.ramPercent}%`;
+        ramDetail.textContent = `${ru}/${total} GB`;
+        ramBar.className = 'bar-fill' + (d.ramPercent > 75 ? ' hot' : d.ramPercent > 50 ? ' warm' : '');
+
+        tempCpu.textContent = d.tempC;
+        tempGpu.textContent = d.tempG;
+        tempBar.style.width = `${d.tempPercent}%`;
+        tempBar.className = 'bar-fill' + (d.tempPercent > 70 ? ' hot' : d.tempPercent > 45 ? ' warm' : ' cool');
+
+        batteryLevel.textContent = `${d.battery}%`;
+        chargingStatus.textContent = d.isCharging ? '⚡ Charging' : '🔋 Battery';
+        chargingStatus.style.color = d.isCharging ? '#32CD32' : '#6B3410';
+
+        storageInfo.textContent = `${d.storageUsed}/128 GB`;
+        const elapsed = Math.floor((Date.now()-startTime)/1000);
+        const mins = String(Math.floor(elapsed/60)).padStart(2,'0');
+        const secs = String(elapsed%60).padStart(2,'0');
+        uptime.textContent = `${mins}:${secs}`;
+        networkType.textContent = d.network;
+        signalStrength.textContent = d.signal;
+        updateCounter.textContent = counter;
+
+        orderCount.textContent = d.orders;
+        earningsAmount.textContent = d.earnings.toLocaleString();
+        customerCount.textContent = d.customers;
+    }
+
+    // ===== START MONITORING =====
+    function startMonitoring() {
+        deviceName.textContent = deviceInfo.deviceName + ' (' + deviceInfo.os + ')';
+        cpuCores.textContent = deviceInfo.cores + ' core';
+        const ramGB = deviceInfo.ram || 4;
+        ramDetail.textContent = `0/${ramGB.toFixed(1)} GB`;
+
+        updateClock();
+        clockInterval = setInterval(updateClock, 1000);
+
+        updateUI();
+        monitoringInterval = setInterval(updateUI, 1000);
+
+        if (navigator.getBattery) {
+            navigator.getBattery().then(b => {
+                const update = () => {
+                    batteryLevel.textContent = `${Math.round(b.level*100)}%`;
+                    chargingStatus.textContent = b.charging ? '⚡ Charging' : '🔋 Battery';
+                    chargingStatus.style.color = b.charging ? '#32CD32' : '#6B3410';
+                };
+                b.addEventListener('levelchange', update);
+                b.addEventListener('chargingchange', update);
+                update();
+            }).catch(() => {});
+        }
+
+        if ('connection' in navigator) {
+            const conn = navigator.connection;
+            const updateNetwork = () => {
+                const type = conn.effectiveType || '4G';
+                networkType.textContent = type.toUpperCase();
+            };
+            conn.addEventListener('change', updateNetwork);
+            updateNetwork();
+        }
+
+        console.log('🍔 Krusty Krab Monitor aktif!');
+        console.log('📱 Device terdeteksi:', deviceInfo);
+    }
+
+    console.log('🔑 Krusty Krab Login siap!');
+</script>
+</body>
+</html>
