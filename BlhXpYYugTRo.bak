@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>BRAT Maker Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SPLASH SCREEN ===== */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+
+        .splash-screen.hide {
+            opacity: 0;
+            transform: scale(1.05) translateY(-8px);
+            pointer-events: none;
+        }
+
+        .splash-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a73e8, #1557b0);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+            animation: pulse 1.4s ease-in-out infinite;
+            box-shadow: 0 8px 30px rgba(26, 115, 232, 0.2);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .splash-title {
+            margin-top: 24px;
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a73e8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+        }
+
+        .splash-sub {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #7a8aa8;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.4s forwards;
+        }
+
+        .splash-loader {
+            margin-top: 32px;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e8edf5;
+            border-top-color: #1a73e8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .splash-title, .splash-sub { transform: translateY(12px); }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 680px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 32px 28px;
+            border: 1px solid #ffffff;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+            opacity: 0;
+            transform: translateY(24px) scale(0.98);
+            animation: containerIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+
+        @keyframes containerIn {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid #f0f4ff;
+        }
+
+        .header .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1a73e8, #1557b0);
+            color: #ffffff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header:hover .icon {
+            transform: scale(1.04) rotate(-2deg);
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.2);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            color: #1a2332;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #1a73e8, #1557b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 11px;
+            color: #7a8aa8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        /* ===== API KEY STATUS ===== */
+        .api-status {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: #e8f5e9;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .api-status.error {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #ffcdd2;
+            display: flex;
+        }
+
+        .api-status i {
+            font-size: 13px;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1a73e8;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e8edf5;
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            background: #fafcff;
+            color: #1a2332;
+            resize: vertical;
+            min-height: 130px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .form-group textarea:focus {
+            border-color: #1a73e8;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.06);
+        }
+
+        .form-group textarea::placeholder {
+            color: #b0bedb;
+            font-weight: 400;
+        }
+
+        /* ===== EMOJI WARNING - RATA TENGAH ===== */
+        .emoji-warning {
+            font-size: 10px;
+            color: #1a73e8;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            text-align: center;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== BUTTON ===== */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1a73e8, #1557b0);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow 0.3s ease,
+                        background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            box-shadow: 0 4px 14px rgba(26, 115, 232, 0.2);
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                        transparent, 
+                        rgba(255, 255, 255, 0.18) 40%, 
+                        rgba(255, 255, 255, 0.18) 60%, 
+                        transparent);
+            transform: skewX(-25deg);
+            animation: scanMove 3.2s ease-in-out infinite;
+            border-radius: 16px;
+            will-change: left;
+            backface-visibility: hidden;
+        }
+
+        @keyframes scanMove {
+            0% { left: -100%; }
+            60% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 25%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                        transparent, 
+                        rgba(255, 255, 255, 0.08) 50%, 
+                        transparent);
+            transform: skewX(-20deg);
+            animation: scanMove2 4.5s ease-in-out infinite 0.9s;
+            border-radius: 16px;
+            will-change: left;
+            backface-visibility: hidden;
+        }
+
+        @keyframes scanMove2 {
+            0% { left: -100%; }
+            70% { left: 250%; }
+            100% { left: 250%; }
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #1a6ad8, #124a9e);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 24px rgba(26, 115, 232, 0.25);
+        }
+
+        .btn:active {
+            transform: scale(0.97) translateY(0);
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.15);
+            transition-duration: 0.08s;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.1);
+        }
+
+        .btn:disabled::before,
+        .btn:disabled::after {
+            animation: none;
+            display: none;
+        }
+
+        .btn i {
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== PROGRESS STEPS ===== */
+        .progress-steps {
+            display: none;
+            margin-top: 18px;
+            padding: 14px 10px;
+            background: #fafcff;
+            border-radius: 16px;
+            border: 2px solid #e8f5e9;
+            animation: fadeSlide 0.35s ease;
+        }
+
+        .progress-steps.show {
+            display: block;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            margin-bottom: 2px;
+            transition: opacity 0.3s ease, background 0.3s ease;
+            opacity: 0.4;
+        }
+
+        .step-item.active {
+            opacity: 1;
+            background: rgba(76, 175, 80, 0.07);
+        }
+
+        .step-item.done {
+            opacity: 1;
+        }
+
+        .step-item .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e8edf5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #7a8aa8;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .step-item.active .step-icon {
+            background: #4CAF50;
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(76, 175, 80, 0.25);
+            animation: pulse-icon 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .step-item.done .step-icon {
+            background: #4CAF50;
+            color: #fff;
+            transform: scale(1);
+        }
+
+        .step-item .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4CAF50;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+        }
+
+        .step-item .step-status {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 500;
+            color: #7a8aa8;
+            transition: color 0.3s ease;
+        }
+
+        .step-item.active .step-status {
+            color: #4CAF50;
+        }
+
+        .step-item.done .step-status {
+            color: #4CAF50;
+        }
+
+        /* ===== RETRY INFO ===== */
+        .retry-info {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #fff8e1;
+            border-radius: 12px;
+            border: 1px solid #ffe082;
+            font-size: 12px;
+            color: #e65100;
+            font-weight: 500;
+            text-align: center;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .retry-info.show {
+            display: block;
+        }
+
+        .retry-info i {
+            margin-right: 6px;
+        }
+
+        /* ===== RESULT ===== */
+        .result {
+            display: none;
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 16px;
+            text-align: center;
+            background: #fafcff;
+            border: 2px solid #f0f4ff;
+            min-height: 70px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .result.show {
+            display: block;
+            animation: resultIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes resultIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .result img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            border: 1px solid #f0f4ff;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .result img:hover {
+            transform: scale(1.01);
+        }
+
+        .result .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .result .actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            background: #1a73e8;
+            color: #ffffff;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.15);
+        }
+
+        .result .actions a:hover {
+            background: #1557b0;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.2);
+        }
+
+        .result .actions a:active {
+            transform: scale(0.95);
+        }
+
+        .result .actions a i {
+            font-size: 13px;
+        }
+
+        .result .error-text {
+            color: #c62828;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        .result .warning-text {
+            color: #1a73e8;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        .result .info-text {
+            color: #1a73e8;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: center;
+            padding: 8px 0;
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+        }
+
+        /* LABEL EMOJI DIHAPUS - WARNA BIRU */
+        .result .info-label {
+            font-size: 11px;
+            color: #1a73e8;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .result .info-text .highlight {
+            color: #1a73e8;
+            font-weight: 700;
+            background: rgba(26, 115, 232, 0.08);
+            padding: 2px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .result .success-text {
+            color: #2e7d32;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* ===== SPINNER ===== */
+        .spinner {
+            display: inline-block;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ===== NOTE ===== */
+        .note {
+            font-size: 10px;
+            color: #b0bedb;
+            margin-top: 18px;
+            text-align: center;
+            line-height: 1.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .note .success {
+            color: #1a73e8;
+            font-weight: 600;
+        }
+
+        .note .warning {
+            color: #e65100;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+                max-width: 100%;
+                border-radius: 24px;
+            }
+
+            .header h1 { font-size: 18px; }
+            .header .icon { width: 44px; height: 44px; font-size: 20px; border-radius: 14px; }
+            .form-group textarea { min-height: 110px; font-size: 14px; padding: 12px 14px; }
+            .btn { padding: 14px; font-size: 14px; }
+            .splash-icon { width: 64px; height: 64px; font-size: 28px; }
+            .splash-title { font-size: 22px; }
+            .step-item .step-label { font-size: 11px; }
+            .result .actions a { padding: 8px 16px; font-size: 11px; }
+            .result .info-text { font-size: 12px; }
+        }
+
+        @media (max-width: 400px) {
+            .container { padding: 14px 12px; }
+            .header .icon { width: 38px; height: 38px; font-size: 16px; }
+            .header h1 { font-size: 16px; }
+            .btn { font-size: 12px; padding: 12px; }
+            .result { padding: 12px; }
+            .result .info-text { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== SPLASH SCREEN ===== -->
+    <div class="splash-screen" id="splash">
+        <div class="splash-icon">
+            <i class="fas fa-font"></i>
+        </div>
+        <div class="splash-title">ASISBRAT</div>
+        <div class="splash-sub"></div>
+        <div class="splash-loader"></div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="icon">
+                <i class="fas fa-font"></i>
+            </div>
+            <div>
+                <h1>ASISBRAT</h1>
+                <p>Buat teks gaya gambar</p>
+            </div>
+        </div>
+
+        <!-- API KEY STATUS -->
+        <div class="api-status" id="api-status">
+            <i class="fas fa-check-circle"></i>
+            <span>Status: <strong>Terkoneksi</strong></span>
+        </div>
+
+        <!-- FORM -->
+        <div class="form-group">
+            <label for="brat-text"><i class="fas fa-pencil-alt" style="margin-right:6px;"></i> Teks</label>
+            <textarea id="brat-text" placeholder="I'M KAY" rows="3">HALO WORD !</textarea>
+            <div id="emoji-warning" class="emoji-warning" style="display:none;">Emoji tidak didukung akan dihapus otomatis</div>
+        </div>
+
+        <button class="btn" id="generate-btn" onclick="generateBrat()">
+            <i class="fas fa-wand-magic-sparkles"></i> <span>Generate</span>
+        </button>
+
+        <!-- PROGRESS STEPS -->
+        <div class="progress-steps" id="progress-steps">
+            <div class="step-item" data-step="1">
+                <div class="step-icon"><i class="fas fa-pencil-alt"></i></div>
+                <span class="step-label">Membuat Teks</span>
+                <span class="step-status"></span>
+            </div>
+            <div class="step-item" data-step="2">
+                <div class="step-icon"><i class="fas fa-image"></i></div>
+                <span class="step-label">Membuat BACKGROUND</span>
+                <span class="step-status"></span>
+            </div>
+            <div class="step-item" data-step="3">
+                <div class="step-icon"><i class="fas fa-expand"></i></div>
+                <span class="step-label">Membuat Gambar lebih HD</span>
+                <span class="step-status"></span>
+            </div>
+            <div class="step-item" data-step="4">
+                <div class="step-icon"><i class="fas fa-upload"></i></div>
+                <span class="step-label">Mengirim ke Server</span>
+                <span class="step-status"></span>
+            </div>
+            <div class="step-item" data-step="5">
+                <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                <span class="step-label">Selesai</span>
+                <span class="step-status"></span>
+            </div>
+        </div>
+
+        <!-- RETRY INFO -->
+        <div class="retry-info" id="retry-info">
+            <i class="fas fa-rotate-left"></i>
+            <span>Mencoba ulang koneksi ke server... (Percobaan <span id="retry-count">1</span>/3)</span>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result" id="brat-result">
+            <div id="brat-result-content"></div>
+        </div>
+
+        <div class="note">
+            <span class="success"></span><br />
+            <span class="warning"></span>
+        </div>
+    </div>
+
+    <script>
+        // ========== SPLASH SCREEN ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('splash').classList.add('hide');
+            }, 1400);
+        });
+
+        // ========== KONFIGURASI ==========
+        const API_KEY = 'fcs_test_578724cda0dd46419e1f7510b5f872b41fb54ec5';
+        const API_URL = 'https://api.fazzcode.eu.cc/brat';
+        const MAX_RETRIES = 3;
+        const RETRY_DELAY = 1500;
+
+        // ========== ELEMEN ==========
+        const textEl = document.getElementById('brat-text');
+        const resultEl = document.getElementById('brat-result');
+        const contentEl = document.getElementById('brat-result-content');
+        const btnEl = document.getElementById('generate-btn');
+        const progressEl = document.getElementById('progress-steps');
+        const stepItems = progressEl.querySelectorAll('.step-item');
+        const apiStatusEl = document.getElementById('api-status');
+        const retryInfoEl = document.getElementById('retry-info');
+        const retryCountEl = document.getElementById('retry-count');
+        const emojiWarningEl = document.getElementById('emoji-warning');
+
+        // ========== FUNGSI HAPUS EMOJI ==========
+        function removeEmoji(text) {
+            return text.replace(/[\u{1F600}-\u{1F9FF}]|[\u{2600}-\u{27BF}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F700}-\u{1F77F}]|[\u{1F780}-\u{1F7FF}]|[\u{1F800}-\u{1F8FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{FE00}-\u{FEFF}]|[\u{2300}-\u{23FF}]|[\u{2B50}]|[\u{2700}-\u{27BF}]|[\u{1F000}-\u{1F02F}]/gu, '').trim();
+        }
+
+        // ========== API KEY VALIDATION ==========
+        function validateApiKey(key) {
+            return key && key.startsWith('fcs_test_') && key.length > 20;
+        }
+
+        // ========== PROGRESS STEPS ==========
+        function resetSteps() {
+            stepItems.forEach((el) => {
+                el.classList.remove('active', 'done');
+                const status = el.querySelector('.step-status');
+                status.textContent = '';
+            });
+            progressEl.classList.remove('show');
+            retryInfoEl.classList.remove('show');
+        }
+
+        function setStep(stepIndex, status) {
+            const el = stepItems[stepIndex - 1];
+            if (!el) return;
+            el.classList.remove('active', 'done');
+            if (status === 'active') {
+                el.classList.add('active');
+                el.querySelector('.step-status').textContent = '⟳';
+            } else if (status === 'done') {
+                el.classList.add('done');
+                el.querySelector('.step-status').textContent = '✓';
+            }
+        }
+
+        function animateSteps() {
+            return new Promise((resolve) => {
+                progressEl.classList.add('show');
+                let current = 0;
+                const total = 5;
+
+                function nextStep() {
+                    if (current > 0) {
+                        setStep(current, 'done');
+                    }
+                    current++;
+                    if (current <= total) {
+                        setStep(current, 'active');
+                        setTimeout(nextStep, 400);
+                    } else {
+                        stepItems.forEach(el => {
+                            el.classList.remove('active');
+                            el.classList.add('done');
+                            el.querySelector('.step-status').textContent = '✓';
+                        });
+                        resolve();
+                    }
+                }
+                nextStep();
+            });
+        }
+
+        // ========== FETCH WITH RETRY ==========
+        async function fetchWithRetry(url, retries = MAX_RETRIES) {
+            let lastError;
+            
+            for (let attempt = 1; attempt <= retries; attempt++) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 30000);
+                    
+                    const response = await fetch(url, {
+                        signal: controller.signal,
+                        headers: {
+                            'Accept': 'image/*, application/json',
+                            'Cache-Control': 'no-cache'
+                        }
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    return response;
+                    
+                } catch (error) {
+                    lastError = error;
+                    
+                    if (attempt < retries) {
+                        retryInfoEl.classList.add('show');
+                        retryCountEl.textContent = attempt;
+                        
+                        console.warn(`Retry ${attempt}/${retries} failed:`, error.message);
+                        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * attempt));
+                    } else {
+                        retryInfoEl.classList.remove('show');
+                        throw new Error(`Gagal setelah ${retries} percobaan: ${error.message}`);
+                    }
+                }
+            }
+            
+            throw lastError;
+        }
+
+        // ========== FUNGSI UTAMA ==========
+        async function generateBrat() {
+            resetSteps();
+            retryInfoEl.classList.remove('show');
+            
+            if (!validateApiKey(API_KEY)) {
+                apiStatusEl.className = 'api-status error';
+                apiStatusEl.style.display = 'flex';
+                apiStatusEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> <span>Error : API Key tidak valid !</span>';
+                showResult('error', 'Terjadi kesalahan konfigurasi Hubungi developer.');
+                return;
+            }
+
+            let text = textEl.value.trim();
+            const cleanText = removeEmoji(text);
+
+            if (!cleanText) {
+                showResult('warning', 'Teks hanya berisi emoji Mohon masukkan teks biasa');
+                return;
+            }
+
+            if (text !== cleanText) {
+                textEl.value = cleanText;
+                showResult('info', cleanText);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+
+            const url = `${API_URL}?text=${encodeURIComponent(cleanText)}&api_key=${encodeURIComponent(API_KEY)}`;
+            
+            console.log('Request URL:', url.replace(API_KEY, 'HIDDEN_KEY'));
+
+            btnEl.disabled = true;
+            btnEl.innerHTML = '<i class="fas fa-spinner spinner"></i> <span></span>';
+            showResult('loading', '');
+
+            await animateSteps();
+
+            try {
+                const response = await fetchWithRetry(url);
+                
+                const contentType = response.headers.get('content-type') || '';
+
+                if (contentType.includes('image/') || contentType.includes('octet-stream')) {
+                    const blob = await response.blob();
+
+                    if (blob.size < 200) {
+                        throw new Error('Response terlalu kecil Server mungkin mengembalikan error');
+                    }
+
+                    const imageUrl = URL.createObjectURL(blob);
+                    showResult('image', imageUrl);
+                    
+                } else {
+                    const textData = await response.text();
+                    let data;
+                    
+                    try {
+                        data = JSON.parse(textData);
+                    } catch (e) {
+                        throw new Error(`Response tidak valid: ${textData.substring(0, 100)}`);
+                    }
+
+                    if (data.success === false || data.status === false) {
+                        const errMsg = data.error?.message || data.message || data.error || 'Gagal memproses';
+                        throw new Error(errMsg);
+                    }
+
+                    let imageUrl = '';
+                    if (typeof data.result === 'string' && data.result.startsWith('http')) {
+                        imageUrl = data.result;
+                    } else if (data.url) {
+                        imageUrl = data.url;
+                    } else if (data.image) {
+                        imageUrl = data.image;
+                    } else if (data.data && typeof data.data === 'string' && data.data.startsWith('http')) {
+                        imageUrl = data.data;
+                    } else if (data.result?.url) {
+                        imageUrl = data.result.url;
+                    } else if (data.result?.image) {
+                        imageUrl = data.result.image;
+                    }
+
+                    if (imageUrl) {
+                        showResult('image', imageUrl);
+                    } else {
+                        throw new Error(`Tidak ditemukan URL gambar dalam response\nResponse : ${JSON.stringify(data, null, 2).substring(0, 300)}`);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    showResult('error', `gagal terhubung ke server\n${error.message}\n\nPastikan koneksi internet stabil dan coba lagi`);
+                } else if (error.message.includes('abort')) {
+                    showResult('error', `Timeout ! Server terlalu lama merespon\nCoba lagi dengan teks yang lebih pendek`);
+                } else {
+                    showResult('error', `${error.message}`);
+                }
+            }
+
+            btnEl.disabled = false;
+            btnEl.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> <span>Generate</span>';
+        }
+
+        // ========== FUNGSI TAMPILAN ==========
+        function showResult(type, data) {
+            resultEl.classList.add('show');
+
+            if (type === 'loading') {
+                contentEl.innerHTML = `
+                    <div style="padding:20px;color:#7a8aa8;text-transform:uppercase;letter-spacing:0.8px;font-weight:500;font-size:12px;">
+                        <i class="fas fa-spinner spinner" style="font-size:28px;display:block;margin-bottom:10px;color:#1a73e8;"></i>
+                        ${data || ''}
+                    </div>
+                `;
+                return;
+            }
+
+            if (type === 'warning') {
+                contentEl.innerHTML = `
+                    <div class="warning-text">
+                        <i class="fas fa-triangle-exclamation" style="margin-right:8px;"></i>
+                        ${data}
+                    </div>
+                `;
+                return;
+            }
+
+            if (type === 'info') {
+                // LABEL EMOJI DIHAPUS SEKARANG WARNA BIRU
+                contentEl.innerHTML = `
+                    <div class="info-text">
+                        <div class="info-label">EMOJI DIHAPUS OTOMATIS</div>
+                        <div style="font-weight:700;font-size:15px;color:#1a73e8;letter-spacing:0.5px;">
+                            "${data}"
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (type === 'error') {
+                contentEl.innerHTML = `
+                    <div class="error-text">
+                        <i class="fas fa-circle-exclamation" style="margin-right:8px;"></i>
+                        ${data}
+                    </div>
+                `;
+                return;
+            }
+
+            if (type === 'success') {
+                contentEl.innerHTML = `
+                    <div class="success-text">
+                        <i class="fas fa-check-circle" style="margin-right:8px;color:#2e7d32;"></i>
+                        ${data}
+                    </div>
+                `;
+                return;
+            }
+
+            if (type === 'image') {
+                const timestamp = Date.now();
+                contentEl.innerHTML = `
+                    <img src="${data}" alt="BRAT Result" loading="lazy" />
+                    <div class="actions">
+                        <a href="${data}" download="brat_${timestamp}.png">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                        <a href="${data}" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-external-link-alt"></i> Buka
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            contentEl.innerHTML = `<div>${data}</div>`;
+        }
+
+        // ========== CEK EMOJI SAAT KETIK ==========
+        textEl.addEventListener('input', function() {
+            const clean = removeEmoji(this.value);
+            if (this.value !== clean) {
+                emojiWarningEl.style.display = 'block';
+            } else {
+                emojiWarningEl.style.display = 'none';
+            }
+        });
+
+        // ========== ENTER + CTRL UNTUK GENERATE ==========
+        textEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                generateBrat();
+            }
+        });
+
+        // ========== INITIALIZE ==========
+        console.log('BRAT Maker Pro siap!');
+        console.log('API Key:', API_KEY.substring(0, 10) + '... (tersembunyi)');
+        console.log('Max Retries:', MAX_RETRIES);
+        
+        apiStatusEl.style.display = 'none';
+
+        async function testConnection() {
+            try {
+                const testUrl = `${API_URL}?text=test&api_key=${encodeURIComponent(API_KEY)}`;
+                const response = await fetch(testUrl, { 
+                    method: 'HEAD',
+                    signal: AbortSignal.timeout(5000)
+                });
+                if (response.ok) {
+                    console.log('Server connection OK');
+                }
+            } catch (e) {
+                console.warn('Server connection test failed:', e.message);
+            }
+        }
+        testConnection();
+    </script>
+
+</body>
+</html>
