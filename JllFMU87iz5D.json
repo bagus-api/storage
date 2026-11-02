@@ -1,0 +1,197 @@
+{
+  "judul_tes": "LBE - UTBK - Reading Comprehension (Online Discussions)",
+  "mata_pelajaran": "Bahasa Inggris",
+  "jenis_nilai": "irt",
+  "skala_nilai": {
+    "min": 200,
+    "max": 1000
+  },
+  "alokasi_waktu": 30,
+  "teks_bacaan": {
+    "teks1": "<p><em>Adapted from a real Reddit discussion. Usernames and dates are fictional; messages are faithful paraphrases, not verbatim quotations.</em></p><table class='question-table'><thead><tr><th style='width:25%'>User &amp; Date</th><th>Message</th></tr></thead><tbody><tr><td><strong>CuriousStudent</strong><br>April 7, 2025</td><td>I have had multiple professors using ChatGPT to respond to discussion posts, give revisions on papers, and critique projects. It's really obvious when they use it, and it's starting to rub me the wrong way. What are we paying for if professors aren't using their own education to revise and respond to us?</td></tr><tr><td><strong>PragmaticProf</strong><br>April 7, 2025</td><td>If it's good feedback that benefits you, why do you care? It's likely your professor is using ChatGPT for clarity after they type their input. It's not like they are scanning your paper in and having ChatGPT do the work.</td></tr><tr><td><strong>GenuineLearner</strong><br>April 8, 2025</td><td>Because if I want feedback from ChatGPT, I'll submit my paper to ChatGPT myself. I want genuine feedback from my professors, not AI. There have been cases where my full paper was submitted into ChatGPT and the feedback I received was fully AI-generated.</td></tr><tr><td><strong>ThoughtfulReader</strong><br>April 8, 2025</td><td>I think the issue isn't necessarily the tool itself, but how it's being used. If a professor is using it just to save time without adding their own input or context, that's a problem. It starts to feel transactional rather than educational. You can usually tell when something is AI-generated—it often lacks nuance and personalization.</td></tr><tr><td><strong>RealistRick</strong><br>April 9, 2025</td><td>Well at least you're getting feedback. In my business classes, the only feedback is whether your in-text citations are correct. Zero feedback on content—just if your references are correct. It is a total waste of time.</td></tr><tr><td><strong>HonestHana</strong><br>April 9, 2025</td><td>I had a professor who clearly ran my entire essay through ChatGPT before grading it—the feedback I got back was robotic and repeated the same phrases over and over. I reported it and got nowhere, so honestly I just stopped caring about that class.</td></tr><tr><td><strong>BalancedBea</strong><br>April 10, 2025</td><td>I think we need to separate two things: a professor using AI to draft the feedback (bad) versus using AI to polish their own written comments (understandable). The former erases the human element completely; the latter just saves a bit of typing time.</td></tr></tbody></table>",
+    "teks2": "<p><em>Adapted from a real Reddit discussion. Usernames and dates are fictional; messages are faithful paraphrases, not verbatim quotations.</em></p><table class='question-table'><thead><tr><th style='width:25%'>User &amp; Date</th><th>Message</th></tr></thead><tbody><tr><td><strong>VocabSeeker</strong><br>April 8, 2025</td><td>Wondering if you guys have suggestions about how to grow vocabulary? How did you manage to memorize words?</td></tr><tr><td><strong>AvidReader</strong><br>April 8, 2025</td><td>The key is reading a lot of books. If you want to improve your vocabulary, you have to make time to read books, magazines, articles, the daily news—content at your level +1 difficulty so you understand the <em>gist</em> using context. When you advance in reading, you don't necessarily have to memorize words. You encounter words often enough that it becomes spaced repetition.</td></tr><tr><td><strong>ListenerLearner</strong><br>April 8, 2025</td><td>You can also pick up words from listening. Try to listen for words that you already know to reinforce them. If you hear new words that come up frequently or seem interesting, look them up in a dictionary or translation app.</td></tr><tr><td><strong>AnkiFan</strong><br>April 9, 2025</td><td>If you're at the A0–A2 stage and only know around a hundred words, reading will feel like torture. You need to grow your vocabulary to at least 1,500–3,000 words. Anki or a similar spaced-repetition tool can help with that.</td></tr><tr><td><strong>FlashcardUser</strong><br>April 9, 2025</td><td>I really like the app Reword, which is basically a flashcard learning app. It has pre-set collections of words so there's no need to make your own flashcards. The cards have pictures, audio, and sample sentences. It's been helping a lot with my beginner Italian.</td></tr><tr><td><strong>MovieWatcherMia</strong><br>April 10, 2025</td><td>Honestly, watching the same movie three times with subtitles in my target language changed everything for me. First time for plot, second time for sounds, third time for new words. You'll be shocked how many words stick without ever opening a flashcard app.</td></tr><tr><td><strong>GrammarGuru</strong><br>April 10, 2025</td><td>Vocabulary without grammar is useless. You can know every word in a sentence and still misunderstand it if you don't understand how they fit together. Read grammar guides alongside vocabulary practice.</td></tr></tbody></table>",
+    "teks3": "<p><em>Adapted from a real Reddit discussion. Usernames and dates are fictional; messages are faithful paraphrases, not verbatim quotations.</em></p><table class='question-table'><thead><tr><th style='width:25%'>User &amp; Date</th><th>Message</th></tr></thead><tbody><tr><td><strong>StressedFinals</strong><br>July 22, 2024</td><td>Finals are coming up and I'm struggling to focus. What are your go-to strategies for staying concentrated during finals week?</td></tr><tr><td><strong>PomodoroPro</strong><br>July 22, 2024</td><td>I'm personally a Pomodoro kind of guy. I usually do a 30:5 split—work for 30 minutes, then chill for 5. It helps a lot with burnout since my finals study sessions are usually long, upwards of 6 hours. If the final is really difficult, I do a 1-hour:10-minute split.</td></tr><tr><td><strong>GroupStudier</strong><br>July 22, 2024</td><td>Another thing that helps a lot is studying in SMALL groups. I have one friend who is also CS and we always study together for finals. It helps when you are stuck, and teaching to someone else enhances my understanding.</td></tr><tr><td><strong>PlannerPatty</strong><br>July 23, 2024</td><td>Usually 1.5 weeks before finals I make a to-do list of things I need to do every day leading up to an exam. It includes reviewing homework, quizzes, old exams, taking practice exams, and midterm review notes. Spread it out over a week and you'll know it better.</td></tr><tr><td><strong>FearfulFocused</strong><br>July 23, 2024</td><td>I would always just use the fear of failing and having to pay for an extra semester to keep me focused. As for anxiety, I reassured myself that if I had truly done all I could, there was nothing more to be done.</td></tr><tr><td><strong>BurnoutBri</strong><br>July 24, 2024</td><td>I burned out badly last semester because I didn't take breaks. Now I set a rule: every 45 minutes I get up, walk around, drink water, no phone. It sounds small but it made a huge difference in how focused I felt by the end of the day.</td></tr><tr><td><strong>PodcastPete</strong><br>July 24, 2024</td><td>Honestly I just put on a two-hour 'study with me' YouTube video and match the host's pace. Something about seeing someone else working keeps me from wandering off. Weird, but it works for me.</td></tr></tbody></table>"
+  },
+  "soal": [
+    {
+      "id": 1,
+      "tipe": "pg",
+      "tingkat_kesulitan": 2,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks1",
+      "pertanyaan": "Which of the following is the issue stated at the beginning of the thread?",
+      "pilihan": [
+        "A. Using ChatGPT to give feedback on students' work",
+        "B. Requiring students to use ChatGPT for assignments",
+        "C. Banning all forms of AI from university classes",
+        "D. Replacing professors with automated grading systems",
+        "E. Teaching students how to code in business classes"
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "CuriousStudent membuka thread dengan kekhawatiran tentang profesor yang memakai ChatGPT untuk merespons diskusi dan memberi revisi. Opsi lain membahas hal yang tidak disebut di awal thread.",
+      "referensi": "https://www.reddit.com/r/UMGC/comments/1jt8c8b/profs_using_chatgpt/"
+    },
+    {
+      "id": 2,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks1",
+      "pertanyaan": "Who provides evidence of receiving fully AI-generated feedback on their paper?",
+      "pilihan": [
+        "A. CuriousStudent",
+        "B. PragmaticProf",
+        "C. GenuineLearner",
+        "D. ThoughtfulReader",
+        "E. RealistRick"
+      ],
+      "kunci_jawaban": 2,
+      "pembahasan": "GenuineLearner menyatakan ada kasus di mana makalahnya dimasukkan ke ChatGPT dan umpan balik yang diterima sepenuhnya dihasilkan AI—ini bukti pengalaman pribadi.",
+      "referensi": "https://www.reddit.com/r/UMGC/comments/1jt8c8b/profs_using_chatgpt/"
+    },
+    {
+      "id": 3,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks1",
+      "pertanyaan": "Who posts the least relevant answer to CuriousStudent's concern?",
+      "pilihan": [
+        "A. PragmaticProf",
+        "B. GenuineLearner",
+        "C. ThoughtfulReader",
+        "D. RealistRick",
+        "E. CuriousStudent"
+      ],
+      "kunci_jawaban": 3,
+      "pembahasan": "RealistRick justru membahas pengalaman pribadinya di kelas bisnis yang minim umpan balik konten, bukan menanggapi kekhawatiran tentang profesor yang memakai AI.",
+      "referensi": "https://www.reddit.com/r/UMGC/comments/1jt8c8b/profs_using_chatgpt/"
+    },
+    {
+      "id": 4,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks1",
+      "pertanyaan": "What is the tone of the thread?",
+      "pilihan": [
+        "A. Critical but thoughtful",
+        "B. Panicked and hopeless",
+        "C. Sarcastic and dismissive",
+        "D. Indifferent and distant",
+        "E. Strict and authoritative"
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Para pengguna mengkritisi penggunaan AI oleh profesor, tetapi juga menawarkan perspektif yang lebih seimbang (mis. membedakan drafting vs polishing), sehingga nadanya kritis namun tetap reflektif.",
+      "referensi": "https://www.reddit.com/r/UMGC/comments/1jt8c8b/profs_using_chatgpt/"
+    },
+    {
+      "id": 5,
+      "tipe": "pg",
+      "tingkat_kesulitan": 2,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks2",
+      "pertanyaan": "The word \"gist\" in AvidReader's post is closest in meaning to...",
+      "pilihan": [
+        "A. main idea",
+        "B. exact translation",
+        "C. difficult word",
+        "D. grammar rule",
+        "E. full text"
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Kata 'gist' merujuk pada inti atau gagasan pokok suatu teks, sehingga padanan terdekatnya adalah 'main idea'.",
+      "referensi": "https://www.reddit.com/r/languagelearning/comments/1ju13pl/any_recommendation_for_building_vocabulary/"
+    },
+    {
+      "id": 6,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks2",
+      "pertanyaan": "The purpose of AnkiFan's post is to...",
+      "pilihan": [
+        "A. argue that reading is useless for beginners",
+        "B. recommend a spaced-repetition tool for building a basic vocabulary foundation",
+        "C. explain why listening is more important than reading",
+        "D. suggest avoiding flashcards entirely",
+        "E. describe a mobile app for learning Italian"
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "AnkiFan menyarankan Anki atau alat spaced-repetition serupa untuk membantu pemula yang masih memiliki kosakata sangat terbatas.",
+      "referensi": "https://www.reddit.com/r/languagelearning/comments/1ju13pl/any_recommendation_for_building_vocabulary/"
+    },
+    {
+      "id": 7,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks2",
+      "pertanyaan": "What is the tone of the thread?",
+      "pilihan": [
+        "A. Encouraging",
+        "B. Critical",
+        "C. Hesitant",
+        "D. Amused",
+        "E. Judgemental"
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Para pengguna berbagi tips dan pengalaman sukses satu sama lain tanpa merendahkan cara belajar orang lain, sehingga nadanya mendukung/menyemangati.",
+      "referensi": "https://www.reddit.com/r/languagelearning/comments/1ju13pl/any_recommendation_for_building_vocabulary/"
+    },
+    {
+      "id": 8,
+      "tipe": "pg",
+      "tingkat_kesulitan": 2,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks3",
+      "pertanyaan": "Which of the following is the issue stated at the beginning of the thread?",
+      "pilihan": [
+        "A. Choosing the easiest subject for finals",
+        "B. Struggling to stay focused during finals preparation",
+        "C. Deciding whether to postpone an examination",
+        "D. Learning how to write longer answers",
+        "E. Selecting a new study group"
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "StressedFinals meminta strategi untuk tetap fokus saat belajar menjelang ujian akhir—ini adalah masalah utama yang memicu thread.",
+      "referensi": "https://www.reddit.com/r/UMD/comments/1e9g0sl/struggling_to_focus_during_finals_what_are_your/"
+    },
+    {
+      "id": 9,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks3",
+      "pertanyaan": "Who gave evidence on using a timer-based study method with specific work-to-break ratios?",
+      "pilihan": [
+        "A. StressedFinals",
+        "B. PomodoroPro",
+        "C. GroupStudier",
+        "D. PlannerPatty",
+        "E. BurnoutBri"
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "PomodoroPro menjelaskan pembagian waktu 30:5 (kerja 30 menit, istirahat 5 menit) dan varian 1 jam:10 menit untuk ujian yang lebih sulit.",
+      "referensi": "https://www.reddit.com/r/UMD/comments/1e9g0sl/struggling_to_focus_during_finals_what_are_your/"
+    },
+    {
+      "id": 10,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "keterangan": "Soal Modifikasi",
+      "teks_bacaan_ref": "teks3",
+      "pertanyaan": "What is the tone of the thread?",
+      "pilihan": [
+        "A. Panicked and hopeless",
+        "B. Collaborative and solution-oriented",
+        "C. Sarcastic and dismissive",
+        "D. Indifferent and distant",
+        "E. Strict and authoritative"
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "Meskipun StressedFinals mengaku kesulitan, respons lain berisi strategi konkret (Pomodoro, belajar kelompok, perencanaan, jeda teratur) sehingga nada thread bersifat kolaboratif dan berorientasi solusi.",
+      "referensi": "https://www.reddit.com/r/UMD/comments/1e9g0sl/struggling_to_focus_during_finals_what_are_your/"
+    }
+  ]
+}
