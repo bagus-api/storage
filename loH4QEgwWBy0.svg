@@ -1,0 +1,342 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 563" width="1080" height="563" role="img" aria-labelledby="judul deskripsi" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToyMjhmZjViZC05OWI0LTQ2ZDAtYTU0Yy1lNWQ4M2RjYjJmY2MAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaHy+9tEmP+11RViyqLbd3t8AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo0ODk1NjI1NS03MzIwLTRhM2EtODhiMi01MmEwM2FhOGQ5OGVscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoPhPbasJACJydDTtdRs/f7gAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg6Bs4j8g/0ldg0ktsTx+d02lYYGM9gqMvd26iiqxpdRukZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaNdfl0dh0mrhB2DyM0yHECcAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCAbivyUbGxjEqfvB/qTnmO+DZ/Gp1nV7a+8pGNm0fmeymRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjFZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjIyOGZmNWJkLTk5YjQtNDZkMC1hNTRjLWU1ZDgzZGNiMmZjYy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjM1YzY3MTYwLTJhYjMtNGJmMy1hOGYzLWZiZTM4ZTUxODhmYXJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDoGziPyD/SV2DSS2xPH53TaVhgYz2Coy93bqKKrGl1G6JjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggQKtMId4wywyPQfdzBLH3dSRoXYy6LR3pDue5jRzwBTKiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFgghVQXygCuj5CfHksL//kViI/mQ+e/dEsZ4xNMb34a7sB0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQJ2MzgKUeVRvknzFrNn3sz6lnyli/gL2SzZyesWpxn58CRGQYneIlC9gIqk+tXnf1peuKE+NkDzsBx0SiPh0UNo=</c2pa:manifest></metadata>
+  <title id="judul">Number Virtual</title>
+  <desc id="deskripsi">Number Virtual. Pilih negara, aplikasi, dan produk, lalu beli nomor untuk terima kode OTP. Animasi sebuah handphone terbentuk dari garis, lalu pilihan negara, aplikasi, dan produk tersambung ke layar hingga kode OTP masuk.</desc>
+
+  <defs>
+    <linearGradient id="gBadan" gradientUnits="userSpaceOnUse" x1="745" y1="108" x2="905" y2="456">
+      <stop offset="0" stop-color="#9A8CFF"/><stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="gIsi" gradientUnits="userSpaceOnUse" x1="745" y1="108" x2="905" y2="456">
+      <stop offset="0" stop-color="#1E2552"/><stop offset="1" stop-color="#0E1230"/>
+    </linearGradient>
+    <linearGradient id="gKaca" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/>
+    </linearGradient>
+    <radialGradient id="gGlow" gradientUnits="userSpaceOnUse" cx="825" cy="282" r="230">
+      <stop offset="0" stop-color="#7C5CFF" stop-opacity=".42"/><stop offset="1" stop-color="#7C5CFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gGlow2" gradientUnits="userSpaceOnUse" cx="939" cy="377" r="150">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity=".2"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gBubble" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6D5BFF"/><stop offset="1" stop-color="#4338CA"/>
+    </linearGradient>
+    <linearGradient id="gBtn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7C5CFF"/><stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="gGlobe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="gProduk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF6AA2"/><stop offset="1" stop-color="#7C5CFF"/>
+    </linearGradient>
+    <linearGradient id="gOk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34D399"/><stop offset="1" stop-color="#10B981"/>
+    </linearGradient>
+    <linearGradient id="gAksen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7C5CFF"/><stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+
+    <path id="kilau" d="M0-10C1-3 3-1 10 0C3 1 1 3 0 10C-1 3-3 1-10 0C-3-1-1-3 0-10Z"/>
+
+    <!-- Ikon aplikasi sederhana (66x66, berpusat di 0,0) -->
+    <g id="wa">
+      <rect x="-33" y="-33" width="66" height="66" rx="17" fill="#22C55E"/>
+      <circle cy="-1.5" r="16" fill="none" stroke="#fff" stroke-width="4"/>
+      <path d="M-14 9L-20 22L-6 17Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+      <path transform="translate(-7.2 -8.7) scale(.6)" fill="#fff" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </g>
+    <g id="tg">
+      <rect x="-33" y="-33" width="66" height="66" rx="17" fill="#2AABEE"/>
+      <path fill="#fff" d="M-18 -1L14 -14C16.5 -15 18 -13.5 17.3 -11L11.5 15.5C11 17.5 9 18 7.5 16.7L-0.5 10.5L-5.5 15.5C-7 17 -9 16 -8.8 14L-8 6L11 -9L-9.5 3L-17 1C-19 0.4 -19.5 -0.4 -18 -1Z"/>
+    </g>
+    <g id="fb">
+      <rect x="-33" y="-33" width="66" height="66" rx="17" fill="#1877F2"/>
+      <path fill="#fff" d="M2 21V3H9L10-4H2V-8.5C2-11 3.2-12 5.5-12H10.5V-18.5C9-18.8 6.5-19 4.5-19C-1.5-19-5-15.5-5-9V-4H-11V3H-5V21Z"/>
+    </g>
+
+    <!-- Bendera bulat (r=12, berpusat di 0,0) -->
+    <clipPath id="cp"><circle r="12"/></clipPath>
+    <g id="fl-id">
+      <g clip-path="url(#cp)"><rect x="-12" y="-12" width="24" height="12" fill="#EF4444"/><rect x="-12" y="0" width="24" height="12" fill="#fff"/></g>
+      <circle r="12" fill="none" stroke="#fff" stroke-opacity=".28"/>
+    </g>
+    <g id="fl-my">
+      <g clip-path="url(#cp)"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><rect x="-12" y="-12.00" width="24" height="1.71" fill="#DC2626"/><rect x="-12" y="-8.57" width="24" height="1.71" fill="#DC2626"/><rect x="-12" y="-5.14" width="24" height="1.71" fill="#DC2626"/><rect x="-12" y="-1.71" width="24" height="1.71" fill="#DC2626"/><rect x="-12" y="1.71" width="24" height="1.71" fill="#DC2626"/><rect x="-12" y="5.14" width="24" height="1.71" fill="#DC2626"/><rect x="-12" y="8.57" width="24" height="1.71" fill="#DC2626"/>
+        <rect x="-12" y="-12" width="14" height="13.7" fill="#1E3A8A"/>
+        <circle cx="-7" cy="-5.2" r="4.2" fill="#FACC15"/><circle cx="-5.8" cy="-5.2" r="3.4" fill="#1E3A8A"/>
+        <path d="M-1.80 -7.60L-1.21 -6.01L0.48 -5.94L-0.85 -4.89L-0.39 -3.26L-1.80 -4.20L-3.21 -3.26L-2.75 -4.89L-4.08 -5.94L-2.39 -6.01Z" fill="#FACC15"/>
+      </g>
+      <circle r="12" fill="none" stroke="#fff" stroke-opacity=".28"/>
+    </g>
+    <g id="fl-us">
+      <g clip-path="url(#cp)"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><rect x="-12" y="-12.00" width="24" height="1.85" fill="#DC2626"/><rect x="-12" y="-8.31" width="24" height="1.85" fill="#DC2626"/><rect x="-12" y="-4.62" width="24" height="1.85" fill="#DC2626"/><rect x="-12" y="-0.92" width="24" height="1.85" fill="#DC2626"/><rect x="-12" y="2.77" width="24" height="1.85" fill="#DC2626"/><rect x="-12" y="6.46" width="24" height="1.85" fill="#DC2626"/><rect x="-12" y="10.15" width="24" height="1.85" fill="#DC2626"/>
+        <rect x="-12" y="-12" width="13" height="12.9" fill="#1E40AF"/><circle cx="-9" cy="-9" r=".75" fill="#fff"/><circle cx="-9" cy="-5.5" r=".75" fill="#fff"/><circle cx="-9" cy="-2" r=".75" fill="#fff"/><circle cx="-5.5" cy="-9" r=".75" fill="#fff"/><circle cx="-5.5" cy="-5.5" r=".75" fill="#fff"/><circle cx="-5.5" cy="-2" r=".75" fill="#fff"/><circle cx="-2" cy="-9" r=".75" fill="#fff"/><circle cx="-2" cy="-5.5" r=".75" fill="#fff"/><circle cx="-2" cy="-2" r=".75" fill="#fff"/>
+      </g>
+      <circle r="12" fill="none" stroke="#fff" stroke-opacity=".28"/>
+    </g>
+  </defs>
+
+  <style>
+    text { font-family: Poppins, "Plus Jakarta Sans", Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+
+    /* ===== Teks: masuk satu kali ===== */
+    .judul { font-size: 100px; font-weight: 700; fill: #fff; letter-spacing: -1px; }
+    .sub { font-size: 32px; font-weight: 400; fill: #8B94AD; }
+    .tx { animation: teks .9s cubic-bezier(.2, .7, .2, 1) both; }
+    .t1 { animation-delay: .15s; } .t2 { animation-delay: .35s; }
+    .t3 { animation-delay: .95s; } .t4 { animation-delay: 1.15s; } .t5 { animation-delay: 1.35s; }
+    @keyframes teks { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+    .aksen { transform-box: fill-box; transform-origin: 0 50%; animation: aksen .8s ease-out .75s both; }
+    @keyframes aksen { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* ===== Ilustrasi: berulang tiap 14 detik =====
+       garis -> handphone -> negara -> aplikasi -> produk -> kode OTP masuk -> hilang -> ulang */
+    .isi { animation: isi 14s linear infinite; }
+    @keyframes isi { 0%, 86% { opacity: 1; } 92%, 100% { opacity: 0; } }
+    .po { transform-box: fill-box; transform-origin: center; }
+
+    .cahaya { transform-box: fill-box; transform-origin: center; animation: cahaya 14s ease-out infinite; }
+    @keyframes cahaya { 0%, 9% { opacity: 0; transform: scale(.6); } 16%, 100% { opacity: 1; transform: scale(1); } }
+    .napas { transform-box: fill-box; transform-origin: center; animation: napas 4.5s ease-in-out infinite alternate; }
+    @keyframes napas { from { transform: scale(.96); } to { transform: scale(1.06); } }
+
+    .hp { transform-box: fill-box; transform-origin: center; animation: getar 14s infinite; }
+    @keyframes getar {
+      0%, 36% { transform: rotate(0deg); }
+      37.2% { transform: rotate(-3deg); } 38.4% { transform: rotate(3deg); }
+      39.6% { transform: rotate(-2deg); } 40.8% { transform: rotate(1.5deg); }
+      42%, 100% { transform: rotate(0deg); }
+    }
+    .ekran { animation: ekran 14s ease-out infinite; }
+    @keyframes ekran { 0%, 11% { opacity: 0; } 14%, 100% { opacity: 1; } }
+
+    .kon { fill: none; stroke: #8B7CFF; stroke-width: 2.8; stroke-linecap: round; stroke-dasharray: 1; }
+    .ujung { fill: #22D3EE; }
+    .cek { fill: none; stroke: #fff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
+
+    .kaca { fill: url(#gKaca); stroke: #fff; stroke-opacity: .2; stroke-width: 1.5; }
+    .lab { font-size: 13px; font-weight: 700; fill: #fff; }
+    .ket { font-size: 11px; font-weight: 400; fill: #A3ACC9; }
+    .kecil { font-size: 11px; font-weight: 700; fill: #fff; }
+    .no { font-size: 11.5px; font-weight: 700; fill: #fff; }
+    .abu { font-size: 10px; font-weight: 400; fill: #D5D9FF; }
+    .dgt { font-size: 15px; font-weight: 700; fill: #fff; }
+    .btnt { font-size: 12px; font-weight: 700; fill: #fff; }
+
+    .ayun { animation: ayun 3.8s ease-in-out infinite; }
+    .y2 { animation-duration: 4.4s; animation-delay: -1s; }
+    .y3 { animation-duration: 4.1s; animation-delay: -2s; }
+    .y4 { animation-duration: 3.5s; animation-delay: -.6s; }
+    @keyframes ayun { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    .hitung { transform-box: fill-box; transform-origin: 0 50%; animation: hitung 8s linear infinite; }
+    @keyframes hitung { 0% { transform: scaleX(1); } 100% { transform: scaleX(.15); } }
+    .gelombang { animation: tombolnapas 2.2s ease-in-out infinite; }
+    @keyframes tombolnapas { 0%, 100% { opacity: 1; } 50% { opacity: .82; } }
+
+    .hiasan { transform-box: fill-box; transform-origin: center; animation: hiasan 14s infinite; }
+    @keyframes hiasan { 0%, 50% { opacity: 0; transform: scale(0); } 55%, 100% { opacity: 1; transform: scale(1); } }
+    .kilau { transform-box: fill-box; transform-origin: center; animation: kilau 2.6s ease-in-out infinite; }
+    .l2 { animation-delay: -.9s; } .l3 { animation-delay: -1.7s; }
+    @keyframes kilau { 0%, 100% { transform: scale(.5); opacity: .35; } 50% { transform: scale(1.15); opacity: .95; } }
+
+.k1{animation:k1 14s ease-in-out infinite} .c1{animation:c1 14s infinite}
+.k2{animation:k2 14s ease-in-out infinite} .c2{animation:c2 14s infinite}
+.k3{animation:k3 14s ease-in-out infinite} .c3{animation:c3 14s infinite}
+.k4{animation:k4 14s ease-in-out infinite} .c4{animation:c4 14s infinite}
+.num{animation:num 14s ease-out infinite} .bub{animation:bub 14s infinite} .btn{animation:btn 14s ease-out infinite} .cek{animation:cek 14s ease-out infinite}
+.dg0{animation:dg0 14s infinite}
+.dg1{animation:dg1 14s infinite}
+.dg2{animation:dg2 14s infinite}
+.dg3{animation:dg3 14s infinite}
+.dg4{animation:dg4 14s infinite}
+.dg5{animation:dg5 14s infinite}
+.lm{animation:lm 14s ease-out infinite} .lu{animation:lu 14s ease-out infinite} .li{animation:li 14s ease-out infinite}
+.rm{animation:rm 14s infinite} .ru{animation:ru 14s infinite} .ri{animation:ri 14s infinite}
+.li,.lm,.ri,.rm{opacity:0} .ring{fill:none;stroke:#fff;stroke-width:2}
+
+@keyframes k1{0%,12.6%{stroke-dashoffset:1;opacity:0}13%{stroke-dashoffset:1;opacity:1}17%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes c1{0%,16%{transform:scale(0.7);opacity:0}17.75%{transform:scale(1.08);opacity:1}19.5%,100%{transform:scale(1);opacity:1}}
+@keyframes k2{0%,20.6%{stroke-dashoffset:1;opacity:0}21%{stroke-dashoffset:1;opacity:1}25%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes c2{0%,24%{transform:scale(0.7);opacity:0}25.75%{transform:scale(1.08);opacity:1}27.5%,100%{transform:scale(1);opacity:1}}
+@keyframes k3{0%,28.6%{stroke-dashoffset:1;opacity:0}29%{stroke-dashoffset:1;opacity:1}33%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes c3{0%,32%{transform:scale(0.7);opacity:0}33.75%{transform:scale(1.08);opacity:1}35.5%,100%{transform:scale(1);opacity:1}}
+@keyframes k4{0%,43.6%{stroke-dashoffset:1;opacity:0}44%{stroke-dashoffset:1;opacity:1}48%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes c4{0%,47%{transform:scale(0.7);opacity:0}48.75%{transform:scale(1.08);opacity:1}50.5%,100%{transform:scale(1);opacity:1}}
+@keyframes num{0%,19.5%{transform:translate(-14px,0px);opacity:0}22.5%,100%{transform:translate(0,0);opacity:1}}
+@keyframes bub{0%,27%{transform:scale(0.85);opacity:0}28.75%{transform:scale(1.04);opacity:1}30.5%,100%{transform:scale(1);opacity:1}}
+@keyframes dg0{0%,36.0%{transform:scale(0);opacity:0}37.1%{transform:scale(1.3);opacity:1}38.2%,100%{transform:scale(1);opacity:1}}
+@keyframes dg1{0%,37.6%{transform:scale(0);opacity:0}38.7%{transform:scale(1.3);opacity:1}39.8%,100%{transform:scale(1);opacity:1}}
+@keyframes dg2{0%,39.2%{transform:scale(0);opacity:0}40.3%{transform:scale(1.3);opacity:1}41.4%,100%{transform:scale(1);opacity:1}}
+@keyframes dg3{0%,40.8%{transform:scale(0);opacity:0}41.9%{transform:scale(1.3);opacity:1}43.0%,100%{transform:scale(1);opacity:1}}
+@keyframes dg4{0%,42.4%{transform:scale(0);opacity:0}43.5%{transform:scale(1.3);opacity:1}44.6%,100%{transform:scale(1);opacity:1}}
+@keyframes dg5{0%,44.0%{transform:scale(0);opacity:0}45.1%{transform:scale(1.3);opacity:1}46.2%,100%{transform:scale(1);opacity:1}}
+@keyframes btn{0%,46%{transform:translate(0px,10px);opacity:0}49%,100%{transform:translate(0,0);opacity:1}}
+@keyframes cek{0%,48.6%{stroke-dashoffset:1;opacity:0}49%{stroke-dashoffset:1;opacity:1}51%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes li{0%,19.5%{opacity:0;transform:translateY(6px)}20.5%,23%{opacity:1;transform:translateY(0)}24%,100%{opacity:0;transform:translateY(-6px)}}
+@keyframes lm{0%,23.5%{opacity:0;transform:translateY(6px)}24.5%,27%{opacity:1;transform:translateY(0)}28%,100%{opacity:0;transform:translateY(-6px)}}
+@keyframes lu{0%,27.5%{opacity:0;transform:translateY(6px)}28.5%,100%{opacity:1;transform:translateY(0)}}
+@keyframes ri{0%,19.4%{opacity:0}19.5%,23.5%{opacity:1}24%,100%{opacity:0}}
+@keyframes rm{0%,23.5%{opacity:0}24%,27.5%{opacity:1}28%,100%{opacity:0}}
+@keyframes ru{0%,27.5%{opacity:0}28%,100%{opacity:1}}
+
+    /* Kurangi gerak: tampilkan hasil akhir tanpa animasi */
+    @media (prefers-reduced-motion: no-preference) { .badan-statis { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .badan-anim { display: none; }
+    }
+  </style>
+
+  <!-- ===== Teks ===== -->
+  <g>
+    <text class="judul tx t1" x="60" y="158">Number</text>
+    <text class="judul tx t2" x="60" y="262">Virtual</text>
+    <rect class="aksen" x="60" y="292" width="110" height="6" rx="3" fill="url(#gAksen)"/>
+    <text class="sub tx t3" x="60" y="372">Pilih negara, aplikasi, dan</text>
+    <text class="sub tx t4" x="60" y="418">produk, lalu beli nomor</text>
+    <text class="sub tx t5" x="60" y="464">untuk terima kode OTP.</text>
+  </g>
+
+  <!-- ===== Ilustrasi ===== -->
+  <g class="isi">
+    <g transform="translate(785 282) scale(1.45) translate(-825 -282)"><g class="cahaya"><g class="napas">
+      <circle cx="825" cy="282" r="230" fill="url(#gGlow)"/>
+      <circle cx="939" cy="377" r="150" fill="url(#gGlow2)"/>
+    </g></g></g>
+
+    <!-- Penghubung -->
+    <path class="kon k1" pathLength="1" d="M637 125C655 125 651 155 669 155"/>
+    <path class="kon k2" pathLength="1" d="M930 190C914 190 917 261 901 261"/>
+    <path class="kon k3" pathLength="1" d="M637 400C655 400 651 308 669 308"/>
+    <path class="kon k4" pathLength="1" d="M930 420C914 420 917 319 901 319"/>
+
+    <!-- Handphone: garis vertikal tumbuh, lalu melebar jadi handphone -->
+    <g transform="translate(785 282) scale(1.45) translate(-825 -282)">
+    <g class="hp">
+      <rect class="badan-anim" x="745" y="108" width="160" height="348" rx="32" fill="url(#gIsi)" stroke="url(#gBadan)" stroke-width="3">
+        <animate attributeName="y" dur="14s" repeatCount="indefinite" calcMode="spline"
+                 keyTimes="0;0.02;0.06;0.92;0.94;1" values="282;282;108;108;282;282"
+                 keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1;0.6 0 0.4 1;0 0 1 1"/>
+        <animate attributeName="height" dur="14s" repeatCount="indefinite" calcMode="spline"
+                 keyTimes="0;0.02;0.06;0.92;0.94;1" values="0.01;0.01;348;348;0.01;0.01"
+                 keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1;0.6 0 0.4 1;0 0 1 1"/>
+        <animate attributeName="x" dur="14s" repeatCount="indefinite" calcMode="spline"
+                 keyTimes="0;0.06;0.10;0.115;0.92;0.94;1" values="825;825;741;745;745;825;825"
+                 keySplines="0 0 1 1;0.3 0 0.2 1;0.4 0 0.6 1;0 0 1 1;0.6 0 0.4 1;0 0 1 1"/>
+        <animate attributeName="width" dur="14s" repeatCount="indefinite" calcMode="spline"
+                 keyTimes="0;0.06;0.10;0.115;0.92;0.94;1" values="0.01;0.01;168;160;160;0.01;0.01"
+                 keySplines="0 0 1 1;0.3 0 0.2 1;0.4 0 0.6 1;0 0 1 1;0.6 0 0.4 1;0 0 1 1"/>
+      </rect>
+      <rect class="badan-statis" x="745" y="108" width="160" height="348" rx="32" fill="url(#gIsi)" stroke="url(#gBadan)" stroke-width="3"/>
+
+      <g class="ekran">
+        <rect x="754" y="117" width="142" height="330" rx="24" fill="#0B0F26"/>
+        <rect x="805" y="126" width="40" height="8" rx="4" fill="#1B2040"/>
+        <text class="kecil" x="764" y="160">Kotak masuk</text>
+        <circle cx="880" cy="156" r="5" fill="#FF6AA2"/>
+
+        <!-- Nomor -->
+        <g class="num">
+          <rect x="764" y="172" width="122" height="46" rx="14" fill="#1B2040" stroke="#fff" stroke-opacity=".08"/>
+          <g class="lyr lm"><use href="#fl-my" transform="translate(784 195) scale(.75)"/><text class="no" x="798" y="194">+60 12-3456</text></g>
+          <g class="lyr lu"><use href="#fl-us" transform="translate(784 195) scale(.75)"/><text class="no" x="798" y="194">+1 415-5550</text></g>
+          <g class="lyr li"><use href="#fl-id" transform="translate(784 195) scale(.75)"/><text class="no" x="798" y="194">+62 812-3456</text></g>
+          <circle cx="801" cy="206" r="3" fill="#34D399"/>
+          <text class="ket" x="808" y="209.5" style="font-size:9.5px">Nomor aktif</text>
+        </g>
+
+        <!-- Pesan OTP -->
+        <g class="po bub">
+          <rect x="764" y="232" width="122" height="124" rx="18" fill="url(#gBubble)"/>
+          <use href="#wa" transform="translate(783 252) scale(.3)"/>
+          <text class="kecil" x="796" y="256" style="font-size:10.5px">WhatsApp</text>
+          <text class="abu" x="774" y="282">Kode OTP kamu</text>
+        <rect x="774.0" y="294" width="14" height="28" rx="5" fill="#fff" opacity=".16"/>
+        <rect x="791.6" y="294" width="14" height="28" rx="5" fill="#fff" opacity=".16"/>
+        <rect x="809.2" y="294" width="14" height="28" rx="5" fill="#fff" opacity=".16"/>
+        <rect x="826.8" y="294" width="14" height="28" rx="5" fill="#fff" opacity=".16"/>
+        <rect x="844.4" y="294" width="14" height="28" rx="5" fill="#fff" opacity=".16"/>
+        <rect x="862.0" y="294" width="14" height="28" rx="5" fill="#fff" opacity=".16"/>
+        <g class="po dg0"><text class="dgt" x="781.0" y="313" text-anchor="middle">4</text></g>
+        <g class="po dg1"><text class="dgt" x="798.6" y="313" text-anchor="middle">8</text></g>
+        <g class="po dg2"><text class="dgt" x="816.2" y="313" text-anchor="middle">2</text></g>
+        <g class="po dg3"><text class="dgt" x="833.8" y="313" text-anchor="middle">9</text></g>
+        <g class="po dg4"><text class="dgt" x="851.4" y="313" text-anchor="middle">1</text></g>
+        <g class="po dg5"><text class="dgt" x="869.0" y="313" text-anchor="middle">7</text></g>
+          <rect x="774" y="336" width="102" height="4" rx="2" fill="#fff" opacity=".22"/>
+          <rect class="hitung" x="774" y="336" width="102" height="4" rx="2" fill="#22D3EE"/>
+        </g>
+
+        <!-- Tombol -->
+        <g class="btn">
+          <rect class="gelombang" x="764" y="372" width="122" height="34" rx="17" fill="url(#gBtn)"/>
+          <text class="btnt" x="825" y="393" text-anchor="middle">Salin kode</text>
+        </g>
+        <rect x="803" y="430" width="44" height="4" rx="2" fill="#fff" opacity=".3"/>
+      </g>
+    </g>
+
+    </g>
+
+    <!-- Ujung penghubung di tepi handphone -->
+    <circle class="ujung po k1" cx="669" cy="155" r="5"/>
+    <circle class="ujung po k2" cx="901" cy="261" r="5"/>
+    <circle class="ujung po k3" cx="669" cy="308" r="5"/>
+    <circle class="ujung po k4" cx="901" cy="319" r="5"/>
+
+    <!-- Chip 1: Negara -->
+    <g transform="translate(-83 -24)"><g class="po c1"><g class="ayun">
+      <rect class="kaca" x="585" y="122" width="135" height="54" rx="18"/>
+      <use href="#fl-id" transform="translate(609 142)"/>
+      <use href="#fl-my" transform="translate(639 142)"/>
+      <use href="#fl-us" transform="translate(669 142)"/>
+      <circle class="ring ri" cx="609" cy="142" r="14.5"/>
+      <circle class="ring rm" cx="639" cy="142" r="14.5"/>
+      <circle class="ring ru" cx="669" cy="142" r="14.5"/>
+      <text class="lab" x="597" y="170">Negara</text>
+    </g></g></g>
+
+    <!-- Chip 2: Aplikasi -->
+    <g transform="translate(0 -7)"><g class="po c2"><g class="ayun y2">
+      <rect class="kaca" x="930" y="170" width="135" height="54" rx="18"/>
+      <use href="#wa" transform="translate(954 190) scale(.36)"/>
+      <use href="#tg" transform="translate(984 190) scale(.36)"/>
+      <use href="#fb" transform="translate(1014 190) scale(.36)"/>
+      <text class="lab" x="942" y="218">Aplikasi</text>
+    </g></g></g>
+
+    <!-- Chip 3: Produk -->
+    <g transform="translate(-83 21)"><g class="po c3"><g class="ayun y3">
+      <rect class="kaca" x="585" y="352" width="135" height="54" rx="18"/>
+      <g transform="translate(611 379)">
+        <circle r="15" fill="url(#gProduk)"/>
+        <g fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M-6-3H6L5 7Q5 8 4 8H-4Q-5 8-5 7Z"/><path d="M-3-3V-5A3 3 0 0 1 3-5V-3"/>
+        </g>
+      </g>
+      <text class="lab" x="633" y="375">Produk</text>
+      <text class="ket" x="633" y="391">Rp 2.500</text>
+    </g></g></g>
+
+    <!-- Chip 4: OTP masuk -->
+    <g transform="translate(0 21)"><g class="po c4"><g class="ayun y4">
+      <rect class="kaca" x="930" y="372" width="135" height="54" rx="18"/>
+      <g transform="translate(956 399)">
+        <circle r="15" fill="url(#gOk)"/>
+        <path class="cek" pathLength="1" d="M-6 0L-2 4.5L7-5"/>
+      </g>
+      <text class="lab" x="978" y="395">Terkirim</text>
+      <text class="ket" x="978" y="411">Kode masuk</text>
+    </g></g></g>
+
+    <!-- Kilau -->
+    <g class="hiasan"><g transform="translate(610 70) scale(.8)"><use class="kilau" href="#kilau" fill="#22D3EE"/></g></g>
+    <g class="hiasan"><g transform="translate(1040 105) scale(.6)"><use class="kilau l2" href="#kilau" fill="#9A8CFF"/></g></g>
+    <g class="hiasan"><g transform="translate(590 262) scale(.7)"><use class="kilau l3" href="#kilau" fill="#FF6AA2"/></g></g>
+    <g class="hiasan"><g transform="translate(1040 310) scale(.7)"><use class="kilau" href="#kilau" fill="#9A8CFF"/></g></g>
+    <g class="hiasan"><g transform="translate(610 495) scale(.6)"><use class="kilau l2" href="#kilau" fill="#22D3EE"/></g></g>
+    <g class="hiasan"><g transform="translate(990 505) scale(.8)"><use class="kilau l3" href="#kilau" fill="#FF6AA2"/></g></g>
+  </g>
+</svg>
