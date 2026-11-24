@@ -1,0 +1,355 @@
+{
+  "judul_tes": "Pengetahuan dan Pemahaman Umum GO (4)",
+  "mata_pelajaran": "Pengetahuan dan Pemahaman Umum (PPU)",
+  "alokasi_waktu": 17,
+  "jenis_nilai": "irt",
+  "skala_nilai": { "min": 200, "max": 800 },
+  "mode_feedback": "instant",
+  "teks_bacaan": {
+    "bacaan_garangan": "(1) Garangan merupakan mamalia kecil berbadan ramping dengan moncong runcing dan kaki pendek. (2) Di Indonesia, garangan jawa (<i>Herpestes javanicus</i>) bisa ditemukan di Jawa, Bali, dan beberapa pulau lain. (3) Secara keseluruhan, ada sekitar 34 spesies garangan yang tersebar di Afrika, Asia Selatan, dan Semenanjung Iberia meskipun ukuran atau habitatnya berbeda-beda. (4) Selain itu, hewan ini memiliki penampilan yang memang tidak mengesankan. (5) Garangan punya kebiasaan yang sulit dipercaya, yaitu garangan sering berburu kobra. (6) Pada sebagian besar hewan pemangsa seukuran garangan, satu gigitan kobra yang sudah cukup untuk mengakhiri segalanya. (7) Akan tetapi, proses tersebut tidak berlaku bagi garangan. (8) Hal tersebut disebabkan oleh tubuh garangan mengembangkan perubahan kecil pada protein tertentu di sel ototnya. (9) Perubahan itu membuat toksin kobra kehilangan tempat untuk menempel. (10) Racunnya masuk ke tubuh, tetapi tidak bisa bekerja.<br><br><i>(diadaptasi dari https://mongabay.co.id)</i>",
+    "bacaan_joko_kaha": "(1) Tradisi adat <i>joko kaha</i> yang bermakna 'injak tanah' tercatat sebagai kekayaan intelektual komunal (KIK) yang dianakemaskan negara. (2) Tradisi tersebut tercatat sebagai ekspresi budaya tradisional (EBT) berdasarkan data dari Direktorat Jenderal Kekayaan Intelektual (DJKI) Kemenkum atas permohonan dari Pemerintah Kota Ternate. (3) Tradisi ini merupakan bentuk penghormatan, sambutan, dan penerimaan tamu agung, terutama bagi yang pertama kali menaruh mata di Ternate, Maluku Utara. (4) Tradisi tersebut sering kali ditampilkan dalam acara kenegaraan untuk menyambut tamu kakap. (5) Dalam ritual ini, empat putra disebut <i>ngongare</i>, sedangkan empat putri disebut <i>jojaro</i>. (6) Hal ini menjadi cap penghormatan kepada tamu, terutama para pemimpin negara atau kerajaan yang datang ke Ternate.<br><br><i>(diadaptasi dari https://rri.co.id)</i>",
+    "bacaan_generasi_stroberi": "(1) Istilah <i>generasi stroberi</i> bukan berasal dari Indonesia. (2) Istilah tersebut menganalogikan anak muda dengan buah stroberi yang tampak menarik, tetapi mudah rusak ketika mendapat tekanan. (3) Istilah tersebut dipopulerkan Rhenald Kasali untuk menggambarkan generasi muda yang kreatif dan kaya ide, tetapi merasa kecil hati saat berhadapan dengan kompetisi dan ketidakpastian. (4) Anggapan tersebut kemudian memicu perdebatan di media sosial, terutama pada angkatan yang lebih berumur.<br><br>(5) Sejumlah aktivis kesehatan mental menilai bahwa cap mental lemah terhadap generasi stroberi mencerminkan perbedaan cara antargenerasi dalam menghadapi tekanan psikologis. (6) Pada generasi sebelumnya, persoalan kesehatan mental cenderung jarang dibicarakan secara terbuka karena keterbatasan pemahaman dan ruang untuk mengungkapkan perasaan. (7) Sementara itu, generasi sekarang makin terbuka dalam membicarakan kesehatan mental dan mencari bantuan ketika mengalami kesulitan dalam penyesuaian diri.<br><br><i>(diadaptasi dari https://www.kompasiana.com)</i>",
+    "bacaan_bi_suku_bunga": "(1) Bank Indonesia (BI) menaikkan suku bunga sampai tiga kali dalam kurun waktu sebulan hingga mencapai 5,75%. (2) Lonjakan kenaikan suku bunga ini menjadi kenaikan yang paling agresif dalam sebulan selama beberapa tahun terakhir. (3) BI beralasan bahwa kenaikan ini demi menjaga stabilitas rupiah di tengah ketidakpastian global. (4) Langkah agresif BI ini dinilai akan ampuh [...] rupiah dan [...] tingkat inflasi agar harga bahan baku lebih stabil. (5) Berdasarkan data Badan Pusat Statistik, inflasi pada Mei 2026 naik 3,08% dengan tercatat pendorong utama kenaikan harga makanan, minuman, dan tembakau. (6) Namun, di sisi lain, muncul kekhawatiran bahwa langkah agresif BI akan memicu kenaikan beban bunga kredit cicilan masyarakat dan pemilik usaha. (7) Kekhawatiran muncul dari kredit pemilikan rumah (KPR) dengan <i>floating rate</i>, kredit usaha rakyat (KUR), dan kredit kendaraan bermotor (KKB) yang akan menjadi lebih mahal.<br><br><i>(diadaptasi dari https://katadata.co.id)</i>"
+  },
+  "soal": [
+    {
+      "id": 31,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Teks tersebut sebenarnya terdiri atas dua paragraf. Penguraian yang tepat agar menjadi paragraf yang baik adalah",
+      "pilihan": [
+        "(1, 2, 3) dan (4, 5, 6, 7, 8, 9, 10)",
+        "(1, 2, 3, 4) dan (5, 6, 7, 8, 9, 10)",
+        "(1, 2, 3, 4, 5) dan (6, 7, 8, 9, 10)",
+        "(1, 2, 3, 4, 5, 6) dan (7, 8, 9, 10)",
+        "(1, 2, 3, 4, 5, 6, 7) dan (8, 9, 10)"
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "Paragraf yang baik memiliki satu gagasan utama yang padu. Kalimat (1), (2), (3), dan (4) membahas deskripsi umum, ciri fisik, serta persebaran geografis garangan. Sementara itu, kalimat (5) hingga (10) beralih membahas gagasan baru, yaitu kebiasaan unik garangan berburu ular kobra dan mekanisme kekebalan tubuhnya terhadap racun kobra. Oleh karena itu, penguraian paragraf yang tepat adalah (1, 2, 3, 4) dan (5, 6, 7, 8, 9, 10)."
+    },
+    {
+      "id": 32,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Bentuk <i>per-an</i> pada kata <i>perubahan</i> (kalimat 8) memiliki kesamaan makna dengan bentuk <i>per-an</i> pada kalimat",
+      "pilihan": [
+        "Setiap pergantian pasal-pasal dalam kontrak kerja sama ini wajib disepakati oleh kedua belah pihak.",
+        "Para wisatawan mengunjungi peristirahatan di tepi jalan untuk melepas lelah.",
+        "Simulasi evakuasi bencana gempa bumi wajib diikuti oleh seluruh penghuni yang menempati kompleks perkantoran tersebut.",
+        "Penduduk setempat bergotong royong membersihkan perkuburan menjelang bulan Ramadan.",
+        "Pembangunan jembatan layang (<i>flyover</i>) di atas persimpangan menjadi solusi strategis untuk memisahkan arus lalu lintas lokal dan arus transit regional."
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Makna imbuhan termasuk makna gramatikal, yaitu makna yang bergantung pada konteks kata dan kalimat. Makna imbuhan <i>per-an</i> adalah menyatakan hal atau keadaan, menyatakan hasil, menyatakan perbuatan, menyatakan hal yang berkaitan, dan menyatakan tempat. Bentuk <i>per-an</i> pada kata <i>perubahan</i> bermakna 'hal/keadaan berubah'. Makna ini sama dengan imbuhan <i>per-an</i> pada kata <i>pergantian</i> (hal berganti) dalam opsi A, sedangkan <i>peristirahatan</i>, <i>perkantoran</i>, <i>perkuburan</i>, dan <i>persimpangan</i> bermakna 'tempat'."
+    },
+    {
+      "id": 33,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Kata berpasangan tetap pada teks tersebut adalah",
+      "pilihan": [
+        "tidak mengesankan",
+        "beberapa pulau",
+        "sering berburu",
+        "mamalia kecil",
+        "hewan pemangsa"
+      ],
+      "kunci_jawaban": 4,
+      "pembahasan": "Kata berpasangan tetap (kolokasi atau ungkapan idiomatik) adalah gabungan dua kata atau lebih yang penggunaannya sudah lazim berpasangan dan membentuk satu kesatuan makna khusus. Pada teks tersebut, frasa <i>hewan pemangsa</i> merupakan pasangan kata tetap yang merujuk pada kelompok hewan predator."
+    },
+    {
+      "id": 34,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Makna kata hubung <i>akan tetapi</i> pada kalimat (7) adalah",
+      "pilihan": [
+        "menjelaskan pertentangan informasi dengan kalimat sebelumnya.",
+        "menjelaskan penerangan informasi dengan kalimat sebelumnya.",
+        "menjelaskan penegasan informasi dengan kalimat sebelumnya.",
+        "menjelaskan pemilihan informasi dengan kalimat sebelumnya.",
+        "menjelaskan akibat dari informasi kalimat sebelumnya."
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Konjungsi antarkalimat <i>akan tetapi</i> berfungsi untuk menyatakan hubungan pertentangan atau perlawanan antara informasi pada kalimat (7) (bahwa gigitan kobra tidak mematikan garangan) dengan informasi pada kalimat (6) sebelumnya (bahwa satu gigitan kobra mematikan sebagian besar hewan pemangsa lain)."
+    },
+    {
+      "id": 35,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Tujuan penggunaan kata <i>bisa</i> pada kalimat (2) adalah",
+      "pilihan": [
+        "menjelaskan pengontrasan",
+        "menjelaskan frekuentatif",
+        "menjelaskan kuantitatif",
+        "menjelaskan kepastian",
+        "menjelaskan cara"
+      ],
+      "kunci_jawaban": 3,
+      "pembahasan": "Pada kalimat (2), kata <i>bisa</i> (bermakna 'dapat' atau 'mungkin') termasuk kata keterangan modalitas yang digunakan untuk menyatakan tingkat kepastian atau kemungkinan mengenai keberadaan garangan jawa di Jawa, Bali, dan beberapa pulau lain."
+    },
+    {
+      "id": 36,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Kelompok kata yang berdekatan makna dengan kelompok kata <i>moncong runcing</i> pada kalimat (1) adalah",
+      "pilihan": [
+        "mulut lancip.",
+        "hidung tajam.",
+        "lidah panjang.",
+        "penciuman tajam.",
+        "pengendusan efektif."
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Menurut KBBI, kata <i>moncong</i> bermakna 'mulut yang panjang atau menjorok ke depan (pada binatang)', sedangkan kata <i>runcing</i> bersinonim dengan <i>lancip</i> (makin ke ujung makin kecil/tajam). Dengan demikian, kelompok kata yang berdekatan makna dengan <i>moncong runcing</i> adalah <i>mulut lancip</i>."
+    },
+    {
+      "id": 37,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_garangan",
+      "referensi": "https://mongabay.co.id",
+      "pertanyaan": "Kalimat <i>tidak</i> logis pada teks tersebut terdapat pada kalimat nomor",
+      "pilihan": [
+        "(3)",
+        "(4)",
+        "(5)",
+        "(6)",
+        "(8)"
+      ],
+      "kunci_jawaban": 3,
+      "pembahasan": "Kalimat (6) berbunyi: \"Pada sebagian besar hewan pemangsa seukuran garangan, satu gigitan kobra yang sudah cukup untuk mengakhiri segalanya.\" Kehadiran kata hubung <i>yang</i> setelah subjek (<i>satu gigitan kobra</i>) membuat bagian tersebut menjadi perluasan subjek sehingga kalimat kehilangan predikat utama dan menjadi tidak logis/tidak efektif."
+    },
+    {
+      "id": 38,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_joko_kaha",
+      "referensi": "https://rri.co.id",
+      "pertanyaan": "<i>Bacalah kalimat berikut dengan saksama!</i><br>Tradisi yang menjadi akar budaya negara harus dijaga agar tetap menjadi identitas bangsa.<br><br>Kalimat dalam teks yang sepola dengan kalimat tersebut adalah",
+      "pilihan": [
+        "kalimat (1)",
+        "kalimat (2)",
+        "kalimat (3)",
+        "kalimat (4)",
+        "kalimat (5)"
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Kalimat pada soal memiliki pola inti S (<i>Tradisi yang menjadi akar budaya negara</i>, berbentuk frasa nominal berpewatas klausa relatif <i>yang...</i>) + P (<i>harus dijaga</i>) + Ket (<i>agar tetap menjadi identitas bangsa</i>). Struktur subjek berpewatas <i>yang</i> diikuti predikat verba pasif dan pelengkap/keterangan ini sepola dengan kalimat (1): S (<i>Tradisi adat joko kaha yang bermakna 'injak tanah'</i>) + P (<i>tercatat</i>) + Pel (<i>sebagai kekayaan intelektual komunal (KIK) yang dianakemaskan negara</i>)."
+    },
+    {
+      "id": 39,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_joko_kaha",
+      "referensi": "https://rri.co.id",
+      "pertanyaan": "Kata yang bermakna sebenarnya pada teks tersebut adalah",
+      "pilihan": [
+        "<i>dianakemaskan</i> (kalimat 1)",
+        "<i>tercatat</i> (kalimat 2)",
+        "<i>mata</i> (kalimat 3)",
+        "<i>kakap</i> (kalimat 4)",
+        "<i>cap</i> (kalimat 6)"
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "Kata <i>tercatat</i> pada kalimat (2) (\"Tradisi tersebut tercatat sebagai ekspresi budaya tradisional...\") digunakan dalam makna sebenarnya (denotatif), yakni terdaftar secara resmi dalam data. Sementara itu, kata <i>dianakemaskan</i> (diistimewakan), <i>menaruh mata</i> (berkunjung/melihat), <i>tamu kakap</i> (tamu penting/besar), dan <i>cap</i> (tanda/simbol) digunakan dalam makna kias (konotatif)."
+    },
+    {
+      "id": 40,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_joko_kaha",
+      "referensi": "https://rri.co.id",
+      "pertanyaan": "Kalimat (6) dapat divariasikan dalam kalimat",
+      "pilihan": [
+        "Hal ini menjadi simbol penghormatan bagi tamu, terutama para pemimpin negara atau kerajaan yang datang ke Ternate.",
+        "Hal ini menjadi cap penghormatan kepada tamu, terutama para pemimpin negara atau kerajaan yang menginvasi ke Ternate.",
+        "Hal ini menjadi stempel penghormatan kepada tamu, terutama para pemimpin negara atau kerajaan yang datang ke Ternate.",
+        "Hal ini menjadi cap penyambutan kepada tamu, terutama para pemimpin negara atau kerajaan yang datang ke Ternate.",
+        "Hal ini menjadi cap penghormatan kepada tamu, terutama para penduduk negara atau kerajaan yang datang ke Ternate."
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Dalam memvariasikan kalimat, kita harus memperhatikan kesamaan makna atau informasi utama pada kalimat. Kata <i>cap</i> dalam konteks kalimat (6) bermakna 'tanda' atau 'simbol', serta preposisi <i>kepada</i> dapat divariasikan menjadi <i>bagi</i> tanpa mengubah maksud kalimat. Dengan demikian, kalimat (6) dapat divariasikan menjadi <i>Hal ini menjadi simbol penghormatan bagi tamu, terutama para pemimpin negara atau kerajaan yang datang ke Ternate.</i>"
+    },
+    {
+      "id": 41,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_joko_kaha",
+      "referensi": "https://rri.co.id",
+      "pertanyaan": "Frasa <i>bentuk penghormatan, sambutan, dan penerimaan tamu agung</i> pada kalimat (3) akan menjadi sempurna jika diperbaiki dengan cara mengganti kata",
+      "pilihan": [
+        "<i>penghormatan</i> dengan kata <i>menghormati</i>.",
+        "<i>penghormatan</i> dengan kata <i>dihormati</i>.",
+        "<i>sambutan</i> dengan kata <i>penyambutan</i>.",
+        "<i>penerimaan</i> dengan kata <i>menerima</i>.",
+        "<i>sambutan</i> dengan kata <i>menyambut</i>."
+      ],
+      "kunci_jawaban": 2,
+      "pembahasan": "Agar memenuhi kaidah kesejajaran (keparalelan) bentuk kata dalam perincian, ketiga nomina yang dirangkai harus menggunakan pola imbuhan yang sama. Karena <i>penghormatan</i> dan <i>penerimaan</i> menggunakan konfiks nomina proses <i>peN-an</i>, kata <i>sambutan</i> harus diganti menjadi <i>penyambutan</i>."
+    },
+    {
+      "id": 42,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_joko_kaha",
+      "referensi": "https://rri.co.id",
+      "pertanyaan": "Kata yang berlawanan makna dengan kata <i>agung</i> pada kalimat (3) teks tersebut adalah",
+      "pilihan": [
+        "kuat.",
+        "kukuh.",
+        "remeh.",
+        "penting.",
+        "berharga."
+      ],
+      "kunci_jawaban": 2,
+      "pembahasan": "Kata <i>agung</i> dalam frasa <i>tamu agung</i> bermakna 'besar, mulia, terhormat, atau sangat penting'. Lawan kata (antonim) yang tepat untuk makna tersebut di antara pilihan yang tersedia adalah <i>remeh</i> (tidak penting atau tidak berharga)."
+    },
+    {
+      "id": 43,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_generasi_stroberi",
+      "referensi": "https://www.kompasiana.com",
+      "pertanyaan": "Kata <i>kecil hati</i> pada kalimat (3) berasosiasi dengan kata",
+      "pilihan": [
+        "acuh tak acuh.",
+        "waspada.",
+        "pongah.",
+        "apatis.",
+        "takut."
+      ],
+      "kunci_jawaban": 4,
+      "pembahasan": "Kata berasosiasi adalah kata yang memiliki hubungan perbandingan dengan bentuk lain yang memiliki kesamaan sifat. Ungkapan <i>kecil hati</i> bermakna 'hilang keberanian' atau 'gentar', sehingga berasosiasi erat dengan kata <i>takut</i>."
+    },
+    {
+      "id": 44,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_generasi_stroberi",
+      "referensi": "https://www.kompasiana.com",
+      "pertanyaan": "Kata yang mengalami penghalusan makna pada teks tersebut adalah",
+      "pilihan": [
+        "istilah.",
+        "aktivis.",
+        "tekanan.",
+        "generasi.",
+        "berumur."
+      ],
+      "kunci_jawaban": 4,
+      "pembahasan": "Penghalusan makna (eufemisme) adalah penggunaan kata atau ungkapan yang lebih halus untuk menggantikan kata yang dirasa kurang sopan atau menyinggung. Pada kalimat (4), kata <i>berumur</i> digunakan untuk menghaluskan makna kata <i>tua</i>."
+    },
+    {
+      "id": 45,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_generasi_stroberi",
+      "referensi": "https://www.kompasiana.com",
+      "pertanyaan": "Hubungan kata <i>generasi</i> dengan kata <i>angkatan</i> sama dengan hubungan kata",
+      "pilihan": [
+        "kekuatan dan keluwesan.",
+        "kegiatan dan kecakapan.",
+        "estetika dan keindahan.",
+        "kotor dan kerapian.",
+        "jujur dan dusta."
+      ],
+      "kunci_jawaban": 2,
+      "pembahasan": "Kata <i>generasi</i> dan <i>angkatan</i> memiliki hubungan kesamaan makna (sinonim), yaitu sekumpulan orang yang kira-kira sama waktu hidupnya. Hubungan sinonim yang sama terdapat pada pasangan kata <i>estetika</i> dan <i>keindahan</i>."
+    },
+    {
+      "id": 46,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_bi_suku_bunga",
+      "referensi": "https://katadata.co.id",
+      "pertanyaan": "Sikap penulis terhadap isu Bank Indonesia menaikkan suku bunga adalah",
+      "pilihan": [
+        "khawatir.",
+        "waspada.",
+        "inisiatif.",
+        "bahagia.",
+        "sedih."
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Sikap penulis tampak jelas pada kalimat (6) dan (7) yang menyoroti dampak negatif kenaikan suku bunga BI secara agresif, ditandai dengan pengulangan kata <i>kekhawatiran</i> terhadap naiknya beban bunga kredit cicilan masyarakat (KPR, KUR, dan KKB)."
+    },
+    {
+      "id": 47,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_bi_suku_bunga",
+      "referensi": "https://katadata.co.id",
+      "pertanyaan": "Ilustrasi yang tepat untuk melengkapi teks tersebut adalah",
+      "pilihan": [
+        "gambar rumah subsidi di Indonesia.",
+        "grafik kenaikan mata uang di Indonesia.",
+        "infografik dampak kenaikan suku bunga di Indonesia.",
+        "skema perputaran ekonomi dari cicilan biaya bagi masyarakat.",
+        "tabel profesi yang terdampak kenaikan suku bunga di Indonesia."
+      ],
+      "kunci_jawaban": 2,
+      "pembahasan": "Teks secara keseluruhan membahas kenaikan suku bunga acuan BI hingga 5,75% beserta berbagai dampaknya terhadap stabilitas rupiah, inflasi, dan beban bunga kredit masyarakat (KPR, KUR, KKB). Oleh karena itu, ilustrasi visual yang paling relevan dan informatif untuk melengkapi bacaan adalah infografik dampak kenaikan suku bunga di Indonesia."
+    },
+    {
+      "id": 48,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_bi_suku_bunga",
+      "referensi": "https://katadata.co.id",
+      "pertanyaan": "Kata yang tepat untuk melengkapi rumpang pada kalimat (4) adalah",
+      "pilihan": [
+        "menguatkan; menjaga.",
+        "memperkecil; membuang.",
+        "melemahkan; menstabilkan.",
+        "memperbanyak; menguatkan.",
+        "memperkuat; menumbangkan."
+      ],
+      "kunci_jawaban": 0,
+      "pembahasan": "Berdasarkan konteks kalimat (3) dan (4), tujuan kenaikan suku bunga BI adalah menjaga stabilitas rupiah dan mengendalikan inflasi agar harga bahan baku stabil. Pasangan verba yang paling tepat dan logis untuk mengisi bagian rumpang adalah <i>menguatkan</i> (rupiah) dan <i>menjaga</i> (tingkat inflasi)."
+    },
+    {
+      "id": 49,
+      "tipe": "pg",
+      "tingkat_kesulitan": 3,
+      "teks_bacaan_ref": "bacaan_bi_suku_bunga",
+      "referensi": "https://katadata.co.id",
+      "pertanyaan": "Ungkapan <i>inflasi pada Mei 2026 naik 3,08% dengan tercatat pendorong utama kenaikan harga makanan, minuman, dan tembakau</i> pada kalimat (5) dalam teks tersebut akan menjadi sempurna jika diperbaiki menjadi",
+      "pilihan": [
+        "pendorong inflasi pada Mei 2026 naik 3,08% dengan tercatat utama kenaikan harga makanan, minuman, dan tembakau.",
+        "pendorong inflasi pada Mei 2026 naik 3,08% dengan utama kenaikan harga tercatat makanan, minuman, dan tembakau.",
+        "inflasi pada Mei 2026 naik 3,08% dengan tercatat utama pendorong harga makanan, minuman, dan tembakau.",
+        "inflasi pada Mei 2026 tercatat naik 3,08% dengan pendorong utama kenaikan harga makanan, minuman, dan tembakau.",
+        "inflasi pada Mei 2026 naik 3,08% dengan pendorong tercatat utama kenaikan harga makanan, minuman, dan tembakau."
+      ],
+      "kunci_jawaban": 3,
+      "pembahasan": "Kalimat efektif adalah kalimat yang sesuai dengan kaidah bahasa Indonesia, antara lain hemat kata dan memiliki struktur keterangan yang tepat. Pada kalimat asli, peletakan kata <i>tercatat</i> setelah konjungsi <i>dengan</i> tidak tepat karena <i>tercatat</i> seharusnya menerangkan predikat <i>naik 3,08%</i>. Perbaikan yang paling efektif adalah <i>inflasi pada Mei 2026 tercatat naik 3,08% dengan pendorong utama kenaikan harga makanan, minuman, dan tembakau.</i>"
+    },
+       {
+      "id": 50,
+      "tipe": "pg",
+      "tingkat_kesulitan": 4,
+      "pertanyaan": "<i>Cermati bahasa hipotesis berikut!</i><br><br><table class='question-table'><tr><th>Bahasa Indonesia</th><th>Bahasa Hipotesis</th></tr><tr><td>Nuklir menghancurkan daratan.</td><td>Garaunto bagarapim kleanun.</td></tr><tr><td>Bom menumbangkan pohon.</td><td>Diwai bararukim sauha.</td></tr><tr><td>Pohon dihancurkan nuklir.</td><td>Diwai dagarapim kleanun.</td></tr></table><br>Bagaimana menyatakan “Bom ditumbangkan nuklir” dengan bahasa hipotesis?",
+      "pilihan": [
+        "Sauha bararukim garaunto.",
+        "Sauha dararukim kleanun.",
+        "Sauha dagarapim garaunto.",
+        "Kleanun dagarapim sauha.",
+        "Kleanun bararukim diwai."
+      ],
+      "kunci_jawaban": 1,
+      "pembahasan": "Analisis kosakata dan struktur kalimat dari data bahasa hipotesis:<br>• <i>Nuklir</i> = <i>kleanun</i>, <i>daratan</i> = <i>garaunto</i>, <i>menghancurkan</i> = <i>bagarapim</i>.<br>• <i>Pohon</i> = <i>diwai</i>, <i>bom</i> = <i>sauha</i>, <i>menumbangkan</i> = <i>bararukim</i>.<br>• Pada kalimat aktif, pola susunannya adalah Objek + Predikat aktif (awalan <i>ba-</i>) + Subjek.<br>• Pada kalimat pasif (<i>Pohon dihancurkan nuklir</i> — “Diwai dagarapim kleanun”), susunan tetap S (pasif) + P (pasif, awalan <i>ba-</i> berubah menjadi <i>da-</i>) + Pelaku.<br>Maka, untuk menyatakan “Bom ditumbangkan nuklir”: <i>Bom</i> (<i>Sauha</i>) + <i>ditumbangkan</i> (<i>dararukim</i>) + <i>nuklir</i> (<i>kleanun</i>) = <i>Sauha dararukim kleanun.</i>"
+    }
+
+  ]
+}
